@@ -39,6 +39,9 @@ class AnswerQuestion extends Model
     {
         return $this->belongsTo(Question::class, 'question_id', 'id');
     }
-
+    public function getActive()
+    {
+        return $this->status == '1' ? trans('global.active') : trans('global.un_active');
+    }
 
 }

@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4052221a-c94c-4583-9507-3b041c63b492" name="Default Changelist" comment="new updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-answer-question/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-answer-question/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-answer-question/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-answer-question/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-questions/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-questions/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-questions/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/personal-questions/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/SitePartials/LandingPartials/third-section.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/SitePartials/LandingPartials/third-section.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,9 +25,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -169,22 +178,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../oyounmedia/Jewels" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\laragon\www\Happy Family Him\Back-End-Happy-Family-\resources\views\admin" />
+      <recent name="F:\laragon\www\Happy Family Him\Back-End-Happy-Family-\app\Http\Requests\Admin" />
+      <recent name="F:\laragon\www\Happy Family Him\Back-End-Happy-Family-\app\Http\Controllers\Admin" />
+      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\site" />
+      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\vendor\pagination" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\laragon\www\happy_family\app\Http\Resources" />
       <recent name="F:\laragon\www\happy_family\app\Http" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\site" />
-      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\vendor\pagination" />
-      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\admin\settings" />
-      <recent name="C:\xampp\htdocs\Back-End-Happy-Family\resources\views\admin" />
-      <recent name="F:\laragon\www\happy_family\app\Http\Controllers" />
     </key>
   </component>
   <component name="RunManager">
@@ -193,7 +202,7 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -292,6 +301,7 @@
       <workItem from="1671224929589" duration="1103000" />
       <workItem from="1671227668187" duration="9251000" />
       <workItem from="1671345583738" duration="41000" />
+      <workItem from="1671892675844" duration="300000" />
     </task>
     <task id="LOCAL-00001" summary="update_user_step">
       <created>1658652580752</created>
@@ -304,20 +314,19 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
