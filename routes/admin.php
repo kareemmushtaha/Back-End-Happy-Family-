@@ -20,6 +20,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     Route::resource('questions-chat', 'QuestionChatController');
+    Route::resource('personal-questions', 'PersonalQuestionsController');
+    Route::resource('personal-answer-questions', 'PersonalAnswerQuestionsController');
     Route::resource('answers-chat', 'AnswerChatController');
     Route::get('request/question/chat', [QuestionChatController::class, 'customQuestionChat'])->name('questions-chat.customQuestionChat');
     Route::get('request/answer/chat', [AnswerChatController::class, 'customAnswerChat'])->name('answers-chat.customAnswerChat');

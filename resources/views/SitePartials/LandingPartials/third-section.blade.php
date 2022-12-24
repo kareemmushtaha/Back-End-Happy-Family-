@@ -21,7 +21,6 @@
         @endforeach
     @endisset
 
-
     <div class="success-storys">
         <img onclick="slidRight()" src="{{asset('assets/site/images/arrow-right-white.png')}}" alt=""/>
         <div id="story-1" class="story active-story"></div>
