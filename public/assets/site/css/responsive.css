@@ -1,0 +1,1561 @@
+@font-face {
+  font-family: 'Hanimation_Arabic_Light';
+  src: url('../fonts/ArbFONTS-Hanimation_Arabic_Light.otf')  format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hanimation_Arabic_Medium';
+  src: url('../fonts/ArbFONTS-Hanimation_Arabic_Medium.otf')  format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hanimation_Arabic_Regular';
+  src: url('../fonts/ArbFONTS-Hanimation_Arabic_Regular.otf')  format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hanimation_Arabic_SemiBold';
+  src: url('../fonts/ArbFONTS-Hanimation_Arabic_SemiBold.otf')  format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@media( max-width: 1820px){
+  .profile-top h3,
+  .logo-area h3{
+    font-size: 14px;
+  }
+  .profile-top h2,
+  .account h2{
+    font-size: 16px;
+  }
+  .numbers a,
+  .bottom-links a,
+  .search-area input{
+    font-size: 18px;
+  }
+  .user-details h2,
+  .search-container h2,
+  .search-container button,
+  .search-container select,
+  .profile-bottom h2,
+  .logo-area h2,
+  .bottom-logo h2,
+  .bottom-links h2{
+    font-size: 20px;
+  }
+  .user-profile h2{
+    font-size: 22px;
+  }
+  .user-profile h1,
+  .user h1,
+  .profile-container button,
+  .date-container h2,
+  .bottom-logo h1{
+    font-size: 24px;
+  }
+  .header a{
+    font-size: 26px;
+  }
+  .date-container h1{
+    font-size: 30px;
+  }
+  .account img:nth-child(1){
+    width: 50px;
+    height: 50px;
+  }
+  .user-profile{
+    display: flex;
+    gap: 15px;
+  }
+  .user-profile img{
+    width: 56px;
+    height: 56px;
+  }
+  .account img:nth-child(2),
+  .profile-bottom img,
+  .search-container img,
+  .time-container img,
+  .user-details img,
+  .icons img{
+    width: 20px;
+    height: 20px;
+  }
+  .user button{
+    font-size: 18px;
+    padding: 8px 0px;
+    border-radius: 30px;
+  }
+  .date-container img{
+    width: 224px;
+    height: 224px;
+  }
+  .search-area > div{
+    gap: 8px;
+    padding: 15px 15px;
+  }
+  .search-container > a{
+    padding: 20px 40px;
+    font-size: 24px;
+    border-radius: 50px;
+  }
+  .profile-top img{
+    width: 100px;
+    height: 100px;
+  }
+  .logo-area img{
+    width: 52;
+    height: 68;
+  }
+  .pages img{
+    width: 8px;
+    height: 14px;
+    margin: 18px 12px;
+  }
+  .bottom-logo img{
+    width: 65px;
+    height: 80px;
+  }
+}
+@media(max-width: 1640px){
+  .numbers a,
+  .bottom-links a,
+  .user button,
+  .search-area input{
+    font-size: 14px;
+  }
+  .user-details h2,
+  .search-container h2,
+  .search-container button,
+  .search-container select,
+  .profile-bottom h2,
+  .logo-area h2,
+  .bottom-logo h2,
+  .bottom-links h2{
+    font-size: 16px;
+  }
+  .user-profile h2{
+    font-size: 18px;
+  }
+  .user h1,
+  .user-profile h1,
+  .profile-container button,
+  .date-container h2,
+  .bottom-logo h1,
+  .search-container > a{
+    font-size: 20px;
+  }
+  .header a{
+    font-size: 22px;
+  }
+  .date-container h1{
+    font-size: 26px;
+  }
+  .account img:nth-child(1){
+    width: 45px;
+    height: 45px;
+  }
+  .user-profile img{
+    width: 52px;
+    height: 52px;
+  }
+  .account img:nth-child(2),
+  .profile-bottom img,
+  .search-container img,
+  .time-container img,
+  .user-details img{
+    width: 18px;
+    height: 18px;
+  }
+  .search-container select{
+    width: 70px;
+  }
+  .search-area > div{
+    gap: 5px;
+    padding: 10px 10px;
+  }
+  .date-container img{
+    width: 200px;
+    height: 200px;
+  }
+  .search-container > a{
+    padding: 18px 30px;
+  }
+  .profile-top img{
+    width: 90px;
+    height: 90px;
+  }
+  .logo-area img{
+    width: 52px;
+    height: 68px;
+  }
+  .bottom-logo img{
+    width: 65px;
+    height: 80px;
+  }
+  .pages div{
+    border-radius: 30px;
+    padding-inline: 10px;
+    background-color: #F0F0F0;
+  }
+  .pages img{
+    width: 6px;
+    height: 12px;
+    margin: 18px 10px;
+  }
+}
+@media(max-width: 1485px){
+  .user button,
+  .search-area input{
+    font-size: 10px;
+  }
+  .user-details h2,
+  .search-container select,
+  .search-container button,
+  .search-container h2{
+    font-size: 12px;
+  }
+  .user-profile h2,
+  .search-container > a{
+    font-size: 14px;
+  }
+  .user h1,
+  .user-profile h1,
+  .profile-container button,
+  .date-container h2,
+  .bottom-logo h1{
+    font-size: 16px;
+  }
+  .header a{
+    font-size: 18px;
+  }
+  .date-container h1{
+    font-size: 22px;
+  }
+  .account img:nth-child(1){
+    width: 40px;
+    height: 40px;
+  }
+  .search-container select{
+    width: 55px;
+  }
+  .search-area input{
+    width: 60px;
+    height: 30px;
+    border-radius: 10px;
+    padding-right: 10px;
+  }
+  .search-area >div:first-child{
+    padding-right: 20px;
+  }
+  .search-area button{
+    padding-inline: 30px;
+  }
+  .time-container section{
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+  }
+  .user-profile img{
+    width: 45px;
+    height: 45px;
+  }
+  .account img:nth-child(2),
+  .profile-bottom img,
+  .search-container img,
+  .time-container img,
+  .user-details img{
+    width: 14px;
+    height: 14px;
+  }
+  .search-area > div{
+    gap: 8px;
+    padding: 8px 8px;
+  }
+  .search-container > a{
+    padding: 12px 20px;
+  }
+  .profile-top img{
+    width: 80px;
+    height: 80px;
+  }
+  .logo-area img{
+    width: 48px;
+    height: 64px;
+  }
+  .bottom-logo img{
+    width: 60px;
+    height: 75px;
+  }
+  .pages div{
+    padding-inline: 8px;
+  }
+  .pages img{
+    width: 4px;
+    height: 10px;
+    margin: 14px 10px;
+  }
+  .numbers a{
+    padding: 10px 10px;
+    border-radius: 5px;
+  }
+  .header{
+    height: 80px;
+  }
+  .body{
+    margin-inline: 120px;
+  }
+  .profile-container{
+    gap: 30px;
+    padding: 30px 20px;
+  }
+  .profile-top{
+    gap: 30px;
+  }
+  .date-container img{
+    width: 160px;
+    height: 160px;
+  }
+  .date-container{
+    padding-left: 20px;
+  }
+  .users-container{
+    padding: 40px;
+  }
+}
+@media( max-width: 1275px){
+  .users-area > div{
+    grid-template-columns: 1fr 1fr;
+  }
+  .advanced-range-area input{
+    padding-right: 20px;
+  }
+}
+@media( max-width: 1150px){
+  .main-header-login a,
+  .main-header-links a{
+    font-size: 16px;
+  }
+  .body{
+    grid-template-columns: 100%;
+  }
+  .profile-container{
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0px;
+  }
+  .profile-container > a{
+    width: 50%
+  }
+  .advanced-range-container{
+    grid-template-columns: 1fr 1fr;
+  }
+  .main-header,
+  .main-content{
+    padding: 20px 30px;
+  }
+}
+@media(max-width: 1050px){
+  .notification h3,
+  .notification h4{
+    font-size: 10px;
+  }
+  .notification h2{
+    font-size: 14px;
+  }
+  .main-content h2{
+    font-size: 20px;
+  }
+  .main-content h1{
+    font-size: 30px;
+  }
+  header{
+    gap: 0px;
+  }
+  .header-content{
+    justify-content: left;
+    gap: 15px;
+    width: fit-content;
+  }
+  .main-header-links a,
+  .header-content .login,
+  .header-content .signup,
+  .header-content > a{
+    display: none;
+  }
+  .account{
+    display: none;
+  }
+  .bottom{
+    padding-block: 40px;
+  }
+  .bottom > div{
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+  }
+  .bottom-logo{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    width: 100%;
+  }
+  .bottom-links{
+    width: 70%;
+  }
+  .notification{
+    top: 210%;
+  }
+  .header i,
+  .main-header i{
+    display: block;
+  }
+  .mobile-menu .account{
+    display: flex;
+  }
+  .contact-container,
+  .settings-container,
+  .advanced-container,
+  .notifications-container,
+  .questions-container,
+  .about-container,
+  .register-container{
+    width: 90%;
+  }
+  .advanced-selects-container img{
+    width: 16px;
+    height: 16px;
+  }
+  .advanced-bottom{
+    margin-left: 5%;
+  }
+  .contact-area > div{
+    gap: 30px;
+  }
+  .main-content{
+    margin-top: 30px;
+    gap: 40px;
+  }
+  .main-content-inputs{
+    flex-direction: column;
+    gap: 30px;
+  }
+  .main-content-inputs form{
+    align-self: start;
+  }
+  .main-content-user{
+    align-self: start;
+  }
+  .like{
+    top: 150px;
+  }
+  .love{
+    top: 150px;
+  }
+  .landing-success{
+    padding: 80px;
+  }
+  .landing-special{
+    padding: 80px 50px;
+  }
+  .landing-special-cards{
+    gap: 30px;
+  }
+  .question-img{
+    left: 100px;
+    width: 250px;
+    height: 200px;
+  }
+  .popup-container{
+    width: 40%;
+  }
+  .popup-container-answers{
+    width:60%;
+  }
+  .login-profile h1{
+    padding: 50px 50px;
+  }
+  .login-profile h2{
+    padding-right: 50px;
+  }
+  .login-container form{
+    padding: 40px 40px;
+  }
+  .signup-container{
+    width: 90%;
+    padding: 50px 30px;
+  }
+}
+@media( max-width: 950px){
+  .messages-profile-area h2{
+    font-size: 10px;
+  }
+  .messages-chats-area H2,
+  .messages-chats-area input{
+    font-size: 12px;
+  }
+  .messages-profile-area h1{
+    font-size: 14px;
+  }
+  .landing-special h3,
+  .landing-about h3,
+  .messages-chats-area H1,
+  .landing-about a{
+    font-size: 16px;
+  }
+  .landing-special h2,
+  .landing-about h2{
+    font-size: 18px;
+  }
+  .landing-special h1,
+  .landing-about h1{
+    font-size: 25px;
+  }
+  .search-container{
+    flex-direction: column;
+    justify-content: right;
+    gap: 20px;
+  }
+  .search-container > a{
+    width: fit-content;
+    padding: 10px 30px;
+  }
+  .users-area{
+    margin-top: 20px;
+  }
+  .advanced-selects-container{
+    grid-template-columns: 1fr 1fr;
+  }
+  .landing-about{
+    max-width: 40%;
+    padding-block: 80px;
+    margin-left: 20px;
+  }
+  .husband{
+    right: 20px;
+    width: 250px;
+  }
+  .ring{
+    bottom: 230px;
+    right: 100px;
+    width: 160px;
+  }
+  .world{
+    bottom: 150px;
+    right: 235px;
+    width: 160px;
+  }
+  .landing-register{
+    margin-left: 50px;
+    padding-bottom: 40px;
+  }
+  .wife-img{
+    right: -30px;
+  }
+  .heart-img{
+    right: -30px;
+  }
+  .messages-chats-area img{
+    width: 30px;
+    height: 30px;
+  }
+}
+@media( max-width: 840px){
+  .landing-success-content h3{
+    font-size: 12px;
+  }
+  .landing-success-content h2{
+    font-size: 16px;
+  }
+  .landing-success-content h1{
+    font-size: 25px;
+  }
+  .users-area > div{
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .profile-container > a{
+    width: 40%
+  }
+  .main-content-headlines h2{
+    max-width: 100%;
+  }
+  .main-content-numbers{
+    flex-direction: column;
+    width: fit-content;
+  }
+  .main-content-numbers > div{
+    align-self: start;
+    margin-inline: auto;
+  }
+  .cubble{
+    bottom: 0px;
+    left: 20px;
+    width: 300px;
+  }
+  .like{
+    top: 450px;
+    left: 65px;
+    width: 40px;
+  }
+  .love{
+    top: 450px;
+    left: 250px;
+    width: 35px;
+  }
+  .landing-success{
+    padding: 80px 40px;
+  }
+  .landing-success-content{
+    gap: 20px;
+  }
+  .landing-special{
+    padding: 80px 20px;
+  }
+  .landing-special-image{
+    width: 100px;
+    height: 100px;
+  }
+  .login-container{
+    grid-template-columns: 100%;
+    margin-block: 50px;
+  }
+  .login-container form{
+    grid-row-start: 1;
+  }
+  .login-profile{
+    text-align: center;
+  }
+  .login-profile h1{
+    padding: 50px 0px;
+  }
+  .login-profile h2{
+    padding-right: 0px;
+    padding-bottom: 330px;
+  }
+  .cubble-img{
+      bottom: -512px;
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+  }
+  .like-img{
+      bottom: -290px;
+    left: 50%;
+    transform: translateX(-220%);
+    margin: 0px;
+  }
+  .love-img{
+      bottom: -290px;
+    left: 50%;
+    transform: translateX(200%);
+    margin: 0px;
+  }
+
+    .signup-close{
+        padding-bottom: 20px;
+    }
+    .signup-close img{
+        margin-left: 20px;
+        width: 15px;
+    }
+
+}
+@media( max-width: 800px){
+  .search-container select,
+  .search-container button,
+  .search-container h2{
+    font-size: 9px;
+  }
+  .landing-special h3,
+  .landing-about h3,
+  .contact-container a,
+  .personally-edit a,
+  .advanced-container h3,
+  .notifications-container button,
+  .questions-container h3,
+  .about-container h3,
+  .about-container li,
+  .landing-register h3,
+  .landing-register li,
+  .register-container h3,
+  .register-container li,
+  .signup-promise button{
+    font-size: 12px;
+  }
+  .landing-special h2,
+  .landing-about a,
+  .landing-about h2,
+  .contact-container input,
+  .contact-container textarea,
+  .contact-container button,
+  .settings-selects-container input,
+  .settings-selects-container h2,
+  .settings-selects-container select,
+  .settings-inputs-container input,
+  .settings-container button,
+  .advanced-range-area input,
+  .advanced-container h2,
+  .advanced-selects-container select,
+  .advanced-bottom button,
+  .notifications-container h2,
+  .questions-container h2,
+  .about-container h2,
+  .landing-register h2,
+  .register-container h2{
+    font-size: 14px;
+  }
+  .contact-container h1,
+  .advanced-container h1,
+  .notifications-container h1,
+  .questions-container h1,
+  .about-container h1,
+  .landing-register h1,
+  .register-container h1{
+    font-size: 18px;
+  }
+  .landing-special h1,
+  .landing-about h1{
+    font-size: 20px;
+  }
+  .body{
+    grid-template-columns: 100%;
+    gap: 50px;
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-block: 120px;
+  }
+  .users-container{
+    padding: 70px 20px;
+  }
+  .search-area > div{
+    gap: 2px;
+    padding: 3px 5px;
+  }
+  .search-area >div:first-child{
+    padding-right: 10px;
+  }
+  .search-area button{
+    padding-inline: 15px;
+  }
+  .time-container div{
+    position: relative;
+  }
+  .search-area > div:not(:last-child){
+    border-right: 2px solid #FFFFFF;
+  }
+  .search-container > a{
+    padding: 8px 20px;
+    font-size: 10px;
+  }
+  .notifications-container{
+    width: 95%;
+  }
+  .contact-container,
+  .settings-container,
+  .questions-container,
+  .about-container,
+  .register-container{
+    padding: 30px;
+    width: 95%;
+  }
+  .advanced-container{
+    padding-block: 30px;
+    width: 95%;
+  }
+  .advanced-container > div{
+    padding-inline: 30px;
+  }
+  .register-container > div{
+    max-width: 60%;
+    gap: 30px;
+  }
+  .register-container > img{
+    width: 100px;
+    height: 130px;
+  }
+  .landing-register a,
+  .register-container a{
+    padding: 8px 40px;
+    font-size: 12px;
+  }
+  .advanced-bottom{
+    margin-left: 2.5%;
+  }
+  .settings-container img{
+    width: 80px;
+    height: 80px;
+  }
+  .settings-container button{
+    padding: 5px 30px;
+    margin-top: 10px;
+  }
+  .landing-about{
+    gap: 40px;
+    padding-block: 50px;
+  }
+  .husband{
+    right: 10px;
+    width: 200px;
+  }
+  .ring{
+    bottom: 180px;
+    right: 70px;
+    width: 120px;
+  }
+  .world{
+    bottom: 120px;
+    right: 165px;
+    width: 100px;
+  }
+  .landing-register{
+    gap: 20px;
+  }
+  .wife-img{
+    right: 0px;
+    width: 250px;
+  }
+  .heart-img{
+    bottom: 0px;
+    right: -30px;
+    width: 400px;
+    filter: blur(6px);
+    opacity: 40%;
+  }
+  .messages-container{
+    grid-template-columns: 1fr;
+  }
+  .messages-chats-area{
+    position: fixed;
+    height: 100vh;
+    width: 280px;
+    top: 0px;
+    right: 0px;
+    animation: slide-left 500ms forwards;
+    z-index: 1000;
+    border-left: 1px solid #bebebe;
+    display: none;
+  }
+  .messages-profile-area{
+    position: fixed;
+    height: 100vh;
+    width: 280px;
+    top: 0px;
+    right: 0px;
+    animation: slide-left 500ms forwards;
+    z-index: 1000;
+    border-left: 1px solid #bebebe;
+    display: none;
+  }
+  .active-mobile-menu{
+    display: flex;
+  }
+  .chat-img-div,
+  .profile-img-div{
+    display: block;
+  }
+  .popup-container{
+    width: 50%;
+  }
+  .popup-container-answers{
+    width: 80%;
+  }
+  .signup-container{
+    width: 90%;
+    padding: 50px 0px;
+    padding-right: 10px;
+  }
+  .signup-container h2,
+  .signup-progress div,
+  .signup-progress div:not(.active-progress),
+  .signup-content li,
+  .signup-next-button,
+  .signup-back-button{
+    font-size: 16px;
+  }
+  .signup-content input{
+    padding-inline: 20px;
+    margin-left: 30px;
+    font-size: 14px;
+  }
+  .signup-content select{
+    padding-right: 20px;
+    margin-left: 30px;
+    font-size: 14px;
+  }
+}
+@media( max-width: 550px){
+  .profile-top h3,
+  .main-header-logo h4,
+  .logo-area h3{
+    font-size: 8px;
+  }
+  .landing-success-content h3,
+  .contact-container a,
+  .bottom-links a,
+  .social h4,
+  .logo-area h2,
+  .bottom-logo h4,
+  .personally-edit a,
+  .advanced-container h3,
+  .notifications-container button,
+  .questions-container h3,
+  .about-container h3,
+  .landing-register h3,
+  .landing-register li,
+  .about-container li,
+  .register-container h3,
+  .register-container li,
+  .profile-top h2{
+    font-size: 10px;
+  }
+  .main-header-login a,
+  .main-header-logo h3,
+  .contact-container input,
+  .contact-container textarea,
+  .contact-container button,
+  .settings-selects-container input,
+  .settings-selects-container h2,
+  .settings-selects-container select,
+  .settings-inputs-container input,
+  .settings-container button,
+  .advanced-range-area input,
+  .advanced-container h2,
+  .advanced-selects-container select,
+  .advanced-bottom button,
+  .bottom-logo h2,
+  .bottom-links h2,
+  .notifications-container h2,
+  .questions-container h2,
+  .about-container h2,
+  .landing-register h2,
+  .register-container h2,
+  .date-container h2{
+    font-size: 12px;
+  }
+  .main-content-search select,
+  .main-content-search h3,
+  .bottom-logo h1,
+  .date-container h1{
+    font-size: 14px;
+  }
+  .main-content h2,
+  .contact-container h1,
+  .advanced-container h1,
+  .notifications-container h1,
+  .questions-container h1,
+  .about-container h1,
+  .landing-register h1,
+  .register-container h1{
+    font-size: 16px;
+  }
+  .landing-success-content h1{
+    font-size: 18px;
+  }
+  .search-container h1{
+    font-size: 20px;
+  }
+  .main-content h1{
+    font-size: 25px;
+  }
+  .header{
+    height: 70px;
+  }
+  .logo-area{
+    gap: 10px;
+  }
+  .logo-area img{
+    width: 30px;
+    height: 40px;
+  }
+  .profile-container{
+    display: flex;
+    gap: 0px;
+    padding: 30px 20px;
+  }
+  .profile-top{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .profile-top > div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .profile-top img{
+    width: 50px;
+    height: 50px;
+  }
+  .profile-container button{
+    padding: 10px 0px;
+    font-size: 12px;
+  }
+  .profile-container > a{
+    width: 50%;
+  }
+  .profile-bottom h2{
+    font-size: 12px;
+    padding: 40px 0px;
+  }
+  .profile-bottom div{
+    padding: 5px 8px;
+  }
+  .full{
+    grid-template-columns: 95%;
+  }
+  .search-container select{
+    width: 45px;
+  }
+  .search-area input{
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    border-radius: 5px;
+    padding-right: 5px;
+  }
+  .date-container{
+    padding-left: 0px;
+  }
+  .date-container div{
+    padding: 30px;
+  }
+  .date-container img{
+    width: 124px;
+    height: 124px;
+  }
+  .section{
+    border-radius: 30px;
+  }
+  .pages{
+    gap: 2px;
+  }
+  .pages div{
+    border-radius: 30px;
+    padding-inline: 3px;
+    background-color: #F0F0F0;
+  }
+  .pages img{
+    width: 4px;
+    height: 8px;
+    margin: 11px 10px;
+  }
+  .numbers a{
+    font-size: 10px;
+    padding: 10px 10px;
+    border-radius: 5px;
+  }
+  .bottom{
+    padding-block: 40px;
+  }
+  .bottom > div{
+    gap: 20px;
+  }
+  .bottom-logo img{
+    width: 40px;
+    height: 50px;
+  }
+  .bottom-logo{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+  .bottom-links{
+    width: 80%;
+  }
+  .social{
+    padding-block: 20px;
+  }
+  .social div{
+    align-items: center;
+  }
+  .social-icons{
+    gap: 5px;
+  }
+  .social-icons img{
+    width: 15px;
+    height: 15px;
+  }
+  .notifications-container{
+    width: 95%;
+  }
+  .notifications-container > div:first-child{
+    padding-inline: 30px;
+    padding-top: 30px;
+  }
+  .notifications-container button{
+    padding: 5px 15px;
+  }
+  .notifications-area > a{
+    padding-left: 10px;
+  }
+  .settings-container,
+  .questions-container,
+  .about-container,
+  .register-container{
+    padding: 20px;
+    padding-top: 30px;
+    width: 95%;
+  }
+  .advanced-container{
+    padding-block: 30px;
+    width: 95%;
+  }
+  .advanced-container > div{
+    padding-inline: 20px;
+  }
+  .register-container > img{
+    width: 70px;
+    height: 90px;
+  }
+  .register-container > div{
+    max-width: 60%;
+    gap: 30px;
+  }
+  .landing-register a,
+  .register-container a{
+    padding: 8px 40px;
+    font-size: 10px;
+  }
+  .advanced-selects-container,
+  .advanced-range-container{
+    grid-template-columns: 1fr;
+  }
+  .settings-inputs-container{
+    gap: 10px;
+  }
+  .settings-inputs-container input{
+    padding: 5px;
+    padding-right: 15px;
+  }
+  .settings-selects-container{
+    gap: 10px;
+  }
+  .personally-details{
+    gap: 15px;
+  }
+  .personally-details > div{
+    gap: 5px;
+  }
+  .personally-details img{
+    width: 10px;
+    height: 10px;
+  }
+  .personally-edit img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .personally-edit a{
+    padding: 5px 10px;
+  }
+  .second{
+    margin-right: 30px;
+  }
+  .contact-container{
+    padding: 10px;
+    padding-top: 30px;
+    width: 98%;
+  }
+  .contact-area > div{
+    gap: 15px;
+  }
+  .contact-area input{
+    background-color: #F9F8F9;
+    padding: 5px;
+    border-radius: 30px;
+    padding-right: 10px;
+  }
+  .contact-area textarea,
+  .contact-details{
+    padding: 10px 5px;
+    border-radius: 15px;
+  }
+  .contact-area img{
+    width: 15px;
+    height: 15px;
+  }
+  .contact-container button{
+    padding: 5px;
+  }
+  .main-header{
+    padding: 10px;
+  }
+  .main-header-logo img{
+    width: 20px;
+    height: 30px;
+  }
+  .main-content{
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 30px;
+    padding-bottom: 20px;
+  }
+  .main-header-login{
+    gap: 0px;
+  }
+  .main-header-login a:nth-child(2){
+    padding: 2px 10px;
+    margin-right: 5px;
+  }
+  .main-content-user a{
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  .main-content-search input{
+    width: 30px;
+    font-size: 14px;
+  }
+  .main-content-search img{
+    width: 40px;
+    height: 30px;
+    padding-right: 5px;
+  }
+  .main-content-headlines div{
+    width: 30px;
+    height: 5px;
+  }
+  .main-content-numbers{
+    gap: 40px;
+  }
+  .main-content-numbers > div{
+    gap: 5px;
+  }
+  .cubble{
+    bottom: 0px;
+    left: 0px;
+    width: 230px;
+  }
+  .like{
+    top: 400px;
+    left: 40px;
+    width: 40px;
+  }
+  .love{
+    top: 400px;
+    left: 160px;
+    width: 35px;
+  }
+  .landing-about{
+    gap: 20px;
+    margin: 0px;
+    max-width: 100%;
+    padding-inline: 10px;
+    padding-top: 50px;
+    padding-bottom: 30px;
+  }
+  .landing-about h2{
+    max-width: 45%;
+    margin-right: auto;
+    padding-top: 30px;
+  }
+  .landing-about h3{
+    max-width: 45%;
+    margin-right: auto;
+    padding-top: 20px;
+  }
+  .landing-about a{
+    margin-right: 55%;
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  .landing-blur{
+    filter: blur(5px);
+  }
+  .husband{
+    bottom: 0px;
+    right: 5px;
+    width: 140px;
+  }
+  .ring{
+    bottom: 130px;
+    right: 50px;
+    width: 70px;
+  }
+  .world{
+    bottom: 100px;
+    right: 100px;
+    width: 70px;
+  }
+  .landing-success{
+    padding-block: 30px;
+    padding-right: 20px;
+  }
+  .landing-success-content{
+    gap: 20px;
+  }
+  .landing-success-content img{
+    width: 12px;
+    height: 8px;
+  }
+  .landing-success-content h2{
+    font-size: 12px;
+    padding-bottom: 20px;
+    width: 200%;
+  }
+  .landing-succesfull-image{
+    width: 100px;
+    height: 100px;
+    margin-top: 150px;
+    margin-left: 20px;
+  }
+  .landing-special{
+    padding: 50px 10px;
+    gap: 30px;
+  }
+  .landing-special-cards{
+    gap: 10px;
+  }
+  .landing-special-cards > div{
+    border-radius: 10px;
+    padding-block: 10px;
+    gap: 5px;
+  }
+  .landing-special-image{
+    width: 70px;
+    height: 70px;
+  }
+  .question-img{
+    left: 10px;
+    width: 250px;
+    height: 200px;
+    opacity: 30%;
+  }
+  .questions-container{
+    padding-right: 0px;
+  }
+  .landing-register{
+    margin-left: 10px;
+    gap: 10px;
+    width: 50%;
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+  .wife-img{
+    right: -30px;
+    width: 200px;
+  }
+  .heart-img{
+    bottom: 0px;
+    right: -50px;
+    width: 300px;
+  }
+  .main-content{
+    align-items: center;
+  }
+  .main-content-headlines div{
+    display: none;
+  }
+  .main-content-user{
+    align-self: center;
+    gap: 10px;
+  }
+  .main-content-numbers{
+    align-self: start;
+    padding-right: 10px;
+  }
+  .main-content-search{
+    padding-inline: 5px;
+  }
+  .main-content-search div{
+    padding-inline: 2px;
+    gap: 3px;
+  }
+  .main-content-search select{
+    padding-inline: 0px;
+    border-left: 0px solid transparent;
+  }
+  .main-content-search img{
+    padding-right: 0px;
+  }
+  .success-storys{
+    height: 50px;
+    gap: 10px;
+  }
+  .success-storys img{
+    margin-inline: 20px;
+    width: 30px;
+    height: 30px;
+  }
+  .story:not(.active-story){
+    width: 5px;
+    height: 5px;
+  }
+  .active-story{
+    width: 10px;
+    height: 10px;
+  }
+  .texts-container{
+    gap: 15px;
+    margin-right: 5px;
+    padding-right: 5px;
+    padding-left: 10px;
+    margin-top: 10px;
+  }
+  .text-reply{
+    padding-block:10px;
+    margin-inline: 10px;
+    margin-bottom: 10px;
+  }
+  .reply-content{
+    gap: 10px;
+    direction: ltr;
+    overflow-y: auto;
+  }
+  .messages-texts-area h2{
+    font-size: 14px;
+  }
+  .text-recieve{
+    width: 90%;
+  }
+  .text-recieve div:first-child{
+    padding: 10px;
+    padding-right: 30px;
+  }
+  .text-recieve div:nth-child(2){
+    gap: 15px;
+  }
+  .text-send{
+    width: 90%;
+  }
+  .text-send div:first-child{
+    padding: 10px;
+    padding-right: 30px;
+  }
+  .text-reply{
+    border-radius: 20px;
+  }
+  .reply-content{
+    padding: 10px;
+  }
+  .reply-content div{
+    padding: 10px;
+    border-radius: 15px;
+  }
+  .reply-buttons{
+    padding: 15px;
+    margin-top: 10px;
+    gap: 20px;
+  }
+  .reply-buttons button{
+    font-size: 14px;
+  }
+  .popup-container{
+    width: 60%;
+  }
+  .popup-container-answers{
+    width: 90%;
+    padding-left: 10px;
+  }
+  .popup-container-answers h1,
+  .popup-container h1{
+    font-size: 20px;
+  }
+  .popup-container h2{
+    font-size: 14px;
+    padding: 20px 10px;
+  }
+  .popup-container-answers h3{
+    font-size: 12px;
+  }
+  .popup-container h3{
+    font-size: 10px;
+  }
+  .popup-container-answers button{
+    font-size: 12px;
+    padding-inline: 20px;
+  }
+  .popup-container button{
+    font-size: 14px;
+  }
+  .popup-container img{
+    width: 15px;
+    margin-bottom: 20px;
+  }
+  .popup-container-answers ul{
+    padding-block: 0px;
+  }
+  .popup-container-answers ul li:not(.active-answer){
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 3px;
+  }
+  .active-answer{
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 3px;
+  }
+  .popup-container-answers img{
+    width: 10px;
+  }
+  .login-container form h1{
+    font-size: 18px;
+  }
+  .login-container form h2{
+    font-size: 14px;
+  }
+  .login-container h3{
+    font-size: 12px;
+  }
+  .login-container input::placeholder{
+    font-size: 12px;
+  }
+  .login-container button{
+    font-size: 14px;
+  }
+  .login-container form > div a:first-child{
+    font-size: 12px;
+  }
+  .login-container form > div a:last-child{
+    font-size: 12px;
+  }
+  .login-profile h1{
+    font-size: 26px;
+  }
+  .login-profile h2{
+    font-size: 14px;
+  }
+  .signup-container{
+    width: 95%;
+    padding: 50px 0px;
+    padding-right: 10px;
+  }
+  .signup-container h2,
+  .signup-progress div,
+  .signup-progress div:not(.active-progress),
+  .signup-content li{
+    font-size: 12px;
+  }
+  .signup-next-button,
+  .signup-back-button{
+    font-size: 12px;
+    padding: 8px 40px;
+    margin-right: 20px;
+  }
+  .signup-content input{
+    margin-left: 0px;
+    font-size: 12px;
+    width: 90%;
+  }
+  .signup-content select{
+    width: 90%;
+    margin-left: 0px;
+    font-size: 12px;
+  }
+  .signup-promise h2{
+    font-size: 16px;
+  }
+}
+@media( max-width: 350px){
+  .search-container{
+    display: none;
+  }
+  .popup-container{
+    width: 70%;
+  }
+}

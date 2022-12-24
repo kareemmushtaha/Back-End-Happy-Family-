@@ -1,0 +1,18 @@
+.stepper.stepper-pills .stepper-item.completed .stepper-icon{
+    transition: color .2s ease,background-color .2s ease !important;
+    background-color: #2eb82e !important;
+}
+.stepper.stepper-pills .stepper-item.completed .stepper-icon .stepper-check{
+    color: #196719!important;
+    display: inline-block;
+}
+
+.audit{
+    transition: color .2s ease,background-color .2s ease !important;
+    background-color: #ffcc00 !important;
+}
+
+.reject{
+    transition: color .2s ease,background-color .2s ease !important;
+    background-color: #ff0000 !important;
+}
