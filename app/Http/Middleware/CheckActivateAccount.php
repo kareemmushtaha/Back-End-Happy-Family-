@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckMediator
+class CheckActivateAccount
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckMediator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role_id == 2 && auth()->user()->check_active == 1)
+        if (auth()->user()->check_active == 1)
         {
             return $next($request);
 

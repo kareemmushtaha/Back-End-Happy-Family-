@@ -40,7 +40,7 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if (Auth::user()->verified == 0) {
+            if (Auth::user()->verified == 0 || Auth::user()->check_active == 0) {
                 return response()->json(['status' => 422, 'msg' => 'You should verify your account first, please check your email']);
             }
             if (Auth::user()->getType() == 'mediator') {
