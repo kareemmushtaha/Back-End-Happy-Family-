@@ -18,9 +18,10 @@ use function Webmozart\Assert\Tests\StaticAnalysis\null;
 class SearchController extends Controller
 {
     public $users_paginate;
+
     public function __construct(User $users_paginate)
     {
-        $this->users_paginate =$users_paginate;
+        $this->users_paginate = $users_paginate;
     }
 
     public function advanced_search()
@@ -122,26 +123,22 @@ class SearchController extends Controller
             $weight_to = null;
         }
 
-        if($request->answers){
+        if ($request->answers) {
             if ($this->is_serialized($request->answers) == true) {
                 $answers_unserialize = unserialize($request->answers);
-                foreach ($answers_unserialize as $answer){
+                foreach ($answers_unserialize as $answer) {
                     if ($answer != null) {
                         array_push($answers, $answer);
                     }
                 }
             } else {
-                foreach ($request->answers as $answer){
+                foreach ($request->answers as $answer) {
                     if ($answer != null) {
                         array_push($answers, $answer);
                     }
                 }
             }
         }
-
-
-
-
         $data['country'] = $request->country;
         $data['area'] = $request->area;
         $data['city'] = $request->city;
@@ -152,7 +149,6 @@ class SearchController extends Controller
         $data['weight_from'] = $request->weight_from;
         $data['weight_to'] = $request->weight_to;
         $data['answers'] = serialize($answers);
-
         $data['get_users'] = $this->users_paginate->query()->when($country != null, function ($query_1) use ($country) {
             $query_1->where('country_id', $country);
 
@@ -175,7 +171,7 @@ class SearchController extends Controller
             $query_6->whereBetween('year', [$year_from, $year_to]);
 
         })->when(count($answers) > 0, function ($query_7) use ($answers) {
-            $query_7->whereHas('user_question_answers', function ($query_7_1) use ($answers){
+            $query_7->whereHas('user_question_answers', function ($query_7_1) use ($answers) {
                 $query_7_1->whereIn('answer_question_id', $answers);
             });
 
@@ -184,76 +180,74 @@ class SearchController extends Controller
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
 
         if ($request->ajax()) {
-           // dd('gb');
             return view('site._resultAdvanceSearchPaginate', $data);
         } else {
-            //dd('2262');
-
             return view('site.result-search', $data);
 
         }
     }
 
 
-    public function paginateUser (Request $request)
+    public function paginateUser(Request $request)
     {
         return $this->users_paginate;
     }
 
-    function is_serialized( $data, $strict = true ) {
+    function is_serialized($data, $strict = true)
+    {
         // If it isn't a string, it isn't serialized.
-        if ( ! is_string( $data ) ) {
+        if (!is_string($data)) {
             return false;
         }
-        $data = trim( $data );
-        if ( 'N;' === $data ) {
+        $data = trim($data);
+        if ('N;' === $data) {
             return true;
         }
-        if ( strlen( $data ) < 4 ) {
+        if (strlen($data) < 4) {
             return false;
         }
-        if ( ':' !== $data[1] ) {
+        if (':' !== $data[1]) {
             return false;
         }
-        if ( $strict ) {
-            $lastc = substr( $data, -1 );
-            if ( ';' !== $lastc && '}' !== $lastc ) {
+        if ($strict) {
+            $lastc = substr($data, -1);
+            if (';' !== $lastc && '}' !== $lastc) {
                 return false;
             }
         } else {
-            $semicolon = strpos( $data, ';' );
-            $brace     = strpos( $data, '}' );
+            $semicolon = strpos($data, ';');
+            $brace = strpos($data, '}');
             // Either ; or } must exist.
-            if ( false === $semicolon && false === $brace ) {
+            if (false === $semicolon && false === $brace) {
                 return false;
             }
             // But neither must be in the first X characters.
-            if ( false !== $semicolon && $semicolon < 3 ) {
+            if (false !== $semicolon && $semicolon < 3) {
                 return false;
             }
-            if ( false !== $brace && $brace < 4 ) {
+            if (false !== $brace && $brace < 4) {
                 return false;
             }
         }
         $token = $data[0];
-        switch ( $token ) {
+        switch ($token) {
             case 's':
-                if ( $strict ) {
-                    if ( '"' !== substr( $data, -2, 1 ) ) {
+                if ($strict) {
+                    if ('"' !== substr($data, -2, 1)) {
                         return false;
                     }
-                } elseif ( false === strpos( $data, '"' ) ) {
+                } elseif (false === strpos($data, '"')) {
                     return false;
                 }
             // Or else fall through.
             case 'a':
             case 'O':
-                return (bool) preg_match( "/^{$token}:[0-9]+:/s", $data );
+                return (bool)preg_match("/^{$token}:[0-9]+:/s", $data);
             case 'b':
             case 'i':
             case 'd':
                 $end = $strict ? '$' : '';
-                return (bool) preg_match( "/^{$token}:[0-9.E+-]+;$end/", $data );
+                return (bool)preg_match("/^{$token}:[0-9.E+-]+;$end/", $data);
         }
         return false;
     }

@@ -29,7 +29,6 @@ class   ShowUserResource extends JsonResource
             //check user have subscription or not have
             if (checkUserHaveSubscription(auth()->user()->id)) {
                 //user have subscription
-
                 $data = [
                     'id' => $this->id,
                     'fake_name' => $this->fake_name,

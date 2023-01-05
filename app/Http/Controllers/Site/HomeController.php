@@ -27,8 +27,13 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         if (auth()->check()) {
-            $gender = auth()->user()->gender == 'male' ? 'female' : 'male';
-            $data['get_users'] = User::query()->where('id', "!=", auth()->user()->id)->whereIn('role_id', [2, 3])->where('gender', $gender)->latest()->take(10)->paginate(6);
+            $user = User::query()->where('id', "!=", auth()->user()->id)->whereIn('role_id', [2, 3,4]);
+            if (auth()->user()->getType() != 'mediator') {
+                $gender = auth()->user()->gender == 'male' ? 'female' : 'male';
+                $user->where('gender', $gender);
+            }
+            $user = $user->latest()->take(10)->paginate(6);
+            $data['get_users'] = $user;
         } else {
             $data['get_users'] = User::query()->whereIn('role_id', [2, 3])->latest()->take(10)->paginate(6);
         }
@@ -40,12 +45,12 @@ class HomeController extends Controller
         if ($request->ajax()) {
             return view('site._userCardPaginate', $data);
         }
-            return view('site.home', $data);
+        return view('site.home', $data);
 
 
     }
 
-    public function homeSearch (Request $request)
+    public function homeSearch(Request $request)
     {
         $gender = $request->gender;
         $country = $request->country;
@@ -54,7 +59,7 @@ class HomeController extends Controller
         $from = $request->from;
         $to = $request->to;
 //
-        if ($request->gender){
+        if ($request->gender) {
             $gender = $request->gender;
         } else {
             $gender = null;
@@ -93,26 +98,26 @@ class HomeController extends Controller
 
 
         $data['get_users'] = User::query()
-           ->when($gender != null, function ($query_1) use ($gender){
-            $query_1->where('gender', $gender);
+            ->when($gender != null, function ($query_1) use ($gender) {
+                $query_1->where('gender', $gender);
 
-           })->when($country != null, function ($query_2) use ($country){
-            $query_2->where('country_id', $country);
+            })->when($country != null, function ($query_2) use ($country) {
+                $query_2->where('country_id', $country);
 
-           })->when($area != null, function ($query_3) use ($area) {
+            })->when($area != null, function ($query_3) use ($area) {
                 $query_3->where('aria_id', $area);
 
-            })->when($city != null, function ($query_4) use ($city){
-                $query_4->where('city_id',$city);
+            })->when($city != null, function ($query_4) use ($city) {
+                $query_4->where('city_id', $city);
 
-           })->when($from != null && $to != null, function ($query_5) use ($from, $to){
+            })->when($from != null && $to != null, function ($query_5) use ($from, $to) {
 
-                $query_5->whereBetween('year', [$from,$to]);
+                $query_5->whereBetween('year', [$from, $to]);
 
             })->paginate(6);
 
 
-          $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
+        $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
 
         if ($request->ajax()) {
             return view('site._userCardPaginate', $data);
@@ -178,6 +183,7 @@ class HomeController extends Controller
 
 
     }
+
     public function edit()
     {
 
@@ -185,7 +191,7 @@ class HomeController extends Controller
 
     public function subscription($package_id)
     {
-        //find $package_id
+        //this function test for developer
         if (auth()->check()) {
             //check user  have package activate
             if (checkUserHaveSubscription(auth()->user()->id)) {

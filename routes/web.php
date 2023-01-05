@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Site\ChatController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\SearchController;

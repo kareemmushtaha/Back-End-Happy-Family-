@@ -80,7 +80,6 @@
                     $('select[name="aria_id"]').empty();
                     $('select[name="aria_id"]').append('<option value="">المنطقه</option>');
                     $.each(data.areas, function (key, value) {
-
                         $('select[name="aria_id"]').append(`<option value="${value.id}">${value.title}</option>`);
                     });
 

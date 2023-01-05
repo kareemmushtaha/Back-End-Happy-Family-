@@ -18,7 +18,7 @@
                     @if($user['can_contact_us'])
                         <a href="{{route('chat.createAndOpenChat',$user['id'])}}" class="w-100">تواصل</a>
                     @else
-                        <a href="{{route('subscription',$package->id)}}" class="w-100">تواصل</a>
+                        <a href="{{route('package',$package->id)}}" class="w-100">تواصل</a>
                     @endif
                 </div>
             </div>
