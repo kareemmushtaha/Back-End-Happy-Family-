@@ -33,20 +33,20 @@ Route::post('/homeSearch', [HomeController::class, 'homeSearch'])->name('homeSea
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('sendContactUs', [HomeController::class, 'sendContactUs'])->name('sendContactUs');
 Route::post('sendContactUsLanding', [HomeController::class, 'sendContactUsLanding'])->name('sendContactUsLanding');
-Route::get('advanced-search', [SearchController::class, 'advanced_search'])->middleware(['auth', '2fa','CheckCompleteProfile'])->name('advanced-search');
-Route::post('result-advanced-search', [SearchController::class, 'resultAdvancedSearch'])->middleware('CheckCompleteProfile')->name('result-advanced-search');
-Route::get('paginate-result-advanced-search', [SearchController::class, 'paginateUser'])->middleware('CheckCompleteProfile')->name('paginateUser');
+Route::get('advanced-search', [SearchController::class, 'advanced_search'])->middleware(['auth', '2fa','CheckCompleteProfile', 'checkActivateAccount'])->name('advanced-search');
+Route::post('result-advanced-search', [SearchController::class, 'resultAdvancedSearch'])->middleware(['CheckCompleteProfile', 'checkActivateAccount'])->name('result-advanced-search');
+Route::get('paginate-result-advanced-search', [SearchController::class, 'paginateUser'])->middleware(['CheckCompleteProfile', 'checkActivateAccount'])->name('paginateUser');
 Route::post('filterAreas', [SearchController::class, 'filterAreas'])->name('filterAreas');
 Route::post('filterCities', [SearchController::class, 'filterCities'])->name('filterCities');
 Route::get('questions-answer', [HomeController::class, 'questions_answer'])->name('question_answer');
 Route::get('package/{package_id}', [HomeController::class, 'package_details'])->name('package');
  Route::get('my-profile', [UserController::class, 'my_profile'])->name('my_profile');
-Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile')->middleware('auth');
-Route::post('update-profile', [UserController::class, 'update_profile'])->name('update_profile')->middleware('auth');
+Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile')->middleware(['auth', 'checkActivateAccount']);
+Route::post('update-profile', [UserController::class, 'update_profile'])->name('update_profile')->middleware(['auth', 'checkActivateAccount']);
 Route::get('personally/{user_id}', [UserController::class, 'personally'])->name('personally');
 Route::post('update/answer-questions', [UserController::class, 'update_answer_questions'])->name('update-answer-questions');
 
-Route::group(['prefix' => 'chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['prefix' => 'chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {
     Route::get('/', [ChatController::class, 'index'])->name('index');
     Route::get('create/{user_id}', [ChatController::class, 'createAndOpenChat'])->name('createAndOpenChat');
     Route::get('getMessages', [ChatController::class, 'getMessages'])->name('getMessages');
@@ -59,7 +59,7 @@ Route::group(['prefix' => 'chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa
     Route::get('send/custom/question/chat', [ChatController::class, 'send_custom_question_chat'])->name('send_custom_question_chat');
 });
 
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {
     // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
