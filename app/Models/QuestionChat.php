@@ -39,9 +39,10 @@ class QuestionChat extends Model
         return $query->where('status', '1');
     }
 
-    public function scopeMyQuestionChat($query)
+    public function scopeMyQuestionChat($query, $userFollowMediator = null)
     {
-        return $query->whereNull('custom_user_id')->orWhere('custom_user_id', auth()->user()->id);
+        $user = $userFollowMediator != null ? $userFollowMediator : auth()->user()->id;
+        return $query->whereNull('custom_user_id')->orWhere('custom_user_id', $user);
     }
 
 

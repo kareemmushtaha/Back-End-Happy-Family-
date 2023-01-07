@@ -164,7 +164,7 @@
                     // console.log(response.chat)
                     var un_seen = '';
                     $.each(response.chat, function (key, value) {
-                        un_seen = `<span class="float-right primary"><span class="badge badge-pill text-secondary  badge-danger"> ${value.last_message_time} </span>` +
+                        un_seen = `<span class="float-right primary"><span class="badge badge-pill text-secondary  badge-danger"> انقر هنا </span>` +
                             `</span>`;
                         // }
                         var user_link = '';
@@ -185,7 +185,7 @@
                                 '</h6>' +
                                 '<p class="list-group-item-text text-muted mb-0">' +
                                 ' <i class="ft-check primary font-small-2"></i>' +
-                                value.last_message +
+                                'أنقر هنا' +
 
                                 un_seen +
                                 ' </p>' +
@@ -208,7 +208,7 @@
                                 '</h6>' +
                                 '<p class="list-group-item-text text-muted mb-0">' +
                                 ' <i class="ft-check primary font-small-2"></i>' +
-                                value.last_message +
+                                'أنقر هنا' +
                                 '<span class="float-right primary">' +
                                 un_seen +
                                 '  </span>' +
@@ -237,7 +237,7 @@
                     // console.log(response.chat)
                     var un_seen = '';
                     $.each(response.chat, function (key, value) {
-                        un_seen = `<span class="float-right primary"><span class="badge badge-pill text-secondary  badge-danger"> ${value.last_message_time} </span>` +
+                        un_seen = `<span class="float-right primary"><span class="badge badge-pill text-secondary  badge-danger"> تواصل  الان </span>` +
                             `</span>`;
                         // }
                         var user_link = '';
@@ -258,7 +258,7 @@
                                 '</h6>' +
                                 '<p class="list-group-item-text text-muted mb-0">' +
                                 ' <i class="ft-check primary font-small-2"></i>' +
-                                value.last_message +
+                                '....' +
 
                                 un_seen +
                                 ' </p>' +
@@ -281,7 +281,7 @@
                                 '</h6>' +
                                 '<p class="list-group-item-text text-muted mb-0">' +
                                 ' <i class="ft-check primary font-small-2"></i>' +
-                                value.last_message +
+                                '....' +
                                 '<span class="float-right primary">' +
                                 un_seen +
                                 '  </span>' +

@@ -16,10 +16,11 @@ use function Webmozart\Assert\Tests\StaticAnalysis\null;
 class FollowMediatorChatController extends Controller
 {
 
-    public function index()
+    public function index($user_follow_mediator)
     {
-        $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
-        $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
+        $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat($user_follow_mediator)->get();
+        $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat($user_follow_mediator)->get();
+        $data['user_follow_mediator'] = $user_follow_mediator;
 
         return view('site.followMediatorMessages', $data);
     }
@@ -29,7 +30,7 @@ class FollowMediatorChatController extends Controller
         // Note middleware checkMediator
 
         if ($user_id == null) {
-            $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
+            $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat($user_follow_mediator)->get();
             return view('site.followMediatorMessages', $data);
         }
         $checkUserFollowMediator = User::query()->where('mediator_id', auth()->user()->id)->find($user_follow_mediator);
@@ -52,8 +53,8 @@ class FollowMediatorChatController extends Controller
                 ]);
             }
         }
-        $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
-        $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
+        $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat($user_follow_mediator)->get();
+        $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat($user_follow_mediator)->get();
         $data['user_follow_mediator'] = $user_follow_mediator;
 
         return view('site.followMediatorMessages', $data);

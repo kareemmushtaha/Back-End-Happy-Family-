@@ -62,7 +62,7 @@ Route::group(['prefix' => 'mediator', 'as' => 'mediator.', 'namespace' => 'Media
 
 
         Route::group(['prefix' => 'follow-mediator-chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {
-            Route::get('/', [FollowMediatorChatController::class, 'index'])->name('index');
+            Route::get('/{user_follow_mediator}', [FollowMediatorChatController::class, 'index'])->name('index');
             Route::get('create/{user_follow_mediator}/{user_id}', [FollowMediatorChatController::class, 'createAndOpenChat'])->name('createAndOpenChat');
             Route::get('getMessages/{user_follow_mediator}', [FollowMediatorChatController::class, 'getMessages'])->name('getMessages');
             Route::post('searchMessages', [FollowMediatorChatController::class, 'searchMessages'])->name('searchMessages');
