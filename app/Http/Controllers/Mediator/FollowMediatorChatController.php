@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Site;
+namespace App\Http\Controllers\Mediator;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnswerChat;
 use App\Models\Chat;
 use App\Models\Conversations;
-use App\Models\Question;
 use App\Models\QuestionChat;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,95 +13,97 @@ use function Webmozart\Assert\Tests\StaticAnalysis\false;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 
-class ChatController extends Controller
+class FollowMediatorChatController extends Controller
 {
 
     public function index()
     {
-
         $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
         $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
 
-        return view('site.messages', $data);
+        return view('site.followMediatorMessages', $data);
     }
 
-
-    public function createAndOpenChat($user_id = null)
+    public function createAndOpenChat($user_follow_mediator, $user_id)
     {
+        // Note middleware checkMediator
 
         if ($user_id == null) {
             $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
-            return view('site.messages', $data);
+            return view('site.followMediatorMessages', $data);
+        }
+        $checkUserFollowMediator = User::query()->where('mediator_id', auth()->user()->id)->find($user_follow_mediator);
+        if (!$checkUserFollowMediator) {
+            //sorry this user not follow you
+            return redirect()->back();
         }
 
-        $auth = auth()->user()->id;
-        if ($user_id != $auth) {
-            $checkChat = Chat::where(function ($query) use ($auth, $user_id) {
-                $query->where('sender_id', $auth)->where('received_id', $user_id);
-            })->orWhere(function ($query) use ($auth, $user_id) {
-                $query->where('received_id', $auth)->where('sender_id', $user_id);
+        if ($user_id != $user_follow_mediator) {
+            $checkChat = Chat::where(function ($query) use ($user_follow_mediator, $user_id) {
+                $query->where('sender_id', $user_follow_mediator)->where('received_id', $user_id);
+            })->orWhere(function ($query) use ($user_follow_mediator, $user_id) {
+                $query->where('received_id', $user_follow_mediator)->where('sender_id', $user_id);
             })->first();
 
             if (!$checkChat) {
                 Chat::create([
-                    'sender_id' => $auth,
+                    'sender_id' => $user_follow_mediator,
                     'received_id' => $user_id,
                 ]);
             }
         }
         $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
         $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
+        $data['user_follow_mediator'] = $user_follow_mediator;
 
-        return view('site.messages', $data);
+        return view('site.followMediatorMessages', $data);
     }
 
 
-    public function getMessages()
+    public function getMessages($user_follow_mediator)
     {
-        $user_id = auth()->user()->id;
         $messages = Chat::with(['sender', 'receiver', 'conversation'])->orderBy('updated_at', 'desc')
-            ->where(function ($query) use ($user_id) {
-                $query->where('sender_id', '=', $user_id)->orWhere('received_id', '=', $user_id);
+            ->where(function ($query) use ($user_follow_mediator) {
+                $query->where('sender_id', '=', $user_follow_mediator)->orWhere('received_id', '=', $user_follow_mediator);
             })->get();
 
         return response()->json(['chat' => $messages]);
     }
 
-    public function getMessagesChatMessage($chat_id = 0)
+    public function getMessagesChatMessage($user_follow_mediator,$chat_id = 0)
     {
-        $user_id = auth()->user()->id;
         $messages = Chat::with(['conversation'])->orderBy('id', 'asc')
-            ->where(function ($query) use ($user_id) {
-                $query->where('sender_id', '=', $user_id)
-                    ->orWhere('received_id', '=', $user_id);
+            ->where(function ($query) use ($user_follow_mediator) {
+                $query->where('sender_id', '=', $user_follow_mediator)
+                    ->orWhere('received_id', '=', $user_follow_mediator);
             })->findOrFail($chat_id)->conversation;
 
         $chat = Chat::query()->findOrFail($chat_id);
 
-        if ($chat->sender_id == $user_id) {
+        if ($chat->sender_id == $user_follow_mediator) {
             $other_user = User::query()->with('country', 'city')->findOrFail($chat->received_id);
-        } elseif ($chat->received_id == $user_id) {
+        } elseif ($chat->received_id == $user_follow_mediator) {
             $other_user = User::query()->with('country', 'city')->findOrFail($chat->sender_id);
         }
         return response()->json(['messages' => $messages, 'other_user' => $other_user]);
     }
 
 
-    public function getChat()
+    public function getChat($user_follow_mediator)
     {
-        $user_id = auth()->user()->id;
+
         $chats = Chat::with(['conversation'])->orderBy('updated_at', 'desc')
-            ->where(function ($query) use ($user_id) {
-                $query->where('sender_id', '=', $user_id)
-                    ->orWhere('received_id', '=', $user_id);
+            ->where(function ($query) use ($user_follow_mediator) {
+                $query->where('sender_id', '=', $user_follow_mediator)
+                    ->orWhere('received_id', '=', $user_follow_mediator);
             })->get();
         return $chats;
     }
 
-    public function send_question_chat(\Illuminate\Http\Request $request)
+    public function send_question_chat(\Illuminate\Http\Request $request,$user_follow_mediator)
     {
 
-        $auth = auth()->user();
+
         if ($request->chat_id == null) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
             return response()->json(['status' => false, 'msg' => trans('global.chose_contact')]);
@@ -110,7 +111,7 @@ class ChatController extends Controller
 
 
         $conversation = Conversations::query()->where('chat_id', $request->chat_id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '!=', $auth->id)->count();
+            ->where('question_chat_id', $request->question_id)->where('received_id', '!=', $user_follow_mediator)->count();
 
         if ($conversation) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -120,9 +121,9 @@ class ChatController extends Controller
 
         $chat = Chat::query()->find($request->chat_id);
 
-        if ($auth->id == $chat->sender_id) {
+        if ($user_follow_mediator == $chat->sender_id) {
             $conversation_user_received = $chat->received_id;
-        } elseif ($auth->id == $chat->received_id) {
+        } elseif ($user_follow_mediator == $chat->received_id) {
             $conversation_user_received = $chat->sender_id;
         }
         $conversations = Conversations::query()->create([
@@ -139,7 +140,7 @@ class ChatController extends Controller
         }
     }
 
-    public function send_answer_chat(\Illuminate\Http\Request $request)
+    public function send_answer_chat(\Illuminate\Http\Request $request,$user_follow_mediator)
     {
         if ($request->chat_id == null) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -155,13 +156,13 @@ class ChatController extends Controller
         $chat = Chat::query()->findOrFail($request->chat_id);
 
         $conversation = Conversations::query()->where('chat_id', $chat->id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->update([
+            ->where('question_chat_id', $request->question_id)->where('received_id', '=', $user_follow_mediator)->update([
                 'answer_chat_id' => $request->answer_id,
             ]);
 
         $answer = AnswerChat::query()->findOrFail($request->answer_id);
         $conversation = Conversations::query()->where('chat_id', $chat->id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->first();
+            ->where('question_chat_id', $request->question_id)->where('received_id', '=', $user_follow_mediator)->first();
 
 
         if ($conversation) {
@@ -171,7 +172,7 @@ class ChatController extends Controller
 
     }
 
-    public function send_custom_answer_chat(\Illuminate\Http\Request $request)
+    public function send_custom_answer_chat(\Illuminate\Http\Request $request,$user_follow_mediator)
     {
         if ($request->chat_id == null) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -188,20 +189,19 @@ class ChatController extends Controller
                 'answer_title' => $request->answer_title_ar,
             ],
             'status' => 0,
-            'custom_user_id' => auth()->user()->id,
+            'custom_user_id' => $user_follow_mediator,
         ]);
 
         $chat = Chat::query()->findOrFail($request->chat_id);
 
 
-
         $conversation = Conversations::query()->where('chat_id', $chat->id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->update([
+            ->where('question_chat_id', $request->question_id)->where('received_id', '=', $user_follow_mediator)->update([
                 'answer_chat_id' => $new_answer->id,
             ]);
 
         $conversation = Conversations::query()->where('chat_id', $chat->id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->first();
+            ->where('question_chat_id', $request->question_id)->where('received_id', '=', $user_follow_mediator)->first();
 
         if ($conversation) {
             return response()->json(['status' => true, 'answer_title' => $new_answer->answer_title, 'conversation_id' => $conversation->id, 'msg' => trans('cruds.chat.send_answer_successfully')]);
@@ -210,16 +210,16 @@ class ChatController extends Controller
     }
 
 
-    public function send_custom_question_chat(\Illuminate\Http\Request $request)
+    public function send_custom_question_chat(\Illuminate\Http\Request $request,$user_follow_mediator)
     {
-        $auth = auth()->user();
+
         if ($request->chat_id == null) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
             return response()->json(['status' => false, 'msg' => trans('global.chose_contact')]);
         }
 
         $conversation = Conversations::query()->where('chat_id', $request->chat_id)
-            ->where('question_chat_id', $request->question_id)->where('received_id', '!=', $auth->id)->count();
+            ->where('question_chat_id', $request->question_id)->where('received_id', '!=', $user_follow_mediator)->count();
 
         if ($conversation) {
             toastr()->success(trans('global.chose_contact'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -228,9 +228,9 @@ class ChatController extends Controller
 
         $chat = Chat::query()->find($request->chat_id);
 
-        if ($auth->id == $chat->sender_id) {
+        if ($user_follow_mediator == $chat->sender_id) {
             $conversation_user_received = $chat->received_id;
-        } elseif ($auth->id == $chat->received_id) {
+        } elseif ($user_follow_mediator == $chat->received_id) {
             $conversation_user_received = $chat->sender_id;
         }
 
@@ -239,7 +239,7 @@ class ChatController extends Controller
                 'question_title' => $request->question_title_ar,
             ],
             'status' => 0,
-            'custom_user_id' => auth()->user()->id,
+            'custom_user_id' => $user_follow_mediator,
         ]);
 
         $conversations = Conversations::query()->create([
@@ -254,15 +254,15 @@ class ChatController extends Controller
         }
     }
 
-    public function searchMessages (Request $request)
+    public function searchMessages(Request $request)
     {
         $search = $request->search;
         $messages = Chat::query()->with(['sender', 'receiver', 'conversation'])->orderBy('updated_at', 'desc')
             ->where(function ($query) use ($search) {
-                $query->whereHas('sender', function ($query_1) use ($search){
+                $query->whereHas('sender', function ($query_1) use ($search) {
                     $query_1->where('first_name', 'like', '%' . $search . '%');
                     $query_1->orWhere('last_name', 'like', '%' . $search . '%');
-                })->orWhereHas('receiver', function ($query_2) use ($search){
+                })->orWhereHas('receiver', function ($query_2) use ($search) {
                     $query_2->where('first_name', 'like', '%' . $search . '%');
                     $query_2->orWhere('last_name', 'like', '%' . $search . '%');
                 });
@@ -270,6 +270,8 @@ class ChatController extends Controller
 
         return response()->json(['chat' => $messages]);
     }
+
+
 }
 
 

@@ -43,8 +43,8 @@ Route::post('update/answer-questions', [UserController::class, 'update_answer_qu
 
 
 Route::group(['middleware' => ['auth', 'checkActivateAccount']], function () {
-Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile');
-Route::post('update-profile', [UserController::class, 'update_profile'])->name('update_profile');
+    Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile');
+    Route::post('update-profile', [UserController::class, 'update_profile'])->name('update_profile');
 });
 
 
@@ -67,6 +67,9 @@ Route::group(['prefix' => 'chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa
     Route::get('send/custom/answer/chat', [ChatController::class, 'send_custom_answer_chat'])->name('send_custom_answer_chat');
     Route::get('send/custom/question/chat', [ChatController::class, 'send_custom_question_chat'])->name('send_custom_question_chat');
 });
+
+
+
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {
     // Change password

@@ -38,6 +38,10 @@ class UserController extends Controller
         $data['questions'] = Question::query()->Active()->get();
         $data['package'] = Package::query()->first();
 
+        if (\auth()->check()) {
+            $data['users_follow_mediator'] = User::query()->where('mediator_id', \auth()->user()->id)->get();
+        }
+
         return view('site.personally', $data);
     }
 

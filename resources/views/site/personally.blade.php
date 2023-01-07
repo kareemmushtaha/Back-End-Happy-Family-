@@ -55,6 +55,30 @@
                     <h3>{{$user['height']}}</h3>
                 </div>
             </div>
+
+            @if(auth()->check())
+                @if(auth()->user()->getType() =='mediator')
+                    <hr>
+                    <div>
+                        <h2>:التواصل بالنيابة عن المستخدمين التابعين لك</h2>
+                    </div>
+                    <div class="personally-edit">
+                        <div class="d-flex">
+                            @if($user['can_contact_us'])
+                                @foreach($users_follow_mediator as $user_follow_mediator)
+                                    <a style="width: auto !important"
+                                       href="{{route('mediator.chat.createAndOpenChat',[$user_follow_mediator->id,$user['id']])}}"
+                                       class="w-100">تواصل نيابة عن {{$user_follow_mediator->first_name}}
+                                    </a>
+                                @endforeach
+                            @else
+                                <a href="{{route('package',$package->id)}}" class="w-100">إشترك</a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+            @endif
+
         </div>
     </div>
 
