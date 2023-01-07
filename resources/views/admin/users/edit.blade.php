@@ -29,9 +29,9 @@
                             <label for="exampleFormControlInput1"
                                    class="required form-label">{{ trans('cruds.user.fields.name') }}</label>
                             <input type="text" class="form-control" placeholder="{{ trans('cruds.user.fields.name') }}"
-                                   name="name" id="name" value="{{ $user->name}}" required/>
+                                   name="first_name" id="first_name" value="{{ $user->first_name}}" required/>
                             <span class="text-danger errors"
-                                  id="name_error"> </span>
+                                  id="first_name_error"> </span>
                         </div>
 
                         <div class="mb-10" id="email">
@@ -53,7 +53,7 @@
                             <span class="text-danger errors"
                                   id="password_error"> </span>
                         </div>
-                        <div>
+                        <div style="display: none">
                             <label for="exampleFormControlInput1"
                                    class="required form-label">{{ trans('cruds.user.fields.roles') }}</label>
                             <select class="form-control" name="roles[]" id="roles" multiple required>

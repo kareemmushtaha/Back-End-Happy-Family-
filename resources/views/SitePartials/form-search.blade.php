@@ -45,7 +45,7 @@
                 <h2>من</h2>
                 <input type="number" name="from" value="1960"/>
                 <h2>الى</h2>
-                <input type="number" name="to" value="2004"/>
+                <input type="number" name="to" value="2023"/>
             </div>
             <button id="send_data_search" type="submit">بحث</button>
         </div>

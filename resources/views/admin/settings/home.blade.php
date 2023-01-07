@@ -30,6 +30,24 @@
                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">{{ trans('cruds.setting.fields.price_show_user_information') }}</span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                               title="Specify a target name for future usage and reference"></i>
+                        </label>
+                        <!--end::Label-->
+                         <input type="text" name="price_show_user_information" class="form-control form-control-solid" placeholder="{{ trans('cruds.setting.fields.price_show_user_information') }}" id="home_header_title" value="{{settingContentAr('price_show_user_information')}}">
+
+                        <span class="text-danger errors"
+                              id="price_show_user_information_error"> </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-9 mb-8">
+                <div class="col-md-12 fv-row">
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span class="required">{{ trans('cruds.setting.fields.description') }}</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title="Specify a target name for future usage and reference"></i>
@@ -61,7 +79,6 @@
                               id="home_section_get_to_know_us_title_error"> </span>
                     </div>
                 </div>
-
             </div>
 
             <div class="row g-9 mb-8">
@@ -80,9 +97,7 @@
                     </div>
                 </div>
             </div>
-
             <hr>
-
 {{--            section_Features--}}
             <div class="row g-9 mb-8">
                 <strong>{{ trans('cruds.setting.fields.home_section_features') }}</strong>
@@ -100,7 +115,6 @@
                               id="home_section_features_title_1_error"> </span>
                     </div>
                 </div>
-
             </div>
 
             <div class="row g-9 mb-8">
@@ -135,7 +149,6 @@
                               id="home_section_features_title_2_error"> </span>
                     </div>
                 </div>
-
             </div>
 
             <div class="row g-9 mb-8">

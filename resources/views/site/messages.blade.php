@@ -510,7 +510,7 @@
                 `<h2> ${response.city.title}</h2>` +
                 `</div>` +
                 `<a href="${url_}">  <button class="px-5">عرض الملف الشخصي</button></a>` +
-                `<a href=""><h1 style="color: #FF7171;">@if(auth()->user()->getType() == "mediator") انت الأن تتحدث بنيابة عن {{auth()->user()->first_name}} @endif</h1></a>`;
+                `<a href=""><h1 style="color: #FF7171;">@if(auth()->user()->getType() == "FollowMediator") انت الأن تتحدث بنيابة عن {{auth()->user()->first_name}} @endif</h1></a>`;
 
 
             $("#other_person").append(card);

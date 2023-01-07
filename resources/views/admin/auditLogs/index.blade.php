@@ -31,7 +31,8 @@
                                     {{ trans('cruds.auditLog.fields.id') }}
                                 </th>
                                 <th class="min-w-4px">
-                                    {{ trans('cruds.auditLog.fields.description') }}                                </th>
+                                    {{ trans('cruds.auditLog.fields.description') }}
+                                </th>
                                 <th class="min-w-4px">
                                     {{ trans('cruds.auditLog.fields.subject_id') }}
                                 </th>
@@ -39,10 +40,11 @@
                                     {{ trans('cruds.auditLog.fields.subject_type') }}
                                 </th>
                                 <th class="min-w-4px">
-                                    {{ trans('cruds.auditLog.fields.user_id') }}                                </th>
-                                <th class="min-w-4px">
-                                    {{ trans('cruds.auditLog.fields.host') }}
+                                    {{ trans('cruds.auditLog.fields.user_id') }}
                                 </th>
+{{--                                <th class="min-w-4px">--}}
+{{--                                    {{ trans('cruds.auditLog.fields.host') }}--}}
+{{--                                </th>--}}
                                 <th class="min-w-4px">
                                     {{ trans('cruds.auditLog.fields.created_at') }}
                                 </th>
@@ -68,7 +70,6 @@
                                     </td>
 
 
-
                                     <td>
                                         <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"> {{ $auditLog->description ?? '' }}</a>
                                     </td>
@@ -83,9 +84,9 @@
                                         <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">  {{ $auditLog->user_id ?? '' }}</a>
                                     </td>
 
-                                    <td>
-                                        <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">   {{ $auditLog->host ?? '' }}</a>
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">   {{ $auditLog->host ?? '' }}</a>--}}
+{{--                                    </td>--}}
 
                                     <td>
                                         <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">    {{ $auditLog->created_at ?? '' }}</a>

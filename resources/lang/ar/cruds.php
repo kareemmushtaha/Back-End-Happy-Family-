@@ -21,6 +21,30 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
+    'auditLog' => [
+        'title' => 'تتبع النظام',
+        'title_singular' => 'تتبع النظام',
+        'fields' => [
+            'id' => 'رقم',
+            'id_helper' => ' ',
+            'description' => 'الوصف',
+            'description_helper' => ' ',
+            'subject_id' => 'رقم الاكشن',
+            'subject_id_helper' => ' ',
+            'subject_type' => 'نوع الاكشن',
+            'subject_type_helper' => ' ',
+            'user_id' => 'User ID',
+            'user_id_helper' => ' ',
+            'properties' => 'الاجرائات',
+            'properties_helper' => ' ',
+            'host' => 'Host',
+            'host_helper' => ' ',
+            'created_at' => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at' => 'Updated at',
+            'updated_at_helper' => ' ',
+        ],
+    ],
     'role' => [
         'title' => 'مجموعه الصلاحيات',
         'title_singular' => 'مجموعه صلاحيات',
@@ -176,6 +200,7 @@ return [
             'website' => 'الموقع الإلكتروني',
             'email' => 'البريد الإلكتروني',
             'phone' => 'الجوال',
+            'price_show_user_information' => 'سعر كشف بيانات الحساب',
             'address' => 'العنوان',
             'title' => 'العنوان',
             'description' => 'الوصف',
@@ -236,6 +261,8 @@ return [
     'user' => [
         'title' => 'المستخدمين',
         'title_singular' => 'المستخدم',
+        'admin' => 'مدير',
+
         'fields' => [
             'id' => 'الرقم',
             'id_helper' => ' ',
@@ -296,6 +323,7 @@ return [
             'municipal_name' => 'الإسم',
 
         ],
+
 
         //  Change Password
 

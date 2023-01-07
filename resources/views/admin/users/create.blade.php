@@ -30,11 +30,8 @@
                 @csrf
                 <!--begin::Heading-->
                     <div class="mb-13 text-center">
-                        <!--begin::Title-->
                         <h1 class="mb-3">{{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}</h1>
                     </div>
-                    <!--end::Heading-->
-                    <!--begin::Input group-->
                     <div class="row g-9 mb-8">
                         <div class="col-md-6 fv-row">
                             <div class="d-flex flex-column mb-8 fv-row">
@@ -68,7 +65,6 @@
                                       id="last_name_error"> </span>
                             </div>
                         </div>
-
                     </div>
 
 
@@ -112,34 +108,20 @@
                             <label class="required fs-6 fw-semibold mb-2">{{ trans('cruds.user.fields.roles') }}</label>
                             <select class="form-select form-select-solid" data-control="select2"
                                     data-hide-search="true" data-placeholder="Select role"
-                                    name="roles[]" id="roles">
+                                    name="role_id" id="role_id">
                                 <option value="">إختر الصلاحية</option>
-                                @foreach($roles as $id => $role)
-                                    <option value="{{ $id }}">{{ $role }}</option>
-                                @endforeach
+                                    <option value="1">Admin</option>
                             </select>
                             <span class="text-danger errors"
-                                  id="roles_error"> </span>
+                                  id="role_id_error"> </span>
                         </div>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary mr-2" type="button"
                                 id="btn_save_user"> {{ trans('global.save') }}</button>
                     </div>
-                    <!--end::Actions-->
                 </form>
-                <!--end:Form-->
             </div>
-            <!--end::Modal body-->
         </div>
-        <!--end::Modal content-->
     </div>
-    <!--end::Modal dialog-->
 </div>
-
-
-
-
-
-
-

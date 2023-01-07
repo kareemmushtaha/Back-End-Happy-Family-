@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckMediator
+class CheckActivateAccount
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class CheckMediator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role_id == 2 && auth()->user()->check_active == 1)
+        if (auth()->user()->check_active == 1 ||auth()->user()->verified == 0)
         {
             return $next($request);
-
         } else {
             toastr()->error('أنت غير مصرح لك بالدخول لهذه الصفحة');
             return redirect()->back();

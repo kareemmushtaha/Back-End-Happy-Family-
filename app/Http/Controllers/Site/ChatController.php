@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\AnswerChat;
 use App\Models\Chat;
 use App\Models\Conversations;
-use App\Models\Question;
 use App\Models\QuestionChat;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -99,6 +98,7 @@ class ChatController extends Controller
         return $chats;
     }
 
+
     public function send_question_chat(\Illuminate\Http\Request $request)
     {
 
@@ -163,13 +163,11 @@ class ChatController extends Controller
         $conversation = Conversations::query()->where('chat_id', $chat->id)
             ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->first();
 
-
         if ($conversation) {
             return response()->json(['status' => true, 'answer_title' => $answer->answer_title, 'conversation_id' => $conversation->id, 'msg' => trans('cruds.chat.send_answer_successfully')]);
         }
-
-
     }
+
 
     public function send_custom_answer_chat(\Illuminate\Http\Request $request)
     {
@@ -192,8 +190,6 @@ class ChatController extends Controller
         ]);
 
         $chat = Chat::query()->findOrFail($request->chat_id);
-
-
 
         $conversation = Conversations::query()->where('chat_id', $chat->id)
             ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->update([

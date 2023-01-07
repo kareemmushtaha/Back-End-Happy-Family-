@@ -51,7 +51,7 @@
                         $(location).attr('href', data.redirect_url);
                     }, 0);
                 } else {
-                    Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.sorry_the_password_is_incorrect_or_the_email_address_is_incorrect')}}", "error");
+                    Swal.fire("{{trans('global.sorry_some_error')}}", data.msg, "error");
                 }
             }, error: function (reject) {
                 $('#btn_login_user').html('تسجيل الدخول').removeClass('link-disabled');

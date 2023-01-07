@@ -3,6 +3,7 @@
 return [
     'actions' => 'الإجرائات',
     'settings' => 'الإعدادات',
+    'cancel_active' => 'الغاء التفعيل',
     'packages' => 'باقات الإشتراك',
     'contact_us' => 'رسائل التواصل',
     'subscriptions' => 'الإشتراكات',
@@ -69,6 +70,7 @@ return [
     'active' => 'مفعل',
     'make_un_active' => 'إلغاء التفعيل',
     'make_active' => 'تفعيل',
+    'add_mediator' => 'إضافة وسطاء',
     'searching' => 'جاري البحث',
     'no_results' => 'لا يوجد نتيجة',
     'results_could_not_be_loaded' => 'The results could not be loaded',

@@ -314,6 +314,16 @@ class SettingsTableSeeder extends Seeder
             'key' => 'privacy_policy',
             'active' => 1,
         ];
+        $data[30] = [
+            'ar' => [
+                'value' => "سعر ;كشف بيانات الحساب",
+            ],
+            'en' => [
+                'value' => "price show user information",
+            ],
+            'key' => 'price_show_user_information',
+            'active' => 1,
+        ];
 
 
         foreach ($data as $index => $value) {

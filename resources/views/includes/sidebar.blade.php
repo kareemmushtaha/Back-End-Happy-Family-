@@ -106,35 +106,34 @@
 										<span class="menu-title"> {{ trans('cruds.userManagement.title') }}</span>
 										<span class="menu-arrow"></span>
 									</span>
-                        @can('permission_access')
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <div class="menu-item">
-                                    <a class=" menu-link {{request()->is("admin/permissions*") ? 'active' : ''}} "
-                                       href="{{ route("admin.permissions.index") }}">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-                                        <span class="menu-title">{{ trans('cruds.permission.title') }}</span>
-                                    </a>
-                                </div>
-                            </div>
-                        @endcan
+{{--                        @can('permission_access')--}}
+{{--                            <div class="menu-sub menu-sub-accordion menu-active-bg hidden">--}}
+{{--                                <div class="menu-item">--}}
+{{--                                    <a class=" menu-link {{request()->is("admin/permissions*") ? 'active' : ''}} "--}}
+{{--                                       href="{{ route("admin.permissions.index") }}">--}}
+{{--														<span class="menu-bullet">--}}
+{{--															<span class="bullet bullet-dot"></span>--}}
+{{--														</span>--}}
+{{--                                        <span class="menu-title">{{ trans('cruds.permission.title') }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endcan--}}
 
-                        @can('role_access')
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <div class="menu-item">
-                                    <a class="menu-link {{request()->is("admin/roles*") ? 'active' : ''}}"
-                                       href="{{ route("admin.roles.index") }}">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-                                        <span class="menu-title">{{ trans('cruds.role.title') }}</span>
-                                    </a>
-                                </div>
-                            </div>
-                        @endcan
+{{--                        @can('role_access')--}}
+{{--                            <div class="menu-sub menu-sub-accordion menu-active-bg hidden">--}}
+{{--                                <div class="menu-item">--}}
+{{--                                    <a class="menu-link {{request()->is("admin/roles*") ? 'active' : ''}}"--}}
+{{--                                       href="{{ route("admin.roles.index") }}">--}}
+{{--														<span class="menu-bullet">--}}
+{{--															<span class="bullet bullet-dot"></span>--}}
+{{--														</span>--}}
+{{--                                        <span class="menu-title">{{ trans('cruds.role.title') }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endcan--}}
 
-                        @can('user_access')
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
                                 <div class="menu-item">
                                     <a class="menu-link {{request()->is("admin/users*") ? 'active' : ''}}"
@@ -146,7 +145,6 @@
                                     </a>
                                 </div>
                             </div>
-                        @endcan
 
                         @can('audit_log_access')
                             <div class="menu-sub menu-sub-accordion menu-active-bg">

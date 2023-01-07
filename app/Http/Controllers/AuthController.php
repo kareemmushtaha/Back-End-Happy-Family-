@@ -38,14 +38,17 @@ class AuthController extends Controller
             'email' => ['required', 'email', 'exists:users,email'],
             'password' => ['required', 'string'],
         ]);
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if (Auth::user()->verified == 0) {
+            if (Auth::user()->verified == 0 || Auth::user()->check_active == 0) {
                 return response()->json(['status' => 422, 'msg' => 'You should verify your account first, please check your email']);
             }
             if (Auth::user()->getType() == 'mediator') {
                 return response()->json(['status' => true, "redirect_url" => route('home')]);
             } elseif (Auth::user()->getType() == 'user') {
+                return response()->json(['status' => true, "redirect_url" => route('home')]);
+            } elseif (Auth::user()->getType() == 'FollowMediator') {
                 return response()->json(['status' => true, "redirect_url" => route('home')]);
             } elseif (Auth::user()->getType() == 'admin') {
                 return response()->json(['status' => true, "redirect_url" => route('admin.home')]);
