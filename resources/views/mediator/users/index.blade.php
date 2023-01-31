@@ -49,7 +49,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="#" class="text-dark fw-bold text-hover-primary fs-6">#{{ $key+1 }}</a>
+                                        <a href="#" class="text-dark fw-bold text-hover-primary fs-6">#{{ $key+1 }}
+                                            <img src="{{$user->getPhoto($user->photo)}}" style="border-radius: 50%" width="50" height="50">
+                                        </a>
                                     </td>
                                     <td>
                                         <a href="#"

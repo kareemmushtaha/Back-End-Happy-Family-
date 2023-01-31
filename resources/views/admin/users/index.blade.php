@@ -72,11 +72,11 @@
                                     </td>
                                     <td>
                                 <span
-                                    class="badge badge-light-success">  {{ $user->verified ? 'verified' : 'un verified' }} </span>
+                                    class="badge badge-light-success">  {{ $user->verified ? 'مؤكد' : 'غير مؤكد' }} </span>
                                     </td>
                                     <td>
 
-                                        <span class="badge badge-light-success">  {{  $user->getType()  }} </span>
+                                        <span class="badge badge-light-success">  {{  $user->getTypeAr()  }} </span>
 
                                     </td>
                                     <td>

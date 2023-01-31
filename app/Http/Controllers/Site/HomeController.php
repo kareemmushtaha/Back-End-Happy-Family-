@@ -24,10 +24,17 @@ use function Webmozart\Assert\Tests\StaticAnalysis\true;
 class HomeController extends Controller
 {
 
+    public $users_paginate;
+
+    public function __construct(User $users_paginate)
+    {
+        $this->users_paginate = $users_paginate;
+    }
+
     public function home(Request $request)
     {
         if (auth()->check()) {
-            $user = User::query()->where('id', "!=", auth()->user()->id)->whereIn('role_id', [2, 3,4]);
+            $user = User::query()->where('id', "!=", auth()->user()->id)->where('show_profile', 1)->whereIn('role_id', [2, 3,4]);
             if (auth()->user()->getType() != 'mediator') {
                 $gender = auth()->user()->gender == 'male' ? 'female' : 'male';
                 $user->where('gender', $gender);
@@ -35,7 +42,7 @@ class HomeController extends Controller
             $user = $user->latest()->take(10)->paginate(6);
             $data['get_users'] = $user;
         } else {
-            $data['get_users'] = User::query()->whereIn('role_id', [2, 3])->latest()->take(10)->paginate(6);
+            $data['get_users'] = User::query()->where('show_profile', 1)->whereIn('role_id', [2, 3])->latest()->take(10)->paginate(6);
         }
 
         $data['countries'] = Country::query()->get();
@@ -97,7 +104,7 @@ class HomeController extends Controller
         }
 
 
-        $data['get_users'] = User::query()
+        $data['get_users'] = User::query()->where('show_profile', 1)
             ->when($gender != null, function ($query_1) use ($gender) {
                 $query_1->where('gender', $gender);
 
@@ -130,7 +137,93 @@ class HomeController extends Controller
         $data['success_stories'] = SuccessStory::query()->get();
         $data['package'] = Package::query()->first();
         $data['fqas'] = Fqa::query()->get();
+        $data['countries'] = Country::query()->get();
+
         return view('site.landing', $data);
+    }
+
+    public function resultSearchLanding (Request $request)
+    {
+        $gender = $request->gender;
+        $country = $request->country;
+        $area = $request->area;
+        $city = $request->city;
+        $year_from = $request->year_from;
+        $year_to = $request->year_to;
+
+//
+
+        if ($request->gender) {
+            $gender = $request->gender;
+        } else {
+            $gender = null;
+        }
+
+        if ($request->country) {
+            $country = $request->country;
+        } else {
+            $country = null;
+        }
+
+        if ($request->area) {
+            $area = $request->area;
+        } else {
+            $area = null;
+        }
+
+
+        if ($request->city) {
+            $city = $request->city;
+        } else {
+            $city = null;
+        }
+
+        if ($request->year_from) {
+            $year_from = $request->year_from;
+        } else {
+            $year_from = null;
+        }
+
+        if ($request->year_to) {
+            $year_to = $request->year_to;
+        } else {
+            $year_to = null;
+        }
+
+        $data['gender'] = $request->gender;
+        $data['country'] = $request->country;
+        $data['area'] = $request->area;
+        $data['city'] = $request->city;
+        $data['year_from'] = $request->year_from;
+        $data['year_to'] = $request->year_to;
+
+        $data['get_users'] = $this->users_paginate->query()->where('show_profile', 1)->when($gender != null, function ($query_1) use ($gender) {
+            $query_1->where('gender', $gender);
+
+        })->when($country != null, function ($query_1) use ($country) {
+            $query_1->where('country_id', $country);
+
+        })->when($area != null, function ($query_2) use ($area) {
+
+            $query_2->where('aria_id', $area);
+
+        })->when($city != null, function ($query_3) use ($city) {
+
+            $query_3->where('city_id', $city);
+
+        })->when($year_from != null && $year_to != null, function ($query_6) use ($year_from, $year_to) {
+            $query_6->whereBetween('year', [$year_from, $year_to]);
+
+        })->paginate(6);
+
+        $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
+
+        if ($request->ajax()) {
+            return view('site._resultAdvanceSearchPaginate', $data);
+        } else {
+            return view('site.result-search-landing', $data);
+
+        }
     }
 
     public function contact()

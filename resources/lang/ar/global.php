@@ -419,6 +419,7 @@ return [
     'step_files_upload' => 'رفع ملفات المرحلة',
     'Files_to_download_re_correct_and_reattach' => 'الملفات المطلوب تحميلها و تصحيحها و اعادة ارفاقها',
     'reason_reject' => 'سبب الرفض',
+    'You_should_verify_your_account_first' => 'يجب عليك التحقق من حسابك أولاً ، يرجى التحقق من بريدك الإلكتروني',
 
 
 ];

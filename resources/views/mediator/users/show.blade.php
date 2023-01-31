@@ -32,6 +32,16 @@
                                                 {{ $user->id }}
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.user.fields.photo') }}
+                                            </th>
+                                            <td>
+                                                <img src="{{$user->getPhoto($user->photo)}}" style="border-radius: 50%" width="80" height="80">
+                                            </td>
+                                        </tr>
+
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.user.fields.name') }}

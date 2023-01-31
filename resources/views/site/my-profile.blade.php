@@ -14,6 +14,8 @@
                     </div>
                 </div>
                 <a href="{{route('edit_profile')}}">تعديل الملف الشخصي</a>
+
+                <a href="{{route('showProfile', auth()->user()->show_profile == 1 ? 0 : 1)}}">{{auth()->user()->show_profile == 1 ? 'إخفاء الملف الشخصي' : 'إظهار الملف الشخصي'}}</a>
             </div>
             <div class="personally-details">
                 <div>

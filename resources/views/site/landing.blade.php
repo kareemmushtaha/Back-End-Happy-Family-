@@ -110,6 +110,9 @@
                     setTimeout(function () {
                         $(location).attr('href', data.redirect_url);
                     }, 0);
+                } else if (data.status == 422) {
+                    Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.You_should_verify_your_account_first')}}", "error");
+
                 } else {
                     Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.sorry_the_password_is_incorrect_or_the_email_address_is_incorrect')}}", "error");
                 }
@@ -156,6 +159,52 @@
                     // for loop to all validation and show all validate
                     $("#" + key + "_error").text(val[0]);
                 });
+            }
+        });
+    });
+
+    $(document).on('change', '#country', function (e) {
+        e.preventDefault();
+
+        let country_id = $(this).val();
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            url: "{{ route("filterAreas") }}",
+            data: {'country_id': country_id}, // send this data to controller
+            dataType: 'json',
+
+            success: function (data) {
+                $('select[name="area"]').empty();
+                $('select[name="area"]').append('<option value="">المنطقه</option>');
+                $.each(data.areas, function (key, value) {
+
+                    $('select[name="area"]').append(`<option value="${value.id}">${value.title}</option>`);
+                });
+
+            }
+        });
+    });
+
+    $(document).on('change', '#area', function (e) {
+        e.preventDefault();
+
+        let area_id = $(this).val();
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            url: "{{ route("filterCities") }}",
+            data: {'area_id': area_id}, // send this data to controller
+            dataType: 'json',
+
+            success: function (data) {
+                $('select[name="city"]').empty();
+                $('select[name="city"]').append('<option value="">المدينة</option>');
+                $.each(data.cities, function (key, value) {
+
+                    $('select[name="city"]').append(`<option value="${value.id}">${value.title}</option>`);
+                });
+
             }
         });
     });

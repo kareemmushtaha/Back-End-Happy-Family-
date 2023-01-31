@@ -257,8 +257,11 @@ class ChatController extends Controller
     public function searchMessages (Request $request)
     {
         $search = $request->search;
-        $messages = Chat::query()->with(['sender', 'receiver', 'conversation'])->orderBy('updated_at', 'desc')
-            ->where(function ($query) use ($search) {
+        $messages = Chat::query()->with(['sender', 'receiver', 'conversation'])->where(function ($q) {
+            $q->where('sender_id', '=', auth()->user()->id)
+                ->orWhere('received_id', '=', auth()->user()->id);
+        })->orderBy('updated_at', 'desc')
+            ->when($search, function ($query) use ($search) {
                 $query->whereHas('sender', function ($query_1) use ($search){
                     $query_1->where('first_name', 'like', '%' . $search . '%');
                     $query_1->orWhere('last_name', 'like', '%' . $search . '%');

@@ -26,7 +26,22 @@
                     @csrf
                     @method('PUT')
                     <div class="card-body">
-
+                        <img src="{{$user->getPhoto($user->photo)}}" style="border-radius: 50%" width="80" height="80">
+                        <div class="col-md-6 fv-row mt-1">
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">{{ trans('cruds.user.fields.photo') }}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                       title="Specify a target name for future usage and reference"></i>
+                                </label>
+                                <!--end::Label-->
+                                <input type="file" class="form-control form-control-solid"
+                                       name="photo" id="photo"/>
+                                <span class="text-danger errors"
+                                      id="photo_error"> </span>
+                            </div>
+                        </div>
                         <div class="row g-9 mb-8">
                             <div class="col-md-6 fv-row">
                                 <div class="d-flex flex-column mb-8 fv-row">

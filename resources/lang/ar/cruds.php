@@ -271,6 +271,7 @@ return [
             'fake_name' => 'الاسم الرمزي',
             'birth_date' => 'تاريخ الميلاد',
             'gender' => 'الجنس',
+            'photo' => 'الصورة',
             'nationality' => 'الجنسية',
             'phone' => 'رقم الجوال',
             'questions' => 'الأسئلة',

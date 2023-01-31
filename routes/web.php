@@ -38,8 +38,10 @@ Route::post('filterCities', [SearchController::class, 'filterCities'])->name('fi
 Route::get('questions-answer', [HomeController::class, 'questions_answer'])->name('question_answer');
 Route::get('package/{package_id}', [HomeController::class, 'package_details'])->name('package');
 Route::get('my-profile', [UserController::class, 'my_profile'])->name('my_profile');
+Route::get('show-profile/{status}', [UserController::class, 'showProfile'])->name('showProfile');
 Route::get('personally/{user_id}', [UserController::class, 'personally'])->name('personally');
 Route::post('update/answer-questions', [UserController::class, 'update_answer_questions'])->name('update-answer-questions');
+Route::post('result-search-landing', [HomeController::class, 'resultSearchLanding'])->name('resultSearchLanding');
 
 
 Route::group(['middleware' => ['auth', 'checkActivateAccount']], function () {
