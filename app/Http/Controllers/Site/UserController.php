@@ -30,6 +30,18 @@ class UserController extends Controller
 
     }
 
+    public function showProfile ($status)
+    {
+        $user = User::query()->findOrFail(auth()->user()->id);
+
+        $user->update([
+            'show_profile' => $status
+        ]);
+
+        toastr()->success('تم تحديث الحالة بنجاح', ['timeOut' => 20000, 'closeButton' => true]);
+        return redirect()->back();
+    }
+
     public function personally($user_id)
     {
         $data['find_user'] = User::query()->find($user_id);

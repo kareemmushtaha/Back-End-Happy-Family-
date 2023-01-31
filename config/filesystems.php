@@ -48,6 +48,14 @@ return [
             'visibility' => 'public',
         ],
 
+        'images' => [
+            'driver' => 'local',
+            'root' =>  public_path('images/'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+
         'StepUploadFiles' => [
             'driver' => 'local',
             'root' =>  storage_path('StepUploadFiles/'),

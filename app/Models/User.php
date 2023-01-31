@@ -46,7 +46,7 @@ class User extends Authenticatable
         'email', 'email_verified_at', 'password', 'verified',
         'verified_at', 'verification_token', 'two_factor', 'two_factor_code',
         'remember_token', 'created_at', 'updated_at', 'deleted_at',
-        'two_factor_expires_at', 'phone','mediator_id','check_active'
+        'two_factor_expires_at', 'phone','mediator_id','check_active', 'show_profile'
     ];
 
 
@@ -92,6 +92,24 @@ class User extends Authenticatable
         }
     }
 
+    public function getTypeAr()
+    {
+        switch ($this->role_id) {
+            case '1';
+                return 'آدمن';    //admin
+                break;
+            case '2':
+                return 'وسيط'; //mediator
+                break;
+            case '3':
+                return 'مستخدم';    //user
+                break;
+            case '4':
+                return 'تابع وسيط';    //FollowMediator
+                break;
+        }
+    }
+
 
     public function getFullName()
     {
@@ -112,6 +130,11 @@ class User extends Authenticatable
         $this->two_factor_code = null;
         $this->two_factor_expires_at = null;
         $this->save();
+    }
+
+    public function getPhoto($val)
+    {
+        return ($val !== null) ? asset('/' . $val) : "";
     }
 
     public function getIsAdminAttribute()
@@ -203,13 +226,13 @@ class User extends Authenticatable
     }
 
 
-    public function getPhotoAttribute($value)
-    {
-        if (!$value) {
-            return asset('assets/man.png');
-        }
-        return asset('storage/users/' . $value);
-    }
+//    public function getPhotoAttribute($value)
+//    {
+//        if (!$value) {
+//            return asset('assets/man.png');
+//        }
+//        return asset('storage/users/' . $value);
+//    }
 
 
 }

@@ -67,6 +67,7 @@ class UsersMediatorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'photo' => 'nullable|image',
             'user_gender' => 'required',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -89,6 +90,12 @@ class UsersMediatorController extends Controller
         }
 
         DB::beginTransaction();
+
+        $filePath = "";
+        if ($request->has('photo')) {
+            $filePath = uploadImage('images', $request->photo);
+        }
+
         $user = User::create([
             'mediator_id' => auth()->user()->id,
             'first_name' => $request->first_name,
@@ -96,7 +103,7 @@ class UsersMediatorController extends Controller
             'fake_name' => $request->fake_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => 2,
+            'role_id' => 4,
             'birth_date' => $request->birth_date,
             'year' => Carbon::parse($request->birth_date)->format('Y'),
             'gender' => $request->user_gender,
@@ -109,6 +116,8 @@ class UsersMediatorController extends Controller
             'city_id' => $request->city_id,
             'height' => $request->height,
             'width' => $request->width,
+            'photo' => $filePath,
+            'check_active' => 1,
         ]);
 
 
@@ -187,6 +196,11 @@ class UsersMediatorController extends Controller
             }
         }
 
+
+        $filePath = "";
+        if ($request->has('photo')) {
+            $filePath = uploadImage('images', $request->photo);
+        }
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -205,6 +219,7 @@ class UsersMediatorController extends Controller
             'city_id' => $request->city_id,
             'height' => $request->height,
             'width' => $request->width,
+            'photo' => $filePath,
         ]);
 
         DB::commit();

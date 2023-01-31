@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('photo')->nullable();
             $table->string('phone')->nullable();
             $table->integer('check_active')->default(0);
+            $table->integer('show_profile')->default(1);
             $table->bigInteger('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('swear_god')->nullable();

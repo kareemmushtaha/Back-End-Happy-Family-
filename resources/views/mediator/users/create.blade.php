@@ -10,7 +10,7 @@
             <!--begin::Card-->
             <div class="card card-custom example example-compact">
                 <div class="card-header">
-                    <h3 class="card-title">{{ trans('global.edit') }} {{ trans('cruds.user.title_singular') }}</h3>
+                    <h3 class="card-title">{{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}</h3>
                     <div class="card-toolbar">
                         <div class="example-tools justify-content-center">
                             <span class="example-toggle" data-toggle="tooltip" title=""
@@ -25,7 +25,21 @@
                       enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-
+                        <div class="col-md-6 fv-row">
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">{{ trans('cruds.user.fields.photo') }}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                       title="Specify a target name for future usage and reference"></i>
+                                </label>
+                                <!--end::Label-->
+                                <input type="file" class="form-control form-control-solid"
+                                       name="photo" id="photo"/>
+                                <span class="text-danger errors"
+                                      id="photo_error"> </span>
+                            </div>
+                        </div>
                         <div class="row g-9 mb-8">
                             <div class="col-md-6 fv-row">
                                 <div class="d-flex flex-column mb-8 fv-row">

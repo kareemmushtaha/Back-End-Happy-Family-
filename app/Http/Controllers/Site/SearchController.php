@@ -149,7 +149,7 @@ class SearchController extends Controller
         $data['weight_from'] = $request->weight_from;
         $data['weight_to'] = $request->weight_to;
         $data['answers'] = serialize($answers);
-        $data['get_users'] = $this->users_paginate->query()->when($country != null, function ($query_1) use ($country) {
+        $data['get_users'] = $this->users_paginate->query()->where('show_profile', 1)->when($country != null, function ($query_1) use ($country) {
             $query_1->where('country_id', $country);
 
         })->when($area != null, function ($query_2) use ($area) {

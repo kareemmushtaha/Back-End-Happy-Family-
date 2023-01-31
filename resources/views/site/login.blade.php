@@ -50,6 +50,9 @@
                         //the url I want to redirect to
                         $(location).attr('href', data.redirect_url);
                     }, 0);
+                } else if (data.status == 422) {
+                    Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.You_should_verify_your_account_first')}}", "error");
+
                 } else {
                     Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.sorry_the_password_is_incorrect_or_the_email_address_is_incorrect')}}", "error");
                 }
