@@ -45,6 +45,7 @@ class   ShowUserResource extends JsonResource
                         'can_contact_us' => true,
                         'auth' => true,
                         'can_show_answer_questions' => true,
+                        'can_send_personal_info' => true,
                     ];
                 } else {
                     //user  not have subscription
@@ -63,6 +64,7 @@ class   ShowUserResource extends JsonResource
                         'can_contact_us' => false,
                         'auth' => true,
                         'can_show_answer_questions' => true,
+                        'can_send_personal_info' => false,
                     ];
                 }
             } else {
@@ -82,6 +84,7 @@ class   ShowUserResource extends JsonResource
                     'can_contact_us' => true,
                     'auth' => true,
                     'can_show_answer_questions' => true,
+                    'can_send_personal_info' => true,
                 ];
 
             }
@@ -103,6 +106,7 @@ class   ShowUserResource extends JsonResource
                 'can_contact_us' => false,
                 'auth' => false,
                 'can_show_answer_questions' => false,
+                'can_send_personal_info' => false,
             ];
         }
 

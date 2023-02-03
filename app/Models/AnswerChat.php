@@ -59,4 +59,9 @@ class AnswerChat extends Model
     {
         return $this->status == '1' ? trans('global.reject') : trans('global.accept');
     }
+
+    public function customUserId(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'custom_user_id', 'id');
+    }
 }

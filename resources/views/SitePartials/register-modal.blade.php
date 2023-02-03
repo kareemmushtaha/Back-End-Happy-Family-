@@ -83,7 +83,7 @@
                 <input name="last_name" placeholder="العائله"/>
                 <input name="email" placeholder="البريد الإلكتروني"/>
                 <input type="password" name="password" placeholder="كلمة المرور"/>
-                <input name="phone" placeholder="رقم الموبايل"/>
+                <input name="phone" placeholder="رقم الجوال"/>
                 <input name="fake_name" placeholder="الاسم الرمزي"/>
                 <input name="birth_date" type="date"/>
             </div>

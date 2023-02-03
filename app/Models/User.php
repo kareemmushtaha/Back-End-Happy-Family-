@@ -226,13 +226,13 @@ class User extends Authenticatable
     }
 
 
-//    public function getPhotoAttribute($value)
-//    {
-//        if (!$value) {
-//            return asset('assets/man.png');
-//        }
-//        return asset('storage/users/' . $value);
-//    }
+    public function getPhotoAttribute($value)
+    {
+        if (!$value) {
+            return asset('assets/man.png');
+        }
+        return asset('storage/users/' . $value);
+    }
 
 
 }

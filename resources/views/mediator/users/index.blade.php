@@ -35,7 +35,7 @@
                                 <th class="min-w-150px"> {{ trans('cruds.user.fields.id') }}</th>
                                 <th class="min-w-140px">    {{ trans('cruds.user.fields.name') }}</th>
                                 <th class="min-w-120px"> {{ trans('cruds.user.fields.email') }}</th>
-                                <th class="min-w-120px">{{ trans('cruds.user.fields.verified') }}</th>
+{{--                                <th class="min-w-120px">{{ trans('cruds.user.fields.verified') }}</th>--}}
                                 <th class="min-w-100px text-end"> {{ trans('global.actions') }}</th>
                             </tr>
                             </thead>
@@ -50,7 +50,8 @@
                                     </td>
                                     <td>
                                         <a href="#" class="text-dark fw-bold text-hover-primary fs-6">#{{ $key+1 }}
-                                            <img src="{{$user->getPhoto($user->photo)}}" style="border-radius: 50%" width="50" height="50">
+                                            <img src="{{$user->photo}}" style="border-radius: 50%" width="50"
+                                                 height="50">
                                         </a>
                                     </td>
                                     <td>
@@ -66,10 +67,11 @@
                                         <span
                                             class="text-muted fw-semibold text-muted d-block fs-7">{{ $user->email_verified_at ? 'verified at' :'not verified at' }}</span>
                                     </td>
-                                    <td>
-                                <span
-                                    class="badge badge-light-success">  {{ $user->verified ? 'verified' : 'un verified' }} </span>
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        <span class="badge badge-light-success"> --}}
+{{--                                            {{ $user->verified ? 'verified' : 'un verified' }}--}}
+{{--                                        </span>--}}
+{{--                                    </td>--}}
 
                                     <td class="text-end">
 

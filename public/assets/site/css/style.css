@@ -1430,8 +1430,8 @@ a:active,
 .main-content-search > div {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding-inline: 5px;
+    gap: 17px;
+    padding-inline: 35px;
     height: fit-content;
     margin-block: auto;
 }
@@ -1466,7 +1466,7 @@ a:active,
 }
 
 .main-content-search input {
-    width: 40px;
+    width: 70px;
     font-family: Hanimation_Arabic_Regular;
     font-size: 18px;
     color: #FFFFFF;

@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         if (auth()->check()) {
-            $user = User::query()->where('id', "!=", auth()->user()->id)->where('show_profile', 1)->whereIn('role_id', [2, 3,4]);
+            $user = User::query()->where('id', "!=", auth()->user()->id)->where('show_profile', 1)->whereIn('role_id', [2, 3, 4]);
             if (auth()->user()->getType() != 'mediator') {
                 $gender = auth()->user()->gender == 'male' ? 'female' : 'male';
                 $user->where('gender', $gender);
@@ -42,7 +42,7 @@ class HomeController extends Controller
             $user = $user->latest()->take(10)->paginate(6);
             $data['get_users'] = $user;
         } else {
-            $data['get_users'] = User::query()->where('show_profile', 1)->whereIn('role_id', [2, 3])->latest()->take(10)->paginate(6);
+            $data['get_users'] = User::query()->where('show_profile', 1)->whereIn('role_id', [2, 3,4])->latest()->take(10)->paginate(6);
         }
 
         $data['countries'] = Country::query()->get();
@@ -102,27 +102,27 @@ class HomeController extends Controller
         } else {
             $to = null;
         }
+        $data['get_users'] = User::query()->where('show_profile', 1);
+        if (auth()->check()) {
+            $data['get_users']->where('id', '!=', auth()->user()->id);
+        }
+        $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
+            $query_1->where('gender', $gender);
 
+        })->when($country != null, function ($query_2) use ($country) {
+            $query_2->where('country_id', $country);
 
-        $data['get_users'] = User::query()->where('show_profile', 1)
-            ->when($gender != null, function ($query_1) use ($gender) {
-                $query_1->where('gender', $gender);
+        })->when($area != null, function ($query_3) use ($area) {
+            $query_3->where('aria_id', $area);
 
-            })->when($country != null, function ($query_2) use ($country) {
-                $query_2->where('country_id', $country);
+        })->when($city != null, function ($query_4) use ($city) {
+            $query_4->where('city_id', $city);
 
-            })->when($area != null, function ($query_3) use ($area) {
-                $query_3->where('aria_id', $area);
+        })->when($from != null && $to != null, function ($query_5) use ($from, $to) {
 
-            })->when($city != null, function ($query_4) use ($city) {
-                $query_4->where('city_id', $city);
+            $query_5->whereBetween('year', [$from, $to]);
 
-            })->when($from != null && $to != null, function ($query_5) use ($from, $to) {
-
-                $query_5->whereBetween('year', [$from, $to]);
-
-            })->paginate(6);
-
+        })->paginate(6);
 
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
 
@@ -142,7 +142,7 @@ class HomeController extends Controller
         return view('site.landing', $data);
     }
 
-    public function resultSearchLanding (Request $request)
+    public function resultSearchLanding(Request $request)
     {
         $gender = $request->gender;
         $country = $request->country;
@@ -307,5 +307,6 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
     }
+
 
 }

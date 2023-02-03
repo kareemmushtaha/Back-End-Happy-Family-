@@ -48,6 +48,8 @@ class Question extends Model
     {
         return $this->status == '1' ? trans('global.active') : trans('global.un_active');
     }
+
+
 }
 
 

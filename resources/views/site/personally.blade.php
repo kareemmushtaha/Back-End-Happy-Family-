@@ -14,7 +14,17 @@
                 </div>
 
                 <div class="d-flex flex-column gap-2">
-                    <a href="">كشف بيانات</a>
+
+
+                        @if($user['can_send_personal_info'])
+                            {{--got to urway to send information this user--}}
+                            <a href="{{url('urway/checkout/send_personal_info',$user['id'])}}" class="w-100">كشف
+                                بيانات</a>
+                        @else
+                            <a href="{{route('package',$package->id)}}" class="w-100">كشف بيانات</a>
+                        @endif
+
+
                     @if($user['can_contact_us'])
                         <a href="{{route('chat.createAndOpenChat',$user['id'])}}" class="w-100">تواصل</a>
                     @else

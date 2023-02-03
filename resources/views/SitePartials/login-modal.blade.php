@@ -18,13 +18,13 @@
         </div>
     @endif
     <h1>تسجيل دخول</h1>
-    <h2>البريد الإلكتروني او رقم الموبايل</h2>
-    <input placeholder="أدخل البريد الإلكتروني أو رقم الموبايل" name="email"/>
+    <h2>البريد الإلكتروني او رقم الجوال</h2>
+    <input placeholder="أدخل البريد الإلكتروني أو رقم الجوال" name="email"/>
 
     <h2>كلمة المرور</h2>
     <input placeholder="أدخل كلمة المرور" name="password" type="password"/>
 
-    <h3> هل نسيت كلمة المرور</h3>
+    <h3> <a href="">هل نسيت كلمة المرور</a></h3>
     <button type="button" id="btn_login_user">تسجيل دخول</button>
     <div>
 

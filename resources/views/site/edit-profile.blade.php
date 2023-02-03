@@ -16,7 +16,7 @@
                 <input value="{{$user->fake_name}}" name="fake_name" placeholder="الاسم الرمزي"/>
                 <input value="{{$user->height}}" name="height" placeholder="الطول"/>
                 <input value="{{$user->width}}" name="width" placeholder="الوزن"/>
-                <input value="{{$user->phone}}" name="phone" placeholder="رقم الموبايل"/>
+                <input value="{{$user->phone}}" name="phone" placeholder="رقم الجوال"/>
             </div>
             <div class="settings-selects-container">
                 <input value="{{$user->nationality}}" name="nationality" placeholder="الجنسية"/>

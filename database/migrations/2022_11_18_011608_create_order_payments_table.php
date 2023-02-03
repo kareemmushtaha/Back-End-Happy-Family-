@@ -22,6 +22,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->text('transaction_id');
             $table->text('amount');
             $table->text('user_id');
+            $table->text('details')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

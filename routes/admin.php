@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Success Story
     Route::resource('success-stories', 'SuccessStoryController');
+    Route::resource('view-personal-info', 'ViewPersonalInformationController');
 
     //Fqa
     Route::resource('fqas', 'FqaController');

@@ -252,7 +252,7 @@
                                 '  </div>' +
                                 ' <div class="media-body w-100">' +
                                 '<h6 class="list-group-item-heading">' +
-                                value.receiver.first_name
+                                value.receiver.fake_name
                                 + '<span class="font-small-3 float-right info">' +
                                 '</span>' +
                                 '</h6>' +
@@ -276,7 +276,7 @@
                                 '  </div>' +
                                 ' <div class="media-body w-100">' +
                                 '<h6 class="list-group-item-heading">' +
-                                value.sender.first_name
+                                value.sender.fake_name
                                 +
                                 '</h6>' +
                                 '<p class="list-group-item-text text-muted mb-0">' +

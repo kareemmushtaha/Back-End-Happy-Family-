@@ -26,7 +26,7 @@
                     @csrf
                     @method('PUT')
                     <div class="card-body">
-                        <img src="{{$user->getPhoto($user->photo)}}" style="border-radius: 50%" width="80" height="80">
+                        <img src="{{$user->photo}}" style="border-radius: 50%" width="80" height="80">
                         <div class="col-md-6 fv-row mt-1">
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
@@ -113,7 +113,6 @@
                                           id="user_gender_error"> </span>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="row g-9 mb-8">
@@ -308,6 +307,24 @@
                                           id="width_error"> </span>
                                 </div>
                             </div>
+                            <div class="col-md-6 fv-row">
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required"> حالة الظهور</span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                           title="Specify a target name for future usage and reference"></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <select class="form-control form-control-solid" name="show_profile" id="show_profile" required>
+                                        <option value="">حدد حالة الظهور</option>
+                                        <option value="0" @if($user->show_profile == 0) selected @endif>إخفاء البروفايل</option>
+                                        <option value="1" @if($user->show_profile == 1) selected @endif>إظهار البروفايل</option>
+                                    </select>
+                                    <span class="text-danger errors"
+                                          id="show_profile_error">{{$user->show_profile == 1 ?"حالة الحساب الآن ظهور": "حالة الحساب الآن مخفي" }} </span>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -343,6 +360,8 @@
 
                                 </div>
                             </div>
+
+
 
                         </div>
 

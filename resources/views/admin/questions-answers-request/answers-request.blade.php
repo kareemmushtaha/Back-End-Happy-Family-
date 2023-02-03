@@ -28,6 +28,7 @@
                             </div>
                         </th>
                         <th class="min-w-150px"> {{ trans('cruds.chat.fields.id') }}</th>
+                        <th class="min-w-150px"> {{ trans('cruds.user.title') }}</th>
                         <th class="min-w-150px"> {{ trans('cruds.chat.answer') }}</th>
                         <th class="min-w-140px">    {{ trans('cruds.chat.fields.created_at') }}</th>
                         <th class="min-w-120px"> {{ trans('cruds.chat.fields.status') }}</th>
@@ -45,6 +46,10 @@
                             </td>
                             <td>
                                 <a href="#" class="text-dark fw-bold text-hover-primary fs-6">#{{ $key+1 }}</a>
+                            </td>
+
+                            <td>
+                                <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $answer->customUserId->email }}</a>
                             </td>
                             <td>
                                 <a href="#"

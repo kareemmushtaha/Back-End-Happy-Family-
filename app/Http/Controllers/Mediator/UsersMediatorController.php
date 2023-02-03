@@ -41,7 +41,7 @@ class UsersMediatorController extends Controller
 
     public function create()
     {
-         $data['countries'] = Country::query()->get();
+        $data['countries'] = Country::query()->get();
         $data['questions'] = Question::query()->Active()->get();
         return view('mediator.users.create', $data);
     }
@@ -64,6 +64,7 @@ class UsersMediatorController extends Controller
             'cities' => $cities,
         ]);
     }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -83,6 +84,7 @@ class UsersMediatorController extends Controller
             'height' => 'required|numeric',
             'width' => 'required|numeric',
             'answers' => 'required|array',
+            'show_profile' => 'required',
         ]);
 
         if (in_array('null', $request->answers)) {
@@ -91,9 +93,12 @@ class UsersMediatorController extends Controller
 
         DB::beginTransaction();
 
-        $filePath = "";
+
+        $file = null;
         if ($request->has('photo')) {
-            $filePath = uploadImage('images', $request->photo);
+            $file = uniqid() . '.' . $request->photo->guessExtension();
+            $request->file('photo')->storeAs('public/users', $file);
+            $request->photo = $file;
         }
 
         $user = User::create([
@@ -116,11 +121,10 @@ class UsersMediatorController extends Controller
             'city_id' => $request->city_id,
             'height' => $request->height,
             'width' => $request->width,
-            'photo' => $filePath,
+            'show_profile' => $request->show_profile,
+            'photo' => $file,
             'check_active' => 1,
         ]);
-
-
 
         foreach ($request->answers as $answer) {
             $answerQuestion = AnswerQuestion::query()->find($answer);
@@ -134,6 +138,7 @@ class UsersMediatorController extends Controller
                 ]);
             }
         }
+
         DB::commit();
         dispatch(new RegesterEmailJob($user));
         toastr()->success(trans('global.register'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -162,7 +167,7 @@ class UsersMediatorController extends Controller
             'birth_date' => 'required',
             'nationality' => 'required',
             'phone' => 'required|string|max:12',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'. $userId],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
             'password' => ['nullable', 'string', 'min:8'],
             'country_id' => 'required|exists:countries,id',
             'aria_id' => 'required|exists:arias,id',
@@ -170,6 +175,7 @@ class UsersMediatorController extends Controller
             'height' => 'required|numeric',
             'width' => 'required|numeric',
             'answers' => 'required|array',
+            'show_profile' => 'required',
         ]);
         if (in_array('null', $request->answers)) {
             return response()->json(['status' => false, 'msg' => trans('global.some_question_no_answered')]);
@@ -196,11 +202,13 @@ class UsersMediatorController extends Controller
             }
         }
 
-
-        $filePath = "";
+        $file = null;
         if ($request->has('photo')) {
-            $filePath = uploadImage('images', $request->photo);
+            $file = uniqid() . '.' . $request->photo->guessExtension();
+            $request->file('photo')->storeAs('public/users', $file);
+            $request->photo = $file;
         }
+
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -215,11 +223,12 @@ class UsersMediatorController extends Controller
             'swear_god' => 1,
             'code' => '1234',
             'country_id' => $request->country_id,
+            'show_profile' => $request->show_profile,
             'aria_id' => $request->aria_id,
             'city_id' => $request->city_id,
             'height' => $request->height,
             'width' => $request->width,
-            'photo' => $filePath,
+            'photo' => $file,
         ]);
 
         DB::commit();

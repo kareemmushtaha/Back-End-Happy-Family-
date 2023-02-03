@@ -294,6 +294,25 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6 fv-row">
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required"> حالة الظهور</span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                           title="Specify a target name for future usage and reference"></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <select class="form-control form-control-solid" name="show_profile" id="show_profile" required>
+                                        <option value="">حدد حالة الظهور</option>
+                                        <option value="0" >إخفاء البروفايل</option>
+                                        <option value="1" >إظهار البروفايل</option>
+                                    </select>
+                                    <span class="text-danger errors"
+                                          id="show_profile_error"></span>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="row g-9 mb-8">
                             <div class="col-md-12 fv-row">

@@ -36,10 +36,9 @@
                     <option value="female">أنثى</option>
                 </select>
                 <div>
-                    <h2>من</h2>
-                    <h2>من</h2>
+{{--                    <h2>من</h2>--}}
                     <input type="number" name="year_from" value="1960"/>
-                    <h2>الى</h2>
+{{--                    <h2>الى</h2>--}}
                     <input type="number" name="year_to" value="2004"/>
                 </div>
                 <button type="submit">

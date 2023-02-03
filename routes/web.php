@@ -71,8 +71,6 @@ Route::group(['prefix' => 'chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa
 });
 
 
-
-
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {
     // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
@@ -106,6 +104,12 @@ Route::get('urway/success', 'UrwayPaymentController@urwaySuccess')->name('urway.
 Route::get('urway/fail', 'UrwayPaymentController@urwayFail')->name('urway.fail.transaction');
 
 Route::get('subscription/{package_id}', [HomeController::class, 'subscription'])->name('subscription');
+
+
+Route::get('urway/checkout/send_personal_info/{userId}', 'UrwayViewPersonalInformationController@getTransaction')->name('site.send_personal_info');
+Route::get('urway/response/send_personal_info/{userId}', 'UrwayViewPersonalInformationController@getResponse')->name('send_personal_info.response');
+Route::get('urway/send_personal_info/success', 'UrwayViewPersonalInformationController@urwaySuccess')->name('send_personal_info.success.transaction');
+Route::get('urway/send_personal_info/fail', 'UrwayViewPersonalInformationController@urwayFail')->name('send_personal_info.fail.transaction');
 
 
 include 'admin.php';

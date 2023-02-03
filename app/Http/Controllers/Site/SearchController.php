@@ -149,33 +149,35 @@ class SearchController extends Controller
         $data['weight_from'] = $request->weight_from;
         $data['weight_to'] = $request->weight_to;
         $data['answers'] = serialize($answers);
-        $data['get_users'] = $this->users_paginate->query()->where('show_profile', 1)->when($country != null, function ($query_1) use ($country) {
-            $query_1->where('country_id', $country);
+        $data['get_users'] = $this->users_paginate->query()
+            ->where('id', '!=', auth()->user()->id)
+            ->where('show_profile', 1)->when($country != null, function ($query_1) use ($country) {
+                $query_1->where('country_id', $country);
 
-        })->when($area != null, function ($query_2) use ($area) {
+            })->when($area != null, function ($query_2) use ($area) {
 
-            $query_2->where('aria_id', $area);
+                $query_2->where('aria_id', $area);
 
-        })->when($city != null, function ($query_3) use ($city) {
+            })->when($city != null, function ($query_3) use ($city) {
 
-            $query_3->where('city_id', $city);
+                $query_3->where('city_id', $city);
 
-        })->when($weight_from != null && $weight_to != null, function ($query_4) use ($weight_from, $weight_to) {
+            })->when($weight_from != null && $weight_to != null, function ($query_4) use ($weight_from, $weight_to) {
 
-            $query_4->whereBetween('width', [$weight_from, $weight_to]);
+                $query_4->whereBetween('width', [$weight_from, $weight_to]);
 
-        })->when($height_from != null && $height_to != null, function ($query_5) use ($height_from, $height_to) {
-            $query_5->whereBetween('height', [$height_from, $height_to]);
+            })->when($height_from != null && $height_to != null, function ($query_5) use ($height_from, $height_to) {
+                $query_5->whereBetween('height', [$height_from, $height_to]);
 
-        })->when($year_from != null && $year_to != null, function ($query_6) use ($year_from, $year_to) {
-            $query_6->whereBetween('year', [$year_from, $year_to]);
+            })->when($year_from != null && $year_to != null, function ($query_6) use ($year_from, $year_to) {
+                $query_6->whereBetween('year', [$year_from, $year_to]);
 
-        })->when(count($answers) > 0, function ($query_7) use ($answers) {
-            $query_7->whereHas('user_question_answers', function ($query_7_1) use ($answers) {
-                $query_7_1->whereIn('answer_question_id', $answers);
-            });
+            })->when(count($answers) > 0, function ($query_7) use ($answers) {
+                $query_7->whereHas('user_question_answers', function ($query_7_1) use ($answers) {
+                    $query_7_1->whereIn('answer_question_id', $answers);
+                });
 
-        })->paginate(6);
+            })->paginate(6);
 
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
 

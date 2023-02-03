@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 
+use App\Jobs\SendMails;
+use App\Mail\SendOfStepUserStatusEmail;
 use App\Models\OrderPayment;
 use App\Models\Package;
 use App\Models\User;
 use App\Models\UserPackage;
 use App\Models\ViewPersonalInformation;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 
-class UrwayPaymentController extends Controller
+class UrwayViewPersonalInformationController extends Controller
 {
 
     public $order;
@@ -34,30 +38,38 @@ class UrwayPaymentController extends Controller
         $this->merchant_key = '54e41f9bb30e5a5c20c7d88d4638e62a3bbd9cadbeacbb5bd6e83406f9a38464';
     }
 
+
     public function getTransaction(Request $request)
     {
+
         if (!auth()->check()) {
             return redirect()->route('login');
         }
 
-        if (checkUserHaveSubscription(auth()->user()->id)) {
-            toastr()->success(trans('global.sorry_you_have_package_activated'), ['timeOut' => 20000, 'closeButton' => true]);
+        $viewPersonalInformation = ViewPersonalInformation::query()->where('to_user_id', $request->userId)->where('from_user_id', auth()->user()->id)->where('status', 1)->first();
+        $checkCanShowUserInfo = User::query()->findOrFail($request->userId);
+
+        if ($checkCanShowUserInfo->show_profile == 0) {
+            toastr()->success(trans('global.Sorry_this_user_does_not_want_to_share_his_personal_data'), ['timeOut' => 20000, 'closeButton' => true]);
+            return redirect()->back();
+        }
+
+        if ($viewPersonalInformation) {
+            toastr()->success(trans('global.Sorry_this_user_data_has_already_been_exposed'), ['timeOut' => 20000, 'closeButton' => true]);
             return redirect()->back();
         } else {
 
-            $package = Package::query()->findOrFail($request->packageId);
-            $userPackage = UserPackage::query()->create([
-                'package_id' => $package->id,
-                'user_id' => auth()->user()->id,
-                'price' => $package->price,
-                'start_date' => Carbon::now(),
-                'end_date' => Carbon::now()->addDays(30),
-                'status' => 0, //subscription is not active
+            $user = User::query()->findOrFail($request->userId);
+            $viewPersonalInformation = ViewPersonalInformation::query()->create([
+                'from_user_id' => auth()->user()->id,
+                'to_user_id' => $user->id,
+                'price' => settingContentAr('price_show_user_information'),
+                'status' => 0,
             ]);
         }
 
-        $trackId = $userPackage->id;
-        $amount = $userPackage->price;
+        $trackId = $viewPersonalInformation->id;
+        $amount = $viewPersonalInformation->price;
 
 
         $txn_details = $trackId . "|" . $this->terminalId . "|" . $this->password . "|" . $this->secretKey . "|" . $amount . "|SAR";
@@ -73,7 +85,7 @@ class UrwayPaymentController extends Controller
             'country' => "SA",
             'amount' => $amount,
             "udf1" => "Test1",
-            "udf2" => route('urway.payment.response', $userPackage->id),//Response page URL
+            "udf2" => url('urway/response/send_personal_info', $viewPersonalInformation->id),//Response page URL
             "udf3" => "",
             "udf4" => "",
             "udf5" => "Test5",
@@ -111,6 +123,7 @@ class UrwayPaymentController extends Controller
             echo "<b>Something went wrong!!!!</b>";
         }
     }
+
 
     public function getResponse()
     {
@@ -177,8 +190,8 @@ class UrwayPaymentController extends Controller
                     $paymentId = $_GET['PaymentId'];
                     $tranId = $_GET['TranId'];
 
-                    $payment_information = UserPackage::query()->find(\request()->TrackId)->update(['status' => 1]);
-                    $payment_information = UserPackage::query()->find(\request()->TrackId);
+                    $payment_information = ViewPersonalInformation::query()->find(\request()->TrackId)->update(['status' => 1]);
+                    $payment_information = ViewPersonalInformation::query()->find(\request()->TrackId);
 
                     $paymentTransactions = new  OrderPayment();
                     $paymentTransactions->track_id = $trackid;
@@ -187,11 +200,43 @@ class UrwayPaymentController extends Controller
                     $paymentTransactions->payment_reference_at = Carbon::now();
                     $paymentTransactions->transaction_id = $paymentId;
                     $paymentTransactions->amount = $amount;
-                    $paymentTransactions->user_id = $payment_information->user_id;
-                    $paymentTransactions->details = 'Subscription';
+                    $paymentTransactions->user_id = $payment_information->from_user_id;
+                    $paymentTransactions->details = 'ViewPersonalInformation';
                     $paymentTransactions->save();
+                    //send email
+
+                    $checkUser = User::query()->find($payment_information->to_user_id);
+                    if ($checkUser->getType() == 'FollowMediator') {
+                        //send email to parent user "Mediator"
+
+                        $mediator = User::query()->find($checkUser->mediator_id);
+
+                        $data = [
+                            'name' => $mediator->first_name .' '.  $mediator->last_name,
+                            'email' => $mediator->email,
+                            'birth_date' =>$checkUser->birth_date,
+                            'gender' => $checkUser->gender,
+                            'phone' => $mediator->phone,
+                            'message' => 'يمكنك التواصل مع الوسيط لتكملة الأجراءات الرسمية',
+                        ];
+                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
+
+                    }else{
+                        //send email direct to user
+                        $data = [
+                            'name' => $checkUser->first_name .' '.  $checkUser->last_name,
+                            'email' => $checkUser->email,
+                            'birth_date' =>$checkUser->birth_date,
+                            'gender' => $checkUser->gender,
+                            'phone' => $checkUser->phone,
+                            'message' => 'يمكنك التواصل مع الوسيط لتكملة الأجراءات الرسمية',
+                        ];
+                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
+                    }
+
+
                     toastr()->success(trans('global.subscribed_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
-                    return redirect()->route('package', $payment_information->package_id);
+                    return redirect()->route('personally', $payment_information->to_user_id);
 
                 } else {
                     return redirect(route('urway.fail.transaction'));
@@ -214,6 +259,4 @@ class UrwayPaymentController extends Controller
     {
         return 'Payment failed';
     }
-
-
 }
