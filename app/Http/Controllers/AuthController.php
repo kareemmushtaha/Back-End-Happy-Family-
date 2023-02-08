@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Jobs\RegesterEmailJob;
 use App\Models\User;
+use App\Notifications\VerifyUserNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
 {
@@ -113,7 +115,9 @@ class AuthController extends Controller
             'status' => 1,
         ]);
 
-        dispatch(new RegesterEmailJob($user));
+//        dispatch(new RegesterEmailJob($user));
+        Notification::send($user, new VerifyUserNotification($user));
+
         toastr()->success(trans('global.register'), ['timeOut' => 20000, 'closeButton' => true]);
         return response()->json(['status' => true, 'msg' => trans('global.register')]);
     }
@@ -159,7 +163,9 @@ class AuthController extends Controller
             'width' => $request->width,
             'status' => 0,
         ]);
-        dispatch(new RegesterEmailJob($user));
+//        dispatch(new RegesterEmailJob($user));
+        Notification::send($user, new VerifyUserNotification($user));
+
         toastr()->success(trans('global.register'), ['timeOut' => 20000, 'closeButton' => true]);
         return response()->json(['status' => true, 'msg' => trans('global.register')]);
     }

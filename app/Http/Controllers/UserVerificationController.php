@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 class UserVerificationController extends Controller
 {
-
     public function approve($token)
     {
 
@@ -19,6 +18,7 @@ class UserVerificationController extends Controller
         }
 
         $user->verified = 1;
+        $user->check_active = 1;
         $user->verified_at = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $user->verification_token = null;
         $user->save();
