@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'title' => 'الاسم',
     'userManagement' => [
         'title' => 'إدارة المستخدمين',
         'title_singular' => 'إدارة المستخدمين',

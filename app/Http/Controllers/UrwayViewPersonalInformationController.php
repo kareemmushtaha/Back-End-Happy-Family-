@@ -217,7 +217,7 @@ class UrwayViewPersonalInformationController extends Controller
                             'birth_date' =>$checkUser->birth_date,
                             'gender' => $checkUser->gender,
                             'phone' => $mediator->phone,
-                            'message' => 'يمكنك التواصل مع الوسيط لتكملة الأجراءات الرسمية',
+                            'message' => 'يمكنك التواصل مع الوسيط لتكملة الإجراءات الرسمية',
                         ];
                         Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
 
@@ -229,7 +229,7 @@ class UrwayViewPersonalInformationController extends Controller
                             'birth_date' =>$checkUser->birth_date,
                             'gender' => $checkUser->gender,
                             'phone' => $checkUser->phone,
-                            'message' => 'يمكنك التواصل مع الوسيط لتكملة الأجراءات الرسمية',
+                            'message' => 'يمكنك التواصل مع الطرف الآخر لتكملة الإجراءات الرسمية',
                         ];
                         Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
                     }

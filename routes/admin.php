@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AnswerChatController;
+use App\Http\Controllers\Admin\AriasController;
+use App\Http\Controllers\Admin\CitiesController;
 use App\Http\Controllers\Admin\QuestionChatController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Mediator\FollowMediatorChatController;
@@ -19,6 +21,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('users/change-password', [UsersController::class, 'saveChangePassword'])->name('users.saveChangePassword');
     Route::post('users/change-status', [UsersController::class, 'changeStatus'])->name('users.changeStatus');
     Route::resource('users', 'UsersController');
+    Route::resource('countries', 'CountriesController');
+
+    Route::group(['prefix' => 'arias', 'as' => 'arias.'], function () {
+
+        Route::get('country/{countryId}', [AriasController::class, 'index'])->name('index');
+        Route::get('{ariaId}/edit', [AriasController::class, 'edit'])->name('edit');
+        Route::PUT('{ariaId}/update', [AriasController::class, 'update'])->name('update');
+        Route::post('store/{countryId}', [AriasController::class, 'store'])->name('store');
+        Route::delete('{ariaId}/delete', [AriasController::class, 'destroy'])->name('destroy');
+
+    });
+
+    Route::group(['prefix' => 'cities', 'as' => 'cities.'], function () {
+
+        Route::get('arias/{ariaId}', [CitiesController::class, 'index'])->name('index');
+        Route::get('{cityId}/edit', [CitiesController::class, 'edit'])->name('edit');
+        Route::PUT('{cityId}/update', [CitiesController::class, 'update'])->name('update');
+        Route::post('store/{ariaId}', [CitiesController::class, 'store'])->name('store');
+        Route::delete('{cityId}/delete', [CitiesController::class, 'destroy'])->name('destroy');
+
+    });
 
     Route::resource('questions-chat', 'QuestionChatController');
     Route::resource('personal-questions', 'PersonalQuestionsController');
