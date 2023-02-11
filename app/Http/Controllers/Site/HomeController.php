@@ -72,7 +72,6 @@ class HomeController extends Controller
             $gender = null;
         }
 
-
         if ($request->country) {
             $country = $request->country;
         } else {
