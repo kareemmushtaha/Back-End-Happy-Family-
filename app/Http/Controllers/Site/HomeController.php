@@ -106,7 +106,7 @@ class HomeController extends Controller
         if (auth()->check()) {
             $data['get_users']->where('id', '!=', auth()->user()->id);
         }
-        $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
+        $data['get_users'] = $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
             $query_1->where('gender', $gender);
 
         })->when($country != null, function ($query_2) use ($country) {
