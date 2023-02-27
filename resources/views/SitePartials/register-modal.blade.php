@@ -85,7 +85,10 @@
                 <input type="password" name="password" placeholder="كلمة المرور"/>
                 <input name="phone" placeholder="رقم الجوال"/>
                 <input name="fake_name" placeholder="الاسم الرمزي"/>
-                <input name="birth_date" type="date"/>
+                <div>
+                    <h2 style="color: #631E73;">تاريخ الميلاد</h2>
+                    <input class="col-lg-12" name="birth_date" type="date"/>
+                </div>
             </div>
             <div class="signup-navigate">
                 <a onclick="hideAlert('signup-2'), showAlert('signup-1')" class="signup-back-button">السابق</a>
@@ -120,8 +123,13 @@
             </div>
             <div class="signup-content">
 
-                <input name="nationality" placeholder="الجنسية"/>
-
+{{--                <input name="nationality" placeholder="الجنسية"/>--}}
+                <select name="nationality" id="nationality">
+                    <option value="null" hidden>الجنسية</option>
+                    @foreach(\App\Models\Country::all() as $item)
+                        <option value="{{$item->title}}">{{$item->title}}</option>
+                    @endforeach
+                </select>
                 <select name="country_id" id="country">
                     <option value="null" hidden>دولة الإقامه</option>
                     @foreach(\App\Models\Country::all() as $item)
@@ -130,16 +138,16 @@
                 </select>
                 <select name="aria_id" id="area">
                     <option value="" hidden>المنطقه</option>
-{{--                    @foreach(\App\Models\Aria::all() as $Aria)--}}
-{{--                        <option value="{{$Aria->id}}">{{$Aria->title}}</option>--}}
-{{--                    @endforeach--}}
+                    {{--                    @foreach(\App\Models\Aria::all() as $Aria)--}}
+                    {{--                        <option value="{{$Aria->id}}">{{$Aria->title}}</option>--}}
+                    {{--                    @endforeach--}}
                 </select>
 
                 <select name="city_id">
                     <option value="" hidden>المدينه</option>
-{{--                    @foreach(\App\Models\City::all() as $City)--}}
-{{--                        <option value="{{$City->id}}">{{$City->title}}</option>--}}
-{{--                    @endforeach--}}
+                    {{--                    @foreach(\App\Models\City::all() as $City)--}}
+                    {{--                        <option value="{{$City->id}}">{{$City->title}}</option>--}}
+                    {{--                    @endforeach--}}
                 </select>
 
                 <input name="height" id="height" placeholder="الطول"/>

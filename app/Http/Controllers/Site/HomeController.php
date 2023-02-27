@@ -42,7 +42,7 @@ class HomeController extends Controller
             $user = $user->latest()->take(10)->paginate(6);
             $data['get_users'] = $user;
         } else {
-            $data['get_users'] = User::query()->where('show_profile', 1)->whereIn('role_id', [2, 3,4])->latest()->take(10)->paginate(6);
+            $data['get_users'] = User::query()->where('show_profile', 1)->whereIn('role_id', [2, 3, 4])->latest()->take(10)->paginate(6);
         }
 
         $data['countries'] = Country::query()->get();
@@ -105,7 +105,7 @@ class HomeController extends Controller
         if (auth()->check()) {
             $data['get_users']->where('id', '!=', auth()->user()->id);
         }
-        $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
+        $data['get_users'] = $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
             $query_1->where('gender', $gender);
 
         })->when($country != null, function ($query_2) use ($country) {

@@ -42,7 +42,10 @@
                 <h2 id="icon">{{auth()->user()->getFullName()}}</h2>
                 <img id="icon" src="{{asset('assets/site/images/arrow-down.png')}} " alt=""/>
             </div>
+            @endif
             <i onclick="mobileMenu()" class="fa-solid fa-bars"></i>
+            @if( \Illuminate\Support\Facades\Auth::check())
+
             <div id="logout" class="notification">
                 <div>
                     <a href="{{route('my_profile')}}">
@@ -178,15 +181,52 @@
                 <a class="signup" href="{{route('login')}}">سجل مجانا</a>
             </div>
         @endif
-        <a href="">لوحة تحكم</a>
-        <a href="" style="color: #F1BD19;">عن المنصة</a>
-        <a href="">الاشتراك</a>
-        <a href="">الأسئلة الشائعة</a>
-        <a href="">اتصل بنا</a>
-        <a href="{{route('logout')}}">
-            تسجيل الخروج
-            <img style="width: 20px; height: 20px; margin-right: 30px;" src="{{asset('assets/site/images/exit.png')}}"
-                 alt=""/>
-        </a>
+
+
+
+
+
+
+
+
+
+
+
+
+            @if(auth()->check())
+                @if(auth()->user()->getType()== "mediator")
+                    <a href="{{route('mediator.users.index')}}">لوحة تحكم</a>
+                @endif
+            @endif
+            <a href="{{route('home')}}"
+               @if(  \Illuminate\Support\Facades\Request::is('home*' ))  @endif> الرئيسية</a>
+            <a href="{{route('landing')}}" >عن المنصة</a>
+            <a href="{{route('package',1)}}"
+               @if(  \Illuminate\Support\Facades\Request::is('package*' )) style="color: #F1BD19;" @endif>الاشتراك</a>
+            <a href="{{route('question_answer')}}"
+               @if(  \Illuminate\Support\Facades\Request::is('question_answer*' )) style="color: #F1BD19;" @endif>الأسئلة
+                الشائعة</a>
+            <a href="{{route('contact')}}"
+               @if(  \Illuminate\Support\Facades\Request::is('contact*' )) style="color: #F1BD19;" @endif>اتصل بنا</a>
+            <div class="icons">
+                <a href=" {{route('advanced-search')}}"> <img src="{{asset('assets/site/images/search.png')}}" alt=""/></a>
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    {{--                <img src="{{asset('assets/site/images/settings.png')}}" alt=""/>--}}
+                    {{--                <img id="icon" onclick="notification('messages')" src="{{asset('assets/site/images/messages.png')}} "alt=""/>--}}
+                    <a href="{{route('chat.index')}}">  <img id="icon"  src="{{asset('assets/site/images/messages.png')}} "alt=""/></a>
+                    <img id="icon" onclick="notification('alert')" src="{{asset('assets/site/images/bell.png')}} " alt=""/>
+                @endif
+            </div>
+
+            @if(auth()->check())
+                <a href="{{route('logout')}}">
+                    تسجيل الخروج
+                    <img style="width: 20px; height: 20px; margin-right: 30px;" src="{{asset('assets/site/images/exit.png')}}"
+                         alt=""/>
+                </a>
+            @endif
+
+
+
     </div>
 </div><!-- start body -->
