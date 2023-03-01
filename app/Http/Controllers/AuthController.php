@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\RegesterEmailJob;
 use App\Models\User;
 use App\Notifications\VerifyUserNotification;
+use App\Services\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -115,6 +116,8 @@ class AuthController extends Controller
             'status' => 1,
         ]);
 
+        Subscription::CheckFreeSubscription($user);
+
 //        dispatch(new RegesterEmailJob($user));
         Notification::send($user, new VerifyUserNotification($user));
 
@@ -164,6 +167,7 @@ class AuthController extends Controller
             'status' => 0,
         ]);
 //        dispatch(new RegesterEmailJob($user));
+        Subscription::CheckFreeSubscription($user);
         Notification::send($user, new VerifyUserNotification($user));
 
         toastr()->success(trans('global.register'), ['timeOut' => 20000, 'closeButton' => true]);

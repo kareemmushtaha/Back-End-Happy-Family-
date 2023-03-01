@@ -23,6 +23,8 @@ class CreateUserPackagesTable extends Migration
             $table->string('start_date');
             $table->string('end_date');
             $table->integer('status')->default(1);
+            $table->integer('is_free')->default(0);
+            $table->integer('added_by_manager')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

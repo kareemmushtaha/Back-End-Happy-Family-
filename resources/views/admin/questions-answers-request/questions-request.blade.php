@@ -46,7 +46,8 @@
                                 <a href="#" class="text-dark fw-bold text-hover-primary fs-6">#{{ $key+1 }}</a>
                             </td>
                             <td>
-                                <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $question->customUserId->email }}</a>
+                                <a href="#"
+                                   class="text-dark fw-bold text-hover-primary fs-6">{{ $question->customUserId->email }}</a>
                             </td>
                             <td>
                                 <a href="#"
@@ -70,16 +71,34 @@
 
                             <td class="text-end">
 
-                                <button data-id="{{$question->id}}"
-                                        onclick="Change_Status(this)"  id="active{{$question->id}}"
-                                        data-url="{{ route('admin.questions-chat.changeStatusRequestQuestionChat', $question->id) }}"
-                                        class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$question->id}}">
-                                    @if($question->status==0)
+                                @if($question->status == 0)
+                                    {{--  "0" ==>  pending accept or reject--}}
+                                    <button data-id="{{$question->id}}"
+                                            onclick="Change_Status_question(this)" id="active{{$question->id}}"
+                                            data-url="{{ route('admin.questions-chat.acceptRequestQuestionChat', $question->id) }}"
+                                            class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$question->id}}">
                                         {{trans('global.accept')}}
-                                    @else
+                                    </button>
+                                    <button data-id="{{$question->id}}"
+                                            onclick="Change_Status_question(this)" id="active{{$question->id}}"
+                                            data-url="{{ route('admin.questions-chat.rejectRequestQuestionChat', $question->id) }}"
+                                            class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$question->id}}">
                                         {{trans('global.reject')}}
-                                    @endif
-                                </button>
+                                    </button>
+                                @endif
+
+                                @if(in_array($question->status,[1,2]) )
+                                    <button
+                                        class="btn  btn-bg-info text-white btn-active-color-primary " style="padding: 10px 10px !important;">
+                                        @if($question->status ==1)
+                                        {{trans('global.accepted')}}
+                                        @elseif($question->status ==2)
+                                            {{trans('global.rejected')}}
+                                        @endif
+                                    </button>
+                                @endif
+
+
                             </td>
                         </tr>
                     @endforeach
@@ -97,6 +116,61 @@
 @endsection
 
 
+
+@section('script')
+    <script>
+        function Change_Status_question(event) {
+
+            var token = '{{csrf_token()}}';
+            var url = $(event).data('url');
+            var id = $(event).data('id');
+
+            Swal.fire({
+                title: "{{trans('global.areYouSure')}}",
+                text: "❗❗",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "{{trans('global.yes')}}",
+                cancelButtonText: "{{trans('global.no')}} {{trans('global.cancel')}}",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            '_token': token,
+                            '_method': 'get',
+                            'id': id
+
+                        },
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire(
+                                    response.msg,
+                                    "--",
+                                    "success"
+                                )
+                                location.reload();
+
+                            } else {
+                                Swal.fire(response.msg, "...", "error");
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        response.msg,
+                        "{{trans('global.undone')}}",
+                        "error"
+                    )
+                }
+            });
+        }
+    </script>
+
+
+@endsection
 
 
 

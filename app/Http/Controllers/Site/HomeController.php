@@ -281,31 +281,31 @@ class HomeController extends Controller
 
     }
 
-    public function subscription($package_id)
-    {
-        //this function test for developer
-        if (auth()->check()) {
-            //check user  have package activate
-            if (checkUserHaveSubscription(auth()->user()->id)) {
-                toastr()->success(trans('global.sorry_you_have_package_activated'), ['timeOut' => 20000, 'closeButton' => true]);
-                return response()->json(['status' => false, 'msg' => trans('global.sorry_you_have_package_activated')]);
-            } else {
-                $package = Package::query()->findOrFail($package_id);
-                UserPackage::query()->create([
-                    'package_id' => $package->id,
-                    'user_id' => auth()->user()->id,
-                    'price' => $package->price,
-                    'start_date' => Carbon::now(),
-                    'end_date' => Carbon::now()->addDays(30),
-                    'status' => 1, //subscription is active
-                ]);
-                toastr()->success(trans('global.subscribed_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
-                return response()->json(['status' => true, 'msg' => trans('global.subscribed_successfully')]);
-            }
-        } else {
-            return redirect()->route('login');
-        }
-    }
+//    public function subscription($package_id)
+//    {
+//        //this function test for developer
+//        if (auth()->check()) {
+//            //check user  have package activate
+//            if (checkUserHaveSubscription(auth()->user()->id)) {
+//                toastr()->success(trans('global.sorry_you_have_package_activated'), ['timeOut' => 20000, 'closeButton' => true]);
+//                return response()->json(['status' => false, 'msg' => trans('global.sorry_you_have_package_activated')]);
+//            } else {
+//                $package = Package::query()->findOrFail($package_id);
+//                UserPackage::query()->create([
+//                    'package_id' => $package->id,
+//                    'user_id' => auth()->user()->id,
+//                    'price' => $package->price,
+//                    'start_date' => Carbon::now(),
+//                    'end_date' => Carbon::now()->addDays(30),
+//                    'status' => 1, //subscription is active
+//                ]);
+//                toastr()->success(trans('global.subscribed_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
+//                return response()->json(['status' => true, 'msg' => trans('global.subscribed_successfully')]);
+//            }
+//        } else {
+//            return redirect()->route('login');
+//        }
+//    }
 
 
 }

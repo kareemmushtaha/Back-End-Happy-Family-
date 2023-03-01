@@ -10,6 +10,7 @@ use App\Models\Package;
 use App\Models\User;
 use App\Models\UserPackage;
 use App\Models\ViewPersonalInformation;
+use App\Services\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -46,14 +47,20 @@ class UrwayPaymentController extends Controller
         } else {
 
             $package = Package::query()->findOrFail($request->packageId);
-            $userPackage = UserPackage::query()->create([
-                'package_id' => $package->id,
-                'user_id' => auth()->user()->id,
-                'price' => $package->price,
-                'start_date' => Carbon::now(),
-                'end_date' => Carbon::now()->addDays(30),
-                'status' => 0, //subscription is not active
-            ]);
+            if ($package->price == 0) {
+                Subscription::CheckFreeSubscription(auth()->user());
+                toastr()->success(trans('global.subscribed_free_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
+                return redirect()->route('package', $package->id);
+            } else {
+                $userPackage = UserPackage::query()->create([
+                    'package_id' => $package->id,
+                    'user_id' => auth()->user()->id,
+                    'price' => $package->price,
+                    'start_date' => Carbon::now(),
+                    'end_date' => Carbon::now()->addDays(30),
+                    'status' => 0, //subscription is not active
+                ]);
+            }
         }
 
         $trackId = $userPackage->id;

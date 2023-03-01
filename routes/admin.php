@@ -20,6 +20,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('users/change-password', [UsersController::class, 'changePassword'])->name('users.changePassword');
     Route::post('users/change-password', [UsersController::class, 'saveChangePassword'])->name('users.saveChangePassword');
     Route::post('users/change-status', [UsersController::class, 'changeStatus'])->name('users.changeStatus');
+    Route::post('users/upgrade-subscription/{userId}', [UsersController::class, 'upgradeSubscription'])->name('users.upgradeSubscription');
     Route::resource('users', 'UsersController');
     Route::resource('countries', 'CountriesController');
 
@@ -49,8 +50,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('answers-chat', 'AnswerChatController');
     Route::get('request/question/chat', [QuestionChatController::class, 'customQuestionChat'])->name('questions-chat.customQuestionChat');
     Route::get('request/answer/chat', [AnswerChatController::class, 'customAnswerChat'])->name('answers-chat.customAnswerChat');
-    Route::get('change/status/request/question/chat', [QuestionChatController::class, 'changeStatusRequestQuestionChat'])->name('questions-chat.changeStatusRequestQuestionChat');
-    Route::get('change/status/request/answer/chat', [AnswerChatController::class, 'changeStatusRequestAnswerChat'])->name('answers-chat.changeStatusRequestAnswerChat');
+    Route::get('accept/request/question/chat', [QuestionChatController::class, 'acceptRequestQuestionChat'])->name('questions-chat.acceptRequestQuestionChat');
+    Route::get('reject/request/question/chat', [QuestionChatController::class, 'rejectRequestQuestionChat'])->name('questions-chat.rejectRequestQuestionChat');
+
+    Route::get('accept/request/answer/chat', [AnswerChatController::class, 'acceptRequestAnswerChat'])->name('answer-chat.acceptRequestAnswerChat');
+    Route::get('reject/request/answer/chat', [AnswerChatController::class, 'rejectRequestAnswerChat'])->name('answer-chat.rejectRequestAnswerChat');
 
     //Setting
     Route::resource('settings', 'SettingController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);

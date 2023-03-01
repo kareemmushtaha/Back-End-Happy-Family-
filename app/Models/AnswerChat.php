@@ -38,12 +38,18 @@ class AnswerChat extends Model
 
     public function scopeActive($query)
     {
+        //        0 pending accept
+       //         1 accepted
+      //          2 rejected
         return $query->where('status', '1');
     }
 
 
     public function getActive()
     {
+        //        0 pending accept
+        //         1 accepted
+        //          2 rejected
         return $this->status == '1' ? trans('global.active') : trans('global.un_active');
 
     }

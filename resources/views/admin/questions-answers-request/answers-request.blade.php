@@ -72,16 +72,49 @@
                             </td>
 
                             <td class="text-end">
-                                <button data-id="{{$answer->id}}" id="active{{$answer->id}}"
-                                        onclick="Change_Status(this)"
-                                        data-url="{{ route('admin.answers-chat.changeStatusRequestAnswerChat', $answer->id) }}"
-                                        class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$answer->id}}">
-                                    @if($answer->status==0)
+
+
+
+
+
+
+
+                                @if($answer->status == 0)
+                                    {{--  "0" ==>  pending accept or reject--}}
+                                    <button data-id="{{$answer->id}}"
+                                            onclick="Change_Status_Answer(this)" id="active{{$answer->id}}"
+                                            data-url="{{ route('admin.answer-chat.acceptRequestAnswerChat', $answer->id) }}"
+                                            class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$answer->id}}">
                                         {{trans('global.accept')}}
-                                    @else
+                                    </button>
+                                    <button data-id="{{$answer->id}}"
+                                            onclick="Change_Status_Answer(this)" id="active{{$answer->id}}"
+                                            data-url="{{ route('admin.answer-chat.rejectRequestAnswerChat', $answer->id) }}"
+                                            class="btn btn-icon btn-bg-warning text-white btn-active-color-primary btn-lg StatusRow{{$answer->id}}">
                                         {{trans('global.reject')}}
-                                    @endif
-                                </button>
+                                    </button>
+                                @endif
+
+                                @if(in_array($answer->status,[1,2]) )
+                                    <button
+                                        class="btn  btn-bg-info text-white btn-active-color-primary " style="padding: 10px 10px !important;">
+                                        @if($answer->status ==1)
+                                            {{trans('global.accepted')}}
+                                        @elseif($answer->status ==2)
+                                            {{trans('global.rejected')}}
+                                        @endif
+                                    </button>
+                                @endif
+
+
+
+
+
+
+
+
+
+
                             </td>
                         </tr>
                     @endforeach
@@ -104,52 +137,56 @@
 
     <script>
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        function Change_Status_Answer(event) {
 
+            var token = '{{csrf_token()}}';
+            var url = $(event).data('url');
+            var id = $(event).data('id');
 
-        $(document).on('click', '#btn_save_answer', function (e) {
-            $('#btn_save_answer').html('{{trans('global.create')}} <i class="fa fa-spinner fa-spin"></i>');
-            e.preventDefault();
-            $('.errors').text('');
-            var formData = new FormData($('#formSaveAnswer')[0]); //get all data in form
-            $.ajax({
-                type: 'post',
-                enctype: 'multipart/form-data',
-                url: "{{ route("admin.answers-chat.store") }}",
-                data: formData, // send this data to controller
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function (data) {
-                    $('#btn_save_answer').html('{{trans('global.create')}} ');
-                    if (data.status == true) {
+            Swal.fire({
+                title: "{{trans('global.areYouSure')}}",
+                text: "❗❗",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "{{trans('global.yes')}}",
+                cancelButtonText: "{{trans('global.no')}} {{trans('global.cancel')}}",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            '_token': token,
+                            '_method': 'get',
+                            'id': id
 
-                        document.getElementById("formSaveAnswer").reset();
-                        setTimeout(function () {
-                            var url = "{{ route('admin.answers-chat.index') }}"; //the url I want to redirect to
-                            $(location).attr('href', url);
-                        }, 0);
+                        },
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire(
+                                    response.msg,
+                                    "--",
+                                    "success"
+                                )
+                                location.reload();
 
-                    } else {
-                        Swal.fire("{{trans('global.sorry_some_error')}}", "{{trans('global.sorry_some_error')}}", "error");
-                    }
-                }, error: function (reject) {
-                    $('#btn_save_answer').html('{{trans('global.create')}}');
-
-                    var response = $.parseJSON(reject.responseText);
-                    $.each(response.errors, function (key, val) {
-
-                        // for loop to all validation and show all validate
-                        $("#" + key + "_error").text(val[0]);
+                            } else {
+                                Swal.fire(response.msg, "...", "error");
+                            }
+                        }
                     });
+                } else {
+                    Swal.fire(
+                        response.msg,
+                        "{{trans('global.undone')}}",
+                        "error"
+                    )
                 }
             });
-        });
+        }
     </script>
+
 
 @endsection
 

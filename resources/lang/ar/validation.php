@@ -224,6 +224,8 @@ return [
         'execution_time' => 'مدة التنفيذ والتركيب',
 
         'end_date_bid' => 'تاريخ الانتهاء',
+        'start_date' => 'تاريخ بداية الاشتراك',
+        'end_subscription_date' => 'تاريخ إنتهاء الاشتراك',
 
         'auction_type_id' => 'نوع الامر',
         'image' => 'الصورة',

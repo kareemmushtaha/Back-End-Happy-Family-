@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpgradeSubscriptionRequest;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Package;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserPackage;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +35,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        toastr()->success( trans('global.create_success'), ['timeOut' => 20000,'closeButton' => true]);
+        toastr()->success(trans('global.create_success'), ['timeOut' => 20000, 'closeButton' => true]);
         return response()->json(['status' => true, 'msg' => trans('global.create_success')]);
     }
 
@@ -111,7 +115,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function changeStatus (Request $request)
+    public function changeStatus(Request $request)
     {
 
         if ($request->check_active == 0) {
@@ -129,6 +133,31 @@ class UsersController extends Controller
             'check_active' => $check_active,
             'msg' => 'تم تغيير حالة المستخدم بنجاح',
         ]);
+    }
+
+    public function upgradeSubscription(UpgradeSubscriptionRequest $request, $userId)
+    {
+        $user = User::query()->findOrFail($userId);
+
+        $package = Package::query()->first();
+        if (!checkUserHaveSubscription($user->id)) {
+            UserPackage::query()->create([
+                'package_id' => $package->id,
+                'user_id' => $user->id,
+                'price' => $request->price,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_subscription_date,
+                'status' => 1, //subscription is not active
+                'is_free' => 0,
+                'added_by_manager' => 1,
+            ]);
+            return response()->json(['status' => true, 'msg' => trans('global.upgrade_subscription_success')]);
+        } else {
+            return response()->json(['status' => false, 'msg' => trans('global.sorry_you_have_package_activated')]);
+
+        }
+
+
     }
 
 }

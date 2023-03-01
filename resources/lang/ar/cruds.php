@@ -95,14 +95,17 @@ return [
     'subscriptions' => [
         'title' => 'الإشتراكات',
         'title_singular' => 'اشتراك',
+        'the_title' => 'الاشتراك',
         'fields' => [
             'id' => 'الرقم',
             'user' => 'المشترك',
             'package' => 'الباقة',
             'price' => 'السعر',
+            'start_date' => 'تاريخ بداية الاشتراك',
             'end_subscription_date' => 'تاريخ انتهاء الاشتراك',
             'status' => 'الحالة',
-
+            'is_free' => 'مجاني / مدفوع',
+            'added_by_manager' => 'مضاف بواسط الادارة',
             'title' => 'العنوان',
             'title_helper' => ' ',
             'created_at' => 'تاريخ الإنشاء',

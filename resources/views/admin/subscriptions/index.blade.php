@@ -20,7 +20,7 @@
 
 
                     <!--begin::Table container-->
-                    <div   class="datatable datatable-default  datatable-bordered datatable-loaded ">
+                    <div class="datatable datatable-default  datatable-bordered datatable-loaded ">
 
                         <table class="table align-middle gs-0 gy-4 " id="kt_datatable_example_1">
                             <!--begin::Table head-->
@@ -48,6 +48,12 @@
                                     {{ trans('cruds.subscriptions.fields.status') }}
                                 </th>
                                 <th class="min-w-4px">
+                                    {{ trans('cruds.subscriptions.fields.is_free') }}
+                                </th>
+                                <th class="min-w-4px">
+                                    {{ trans('cruds.subscriptions.fields.added_by_manager') }}
+                                </th>
+                                <th class="min-w-4px">
                                 </th>
                                 <th class="min-w-4px">
                                 </th>
@@ -59,7 +65,7 @@
 
                             @isset($subscriptions)
                                 @foreach ($subscriptions  as $key => $subscription)
-                                    <tr >
+                                    <tr>
 
                                         <td>
                                             <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
@@ -85,6 +91,14 @@
                                         </td>
                                         <td>
                                             <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ \App\Models\UserPackage::STATUS[$subscription->status] ?? '' }}</a>
+                                        </td>
+                                        <td>
+                                            <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">@if($subscription->is_free == 1)
+                                                    اشتراك مجاني @else  اشتراك مدفوع @endif </a>
+                                        </td>
+                                        <td>
+                                            <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">@if($subscription->added_by_manager == 1)
+                                              بواسطة الإداة       @else  بواسطة المستخدم @endif </a>
                                         </td>
 
                                     </tr>

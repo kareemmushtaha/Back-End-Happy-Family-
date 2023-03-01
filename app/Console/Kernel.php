@@ -2,8 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\UpdateUserInformation;
-use Illuminate\Console\Scheduling\Schedule;
+ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -25,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(UpdateUserInformation::class)->daily();
+//        $schedule->command(UpdateUserInformation::class)->daily();
     }
 
     /**

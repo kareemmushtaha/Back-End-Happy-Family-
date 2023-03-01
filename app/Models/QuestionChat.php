@@ -48,6 +48,9 @@ class QuestionChat extends Model
 
     public function getActive()
     {
+//        0 pending accept
+//        1 accepted
+//        2 rejected
         return $this->status == '1' ? trans('global.active') : trans('global.un_active');
     }
 

@@ -95,15 +95,30 @@ class QuestionChatController extends Controller
     }
 
 
-    public function changeStatusRequestQuestionChat(Request $request)
+    public function acceptRequestQuestionChat(Request $request)
     {
         try {
             $question = QuestionChat::query()->find($request->id);
             if (!$question) {
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
-            $status = $question->status == '0' ? '1' : '0';
-            $question->update(['status' => $status]);
+             $question->update(['status' => 1]);
+            return response()->json(['status' => true, 'active' => $question->getAcceptOrReject(), 'id' => $question->id, 'msg' => trans('global.update_success')]);
+
+        } catch (\Exception $ex) {
+            return response()->json(['status' => false, 'msg' => trans('global.sorry_some_error')]);
+
+        }
+    }
+
+    public function rejectRequestQuestionChat(Request $request)
+    {
+        try {
+            $question = QuestionChat::query()->find($request->id);
+            if (!$question) {
+                return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
+            }
+            $question->update(['status' => 2]);
             return response()->json(['status' => true, 'active' => $question->getAcceptOrReject(), 'id' => $question->id, 'msg' => trans('global.update_success')]);
 
         } catch (\Exception $ex) {

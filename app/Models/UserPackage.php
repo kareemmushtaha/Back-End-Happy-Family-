@@ -18,7 +18,7 @@ class UserPackage extends Model
     protected $table = 'user_packages';
 
     protected $fillable = [
-        'id', 'package_id', 'user_id', 'price', 'start_date', 'end_date', 'status'
+        'id', 'package_id', 'user_id', 'price', 'start_date', 'end_date', 'status', 'is_free', 'added_by_manager'
     ];
 
     protected $hidden = ['translations'];

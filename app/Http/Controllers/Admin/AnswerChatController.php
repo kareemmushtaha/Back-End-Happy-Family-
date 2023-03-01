@@ -92,15 +92,14 @@ class AnswerChatController extends Controller
         return response()->json(['status' => true, 'msg' => trans('global.delete_success')]);
     }
 
-    public function changeStatusRequestAnswerChat(Request $request)
+    public function acceptRequestAnswerChat(Request $request)
     {
         try {
             $answer = AnswerChat::query()->find($request->id);
             if (!$answer) {
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
-            $status = $answer->status == '0' ? '1' : '0';
-            $answer->update(['status' => $status]);
+             $answer->update(['status' => 1]);
             return response()->json(['status' => true, 'active' => $answer->getAcceptOrReject(), 'id' => $answer->id, 'msg' => trans('global.update_success')]);
 
         } catch (\Exception $ex) {
@@ -108,5 +107,25 @@ class AnswerChatController extends Controller
 
         }
     }
+
+    public function rejectRequestAnswerChat(Request $request)
+    {
+        try {
+            $answer = AnswerChat::query()->find($request->id);
+            if (!$answer) {
+                return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
+            }
+             $answer->update(['status' => 2]);
+            return response()->json(['status' => true, 'active' => $answer->getAcceptOrReject(), 'id' => $answer->id, 'msg' => trans('global.update_success')]);
+
+        } catch (\Exception $ex) {
+            return response()->json(['status' => false, 'msg' => trans('global.sorry_some_error')]);
+
+        }
+    }
+
+
+
+
 
 }
