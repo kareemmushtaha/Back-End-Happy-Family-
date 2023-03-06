@@ -225,7 +225,6 @@ class User extends Authenticatable
         return $this->belongsTo(Aria::class, 'aria_id', 'id');
     }
 
-
     public function getPhotoAttribute($value)
     {
         if (!$value) {

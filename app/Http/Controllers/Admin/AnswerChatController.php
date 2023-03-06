@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AnswerChatRequest;
 use App\Models\AnswerChat;
+use App\Models\User;
+use App\Notifications\AcceptAnswerChatNotification;
+use App\Notifications\RejectAnswerChatNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 
 class AnswerChatController extends Controller
@@ -35,7 +39,7 @@ class AnswerChatController extends Controller
 
     public function store(AnswerChatRequest $request)
     {
-       //abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         AnswerChat::query()->create([
             'ar' => [
                 'answer_title' => $request->answer_title_ar,
@@ -99,7 +103,9 @@ class AnswerChatController extends Controller
             if (!$answer) {
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
-             $answer->update(['status' => 1]);
+            $answer->update(['status' => 1]);
+            $answer = AnswerChat::query()->find($request->id);
+            $this->sendEmail($answer);
             return response()->json(['status' => true, 'active' => $answer->getAcceptOrReject(), 'id' => $answer->id, 'msg' => trans('global.update_success')]);
 
         } catch (\Exception $ex) {
@@ -115,7 +121,9 @@ class AnswerChatController extends Controller
             if (!$answer) {
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
-             $answer->update(['status' => 2]);
+            $answer->update(['status' => 2]);
+            $answer = AnswerChat::query()->find($request->id);
+            $this->sendEmail($answer);
             return response()->json(['status' => true, 'active' => $answer->getAcceptOrReject(), 'id' => $answer->id, 'msg' => trans('global.update_success')]);
 
         } catch (\Exception $ex) {
@@ -124,8 +132,25 @@ class AnswerChatController extends Controller
         }
     }
 
+    public function sendEmail($answer)
+    {
+        $user = User::query()->find($answer->custom_user_id);
+        if ($user->getType() == "FollowMediator") {
+            $user = User::query()->find($user->mediator_id);
+        }
 
+        if ($answer->status == 1) {
+            //         1 accepted
+//            $user->notify(new AcceptQuestionChatNotification(['question' => $question->title]));
+            Notification::send($user, new AcceptAnswerChatNotification($answer));
 
+        } elseif ($answer->status == 2) {
+            //          2 rejected
+//            $user->notify(new RejectQuestionChatNotification(['question' => $question->title]));
+            Notification::send($user, new RejectAnswerChatNotification($answer));
+
+        }
+    }
 
 
 }

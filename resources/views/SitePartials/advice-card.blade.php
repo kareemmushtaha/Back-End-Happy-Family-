@@ -1,4 +1,4 @@
-<a href="">
+<a href="{{route('question_answer')}}">
     <div class="profile-bottom">
         <h2>انتقل الى الإرشادات<br/> والنصائح</h2>
         <div>

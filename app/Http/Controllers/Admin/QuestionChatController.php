@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\QuestionChatRequest;
 use App\Models\QuestionChat;
-use App\Models\Role;
+use App\Models\User;
+use App\Notifications\AcceptQuestionChatNotification;
+use App\Notifications\RejectQuestionChatNotification;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Notification;
 
 class QuestionChatController extends Controller
 {
@@ -102,12 +104,12 @@ class QuestionChatController extends Controller
             if (!$question) {
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
-             $question->update(['status' => 1]);
+            $question->update(['status' => 1]);
+            $question = QuestionChat::query()->find($request->id);
+            $this->sendEmail($question);
             return response()->json(['status' => true, 'active' => $question->getAcceptOrReject(), 'id' => $question->id, 'msg' => trans('global.update_success')]);
-
         } catch (\Exception $ex) {
             return response()->json(['status' => false, 'msg' => trans('global.sorry_some_error')]);
-
         }
     }
 
@@ -119,12 +121,41 @@ class QuestionChatController extends Controller
                 return response()->json(['status' => false, 'msg' => trans('global.data_not_found')]);
             }
             $question->update(['status' => 2]);
+            $question = QuestionChat::query()->find($request->id);
+            $this->sendEmail($question);
             return response()->json(['status' => true, 'active' => $question->getAcceptOrReject(), 'id' => $question->id, 'msg' => trans('global.update_success')]);
-
         } catch (\Exception $ex) {
             return response()->json(['status' => false, 'msg' => trans('global.sorry_some_error')]);
+        }
+    }
+
+
+    public function sendEmail($question)
+    {
+        $user = User::query()->find($question->custom_user_id);
+        if ($user->getType() == "FollowMediator") {
+            $user = User::query()->find($user->mediator_id);
+        }
+
+        if ($question->status == 1) {
+            //         1 accepted
+//            $user->notify(new AcceptQuestionChatNotification(['question' => $question->title]));
+            Notification::send($user, new AcceptQuestionChatNotification($question));
+
+        } elseif ($question->status == 2) {
+            //          2 rejected
+//            $user->notify(new RejectQuestionChatNotification(['question' => $question->title]));
+            Notification::send($user, new RejectQuestionChatNotification($question));
 
         }
     }
 
+
 }
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 <a href="{{route('personally',$user['id'])}}" class="user">
     <div class="user-profile">
         <div class="img-border">
-            <img class="" src="{{asset('assets/site/images/man.png')}}" alt=""/>
+            <img class="" src="{{$user['photo']}}" alt=""/>
         </div>
         <div>
             <h1>{{$user['fake_name']}}</h1>
