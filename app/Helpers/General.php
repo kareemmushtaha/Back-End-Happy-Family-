@@ -45,7 +45,7 @@ function checkUserHaveSubscription($user_id)
 {
     //check
     $check_have_package = \App\Models\UserPackage::query()->where('end_date', '>', \Illuminate\Support\Carbon::now())
-        ->where('user_id', $user_id)->where('status',1)
+        ->where('user_id', $user_id)->where('status', 1)
         ->first();
     if ($check_have_package)
         return true;
@@ -57,17 +57,39 @@ function settingContentAr($key)
     $Setting = \App\Models\Setting::query()->where('key', $key)->first();
     if (!$Setting) {
         return "";
-    }else{
+    } else {
         return $Setting->translate('ar')->value;
     }
 }
 
-function getLastChat(){
+function getLastChat()
+{
 
 
 }
 
+function buttonShowUserInformation($personalId, $authId)
+{
+    $checkHasRequest = \App\Models\ViewPersonalInformation::query()
+        ->where('from_user_id', $authId)
+        ->where('to_user_id', $personalId)->first();
 
+    if ($checkHasRequest) {
+        if ($checkHasRequest->status == 0) {
+            return trans('global.go_to_payment');
+        } elseif ($checkHasRequest->status == -1) {
+            return trans('global.awaiting_accept');
+        } elseif ($checkHasRequest->status == -2) {
+            return trans('global.rejected');
+        }elseif ($checkHasRequest->status == 1) {
+            return trans('global.shown_previously');
+        }
+
+    } else {
+        return trans('global.show_personal_information');
+    }
+
+}
 
 
 

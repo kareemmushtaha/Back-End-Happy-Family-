@@ -20,6 +20,7 @@ class CreateViewPersonalInformationTable extends Migration
             $table->unsignedBigInteger('to_user_id')->unsigned()->nullable();
             $table->foreign('to_user_id', 'uId2')->references('id')->on('users')->onDelete('cascade');
             $table->integer('price');
+            $table->text('hashToken')->nullable();
             $table->integer('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

@@ -108,6 +108,10 @@ Route::get('subscription/{package_id}', [HomeController::class, 'subscription'])
 
 Route::get('urway/checkout/send_personal_info/{userId}', 'UrwayViewPersonalInformationController@getTransaction')->name('site.send_personal_info');
 Route::get('urway/response/send_personal_info/{userId}', 'UrwayViewPersonalInformationController@getResponse')->name('send_personal_info.response');
+Route::get('accept/viewPersonalInformation/{hashToken}', 'UrwayViewPersonalInformationController@accept')->name('viewPersonalInformation.accept');
+Route::get('reject/viewPersonalInformation/{hashToken}', 'UrwayViewPersonalInformationController@reject')->name('viewPersonalInformation.reject');
+
+
 Route::get('urway/send_personal_info/success', 'UrwayViewPersonalInformationController@urwaySuccess')->name('send_personal_info.success.transaction');
 Route::get('urway/send_personal_info/fail', 'UrwayViewPersonalInformationController@urwayFail')->name('send_personal_info.fail.transaction');
 

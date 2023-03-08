@@ -23,11 +23,14 @@ class ViewPersonalInformation extends Model
 
     public function fromUser()
     {
-        return $this->belongsTo(User::class,'from_user_id','id');
+        //this is  sender
+        return $this->belongsTo(User::class, 'from_user_id', 'id');
     }
+
     public function toUser()
     {
-        return $this->belongsTo(User::class,'to_user_id','id');
+        //this is receiver
+        return $this->belongsTo(User::class, 'to_user_id', 'id');
     }
 }
 

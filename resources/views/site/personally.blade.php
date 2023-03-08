@@ -18,8 +18,7 @@
 
                         @if($user['can_send_personal_info'])
                             {{--got to urway to send information this user--}}
-                            <a href="{{url('urway/checkout/send_personal_info',$user['id'])}}" class="w-100">كشف
-                                بيانات</a>
+                            <a href="{{url('urway/checkout/send_personal_info',$user['id'])}}" class="w-100">{{buttonShowUserInformation($user['id'],auth()->user()->id)}}</a>
                         @else
                             <a href="{{route('package',$package->id)}}" class="w-100">كشف بيانات</a>
                         @endif

@@ -12,10 +12,16 @@ use App\Models\Package;
 use App\Models\User;
 use App\Models\UserPackage;
 use App\Models\ViewPersonalInformation;
+use App\Notifications\AcceptRequestViewPersonaInformationNotification;
+use App\Notifications\RejectRequestViewPersonaInformationNotification;
+use App\Notifications\RequestToViewPersonalInformationNotification;
+use App\Notifications\VerifyUserNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 
 
 class UrwayViewPersonalInformationController extends Controller
@@ -45,9 +51,8 @@ class UrwayViewPersonalInformationController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
-
-        $viewPersonalInformation = ViewPersonalInformation::query()->where('to_user_id', $request->userId)->where('from_user_id', auth()->user()->id)->where('status', 1)->first();
         $checkCanShowUserInfo = User::query()->findOrFail($request->userId);
+        $viewPersonalInformation = ViewPersonalInformation::query()->where('to_user_id', $request->userId)->where('from_user_id', auth()->user()->id)->first();
 
         if ($checkCanShowUserInfo->show_profile == 0) {
             toastr()->success(trans('global.Sorry_this_user_does_not_want_to_share_his_personal_data'), ['timeOut' => 20000, 'closeButton' => true]);
@@ -55,75 +60,140 @@ class UrwayViewPersonalInformationController extends Controller
         }
 
         if ($viewPersonalInformation) {
-            toastr()->success(trans('global.Sorry_this_user_data_has_already_been_exposed'), ['timeOut' => 20000, 'closeButton' => true]);
-            return redirect()->back();
-        } else {
+            if ($viewPersonalInformation->status == -1) {
+                //status -1 this awaiting accept by user
+                toastr()->success(trans('global.your_request_has_been_pending_accept'), ['timeOut' => 20000, 'closeButton' => true]);
+                return redirect()->back();
+            }
 
-            $user = User::query()->findOrFail($request->userId);
-            $viewPersonalInformation = ViewPersonalInformation::query()->create([
-                'from_user_id' => auth()->user()->id,
-                'to_user_id' => $user->id,
-                'price' => settingContentAr('price_show_user_information'),
-                'status' => 0,
-            ]);
-        }
+            if ($viewPersonalInformation->status == -2) {
+                //status -2 this reject accept by user
+                toastr()->success(trans('global.reject_your_request_by_user'), ['timeOut' => 20000, 'closeButton' => true]);
+                return redirect()->back();
+            }
 
-        $trackId = $viewPersonalInformation->id;
-        $amount = $viewPersonalInformation->price;
+            if ($viewPersonalInformation->status == 1) {
+                //status 1 this payment has been made successfully
+                toastr()->success(trans('global.Sorry_this_user_data_has_already_been_exposed'), ['timeOut' => 20000, 'closeButton' => true]);
+                return redirect()->back();
+            }
 
+            if ($viewPersonalInformation->status == 0) {
+                //status 0 awaiting payment
+                $trackId = $viewPersonalInformation->id;
+                $amount = $viewPersonalInformation->price;
 
-        $txn_details = $trackId . "|" . $this->terminalId . "|" . $this->password . "|" . $this->secretKey . "|" . $amount . "|SAR";
-        $hash = hash('sha256', $txn_details);
-        $fields = array(
-            'trackid' => $trackId,
-            'terminalId' => $this->terminalId,
-            'customerEmail' => 'test@hotmail.com',
-            'action' => "1",
-            'merchantIp' => \request()->ip(),
-            'password' => $this->password,
-            'currency' => "SAR",
-            'country' => "SA",
-            'amount' => $amount,
-            "udf1" => "Test1",
-            "udf2" => url('urway/response/send_personal_info', $viewPersonalInformation->id),//Response page URL
-            "udf3" => "",
-            "udf4" => "",
-            "udf5" => "Test5",
-            'requestHash' => $hash //generated Hash
-        );
+                $txn_details = $trackId . "|" . $this->terminalId . "|" . $this->password . "|" . $this->secretKey . "|" . $amount . "|SAR";
+                $hash = hash('sha256', $txn_details);
+                $fields = array(
+                    'trackid' => $trackId,
+                    'terminalId' => $this->terminalId,
+                    'customerEmail' => 'test@hotmail.com',
+                    'action' => "1",
+                    'merchantIp' => \request()->ip(),
+                    'password' => $this->password,
+                    'currency' => "SAR",
+                    'country' => "SA",
+                    'amount' => $amount,
+                    "udf1" => "Test1",
+                    "udf2" => url('urway/response/send_personal_info', $viewPersonalInformation->id),//Response page URL
+                    "udf3" => "",
+                    "udf4" => "",
+                    "udf5" => "Test5",
+                    'requestHash' => $hash //generated Hash
+                );
 
-        $data = json_encode($fields);
-        $ch = curl_init('https://payments-dev.urway-tech.com/URWAYPGService/transaction/jsonProcess/JSONrequest');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data))
-        );
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-//execute post
-        $result = curl_exec($ch);
-        $urldecode = (json_decode($result, true));
-//close connection
+                $data = json_encode($fields);
+                $ch = curl_init('https://payments-dev.urway-tech.com/URWAYPGService/transaction/jsonProcess/JSONrequest');
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        'Content-Type: application/json',
+                        'Content-Length: ' . strlen($data))
+                );
+                curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                //execute post
+                $result = curl_exec($ch);
+                $urldecode = (json_decode($result, true));
+                //close connection
 
-        curl_close($ch);
-        if ($urldecode['payid'] != NULL) {
-            $url = $urldecode['targetUrl'] . "?paymentid=" . $urldecode['payid'];
-            echo
-                '<html>
+                curl_close($ch);
+
+                if ($urldecode['payid'] != NULL) {
+                    $url = $urldecode['targetUrl'] . "?paymentid=" . $urldecode['payid'];
+                    echo
+                        '<html>
                  <form name="myform" method="POST" action="' . $url . '">
                  <h1> Transaction is processing........</h1>
                  </form>
                  <script type="text/javascript">document.myform.submit();
                  </script>
                  </html>';
+                } else {
+                    echo "<b>Something went wrong!!!!</b>";
+                }
+            }
         } else {
-            echo "<b>Something went wrong!!!!</b>";
+            $user = User::query()->findOrFail($request->userId);
+            $viewPersonalInformation = ViewPersonalInformation::query()->create([
+                'from_user_id' => auth()->user()->id,
+                'to_user_id' => $user->id,
+                'price' => settingContentAr('price_show_user_information'),
+                'status' => -1, // awaiting accept by user
+                'hashToken' => Str::random(100), // awaiting accept by user
+            ]);
+
+
+            Mail::to($user->email)->send(new RequestToViewPersonalInformationNotification(auth()->user(), $viewPersonalInformation->hashToken));
+
+            toastr()->success(trans('global.add_request_view_personal_information_successfully_has_been_pending_accept'), ['timeOut' => 20000, 'closeButton' => true]);
+            return redirect()->back();
         }
+
+
     }
 
+    public function accept($hashToken)
+    {
+        $viewPersonalInformation = ViewPersonalInformation::query()->where('hashToken', $hashToken)->first();
+        if ($viewPersonalInformation) {
+            $viewPersonalInformation->updateQuietly([
+                'status' => 0,
+                'hashToken' => null,
+            ]);
+            //send email to sender accepted accepted payment
+            $sender = $viewPersonalInformation->fromUser;
+            $receiver = $viewPersonalInformation->toUser;
+            Notification::send($sender, new AcceptRequestViewPersonaInformationNotification($receiver));
+            toastr()->success(trans('global.accepted_request_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
+        } else {
+            toastr()->error(trans('global.sorry_cant_accept_this_request'), ['timeOut' => 20000, 'closeButton' => true]);
+        }
+        return redirect()->route('home');
+
+    }
+
+    public function reject($hashToken)
+    {
+        $viewPersonalInformation = ViewPersonalInformation::query()->where('hashToken', $hashToken)->first();
+        if ($viewPersonalInformation) {
+            $viewPersonalInformation->updateQuietly([
+                'status' => -2,
+                'hashToken' => null,
+            ]);
+            //send email to sender  reject your request
+            $sender = $viewPersonalInformation->fromUser;
+            $receiver = $viewPersonalInformation->toUser;
+            Notification::send($sender, new RejectRequestViewPersonaInformationNotification($receiver));
+            toastr()->success(trans('global.rejected_request_successfully'), ['timeOut' => 20000, 'closeButton' => true]);
+        } else {
+            toastr()->error(trans('global.sorry_cant_reject_this_request'), ['timeOut' => 20000, 'closeButton' => true]);
+        }
+
+        return redirect()->route('home');
+    }
 
     public function getResponse()
     {
@@ -212,26 +282,26 @@ class UrwayViewPersonalInformationController extends Controller
                         $mediator = User::query()->find($checkUser->mediator_id);
 
                         $data = [
-                            'name' => $mediator->first_name .' '.  $mediator->last_name,
+                            'name' => $mediator->first_name . ' ' . $mediator->last_name,
                             'email' => $mediator->email,
-                            'birth_date' =>$checkUser->birth_date,
+                            'birth_date' => $checkUser->birth_date,
                             'gender' => $checkUser->gender,
                             'phone' => $mediator->phone,
                             'message' => 'يمكنك التواصل مع الوسيط لتكملة الإجراءات الرسمية',
                         ];
                         Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
 
-                    }else{
+                    } else {
                         //send email direct to user
                         $data = [
-                            'name' => $checkUser->first_name .' '.  $checkUser->last_name,
+                            'name' => $checkUser->first_name . ' ' . $checkUser->last_name,
                             'email' => $checkUser->email,
-                            'birth_date' =>$checkUser->birth_date,
+                            'birth_date' => $checkUser->birth_date,
                             'gender' => $checkUser->gender,
                             'phone' => $checkUser->phone,
                             'message' => 'يمكنك التواصل مع الطرف الآخر لتكملة الإجراءات الرسمية',
                         ];
-                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
+//                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
                     }
 
 
