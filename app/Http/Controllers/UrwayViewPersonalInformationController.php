@@ -301,7 +301,7 @@ class UrwayViewPersonalInformationController extends Controller
                             'phone' => $checkUser->phone,
                             'message' => 'يمكنك التواصل مع الطرف الآخر لتكملة الإجراءات الرسمية',
                         ];
-//                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
+                        Mail::to([auth()->user()->email])->send(new SendOfStepUserStatusEmail($data));
                     }
 
 
