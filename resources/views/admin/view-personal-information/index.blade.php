@@ -20,7 +20,7 @@
 
 
                     <!--begin::Table container-->
-                    <div   class="datatable datatable-default  datatable-bordered datatable-loaded ">
+                    <div class="datatable datatable-default  datatable-bordered datatable-loaded ">
 
                         <table class="table align-middle gs-0 gy-4 " id="kt_datatable_example_1">
                             <!--begin::Table head-->
@@ -34,7 +34,8 @@
                                 </th>
                                 <th class="min-w-4px">
                                     {{ trans('global.from_user') }}
-                                </th>    <th class="min-w-4px">
+                                </th>
+                                <th class="min-w-4px">
                                     {{ trans('global.to_user') }}
                                 </th>
 
@@ -57,7 +58,7 @@
 
                             @isset($viewPersonalInformation)
                                 @foreach ($viewPersonalInformation  as $key => $data)
-                                    <tr >
+                                    <tr>
 
                                         <td>
                                             <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
@@ -79,7 +80,16 @@
                                             <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $data->price}}</a>
                                         </td>
                                         <td>
-                                            <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{$data->status == 1 ? "تم الدفع بنجاح" :"فشل عملية الدفع" }}</a>
+                                            <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                                @if($data->status == 0)
+                                                    بإنتظار الدفع
+                                                @elseif($data->status == -1)
+                                                    بإنتظار القبول
+                                                @elseif($data->status == -2)
+                                                    مرفوض
+                                                @elseif($data->status == 1)
+                                                    تم الدفع
+                                                @endif</a>
                                         </td>
 
                                     </tr>
