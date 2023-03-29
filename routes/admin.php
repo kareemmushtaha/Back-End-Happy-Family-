@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\QuestionChatController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Mediator\FollowMediatorChatController;
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa','CheckAdmin']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -52,7 +52,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('request/answer/chat', [AnswerChatController::class, 'customAnswerChat'])->name('answers-chat.customAnswerChat');
     Route::get('accept/request/question/chat', [QuestionChatController::class, 'acceptRequestQuestionChat'])->name('questions-chat.acceptRequestQuestionChat');
     Route::get('reject/request/question/chat', [QuestionChatController::class, 'rejectRequestQuestionChat'])->name('questions-chat.rejectRequestQuestionChat');
-
     Route::get('accept/request/answer/chat', [AnswerChatController::class, 'acceptRequestAnswerChat'])->name('answer-chat.acceptRequestAnswerChat');
     Route::get('reject/request/answer/chat', [AnswerChatController::class, 'rejectRequestAnswerChat'])->name('answer-chat.rejectRequestAnswerChat');
 
@@ -79,6 +78,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 });
+
+
 
 
 Route::group(['prefix' => 'mediator', 'as' => 'mediator.', 'namespace' => 'Mediator', 'middleware' => ['auth', '2fa']], function () {

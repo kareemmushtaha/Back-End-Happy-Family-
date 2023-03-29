@@ -29,6 +29,7 @@ class Kernel extends HttpKernel
         '2fa' => \App\Http\Middleware\TwoFactorMiddleware::class,
         'CheckCompleteProfile' => \App\Http\Middleware\CheckCompleteProfile::class,
         'checkMediator' => \App\Http\Middleware\CheckMediator::class,
+        'CheckAdmin' => \App\Http\Middleware\CheckAdmin::class,
         'checkActivateAccount' => \App\Http\Middleware\CheckActivateAccount::class,
      ];
 

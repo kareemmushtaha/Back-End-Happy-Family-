@@ -88,7 +88,7 @@
             <br>
 
             @if(in_array($user->getType(),['mediator','user']))
-                @if(checkUserHaveSubscription($user->id))
+                @if(checkUserHaveSubscription($user->id) ==false)
                     <div class="card card-custom example example-compact ">
                         <div class="card-header">
                             <h3 class="card-title">{{ trans('global.upgrade') }} {{ trans('cruds.subscriptions.the_title') }}</h3>

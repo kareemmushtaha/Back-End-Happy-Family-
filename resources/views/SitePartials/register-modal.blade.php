@@ -78,22 +78,54 @@
                     <div>4</div>
                 </div>
             </div>
-            <div class="signup-content">
-                <input name="first_name" placeholder="الاسم الاول"/>
-                <input name="last_name" placeholder="العائله"/>
-                <input name="email" placeholder="البريد الإلكتروني"/>
-                <input type="password" name="password" placeholder="كلمة المرور"/>
-                <input name="phone" placeholder="رقم الجوال"/>
-                <input name="fake_name" placeholder="الاسم الرمزي"/>
-                <div>
-                    <h2 style="color: #631E73;">تاريخ الميلاد</h2>
-                    <input class="col-lg-12" name="birth_date" type="date"/>
+                <div class="signup-content mt-3">
+
+                    <div>
+                        <h2 style="color: #631E73;">الاسم الاول</h2>
+                        <h2 style="color: #8b0534;font-size: 16px;"> لا يظهر للمستخدمين</h2>
+
+                        <input name="first_name" class="col-lg-12" placeholder="الاسم الاول"/>
+                    </div>
+
+                    <div>
+                        <h2 style="color: #631E73;">العائله</h2>
+                        <h2 style="color: #8b0534;font-size: 16px;"> لا يظهر للمستخدمين</h2>
+                        <input name="last_name" class="col-lg-12" placeholder="العائله"/>
+                    </div>
+
+                    <div>
+                        <h2 style="color: #631E73;">البريد الإلكتروني</h2>
+                        <input name="email" class="col-lg-12" placeholder="البريد الإلكتروني"/>
+                    </div>
+
+
+                    <div>
+                        <h2 style="color: #631E73;">كلمة المرور</h2>
+                        <input type="password" class="col-lg-12" name="password" placeholder="كلمة المرور"/>
+                    </div>
+
+                    <div>
+                        <h2 style="color: #631E73;">رقم الجوال</h2>
+                        <input name="phone" class="col-lg-12" placeholder="رقم الجوال"/>
+                    </div>
+
+                    <div>
+                        <h2 style="color: #631E73;">الاسم الرمزي</h2>
+                        <h2 style="color: #8b0534;font-size: 16px;">الإسم الظاهر للمستخدمين</h2>
+
+                        <input name="fake_name" class="col-lg-12" placeholder="الاسم الرمزي"/>
+                    </div>
+
+
+                    <div>
+                        <h2 style="color: #631E73;">تاريخ الميلاد</h2>
+                        <input class="col-lg-12" name="birth_date" type="date"/>
+                    </div>
                 </div>
-            </div>
-            <div class="signup-navigate">
-                <a onclick="hideAlert('signup-2'), showAlert('signup-1')" class="signup-back-button">السابق</a>
-                <a onclick="hideAlert('signup-2'), showAlert('signup-3')" class="signup-next-button">التالي</a>
-            </div>
+                <div class="signup-navigate">
+                    <a onclick="hideAlert('signup-2'), showAlert('signup-1')" class="signup-back-button">السابق</a>
+                    <a onclick="hideAlert('signup-2'), showAlert('signup-3')" class="signup-next-button">التالي</a>
+                </div>
         </div>
     </div>
     <div id="signup-3" class="dark-background hidden">
@@ -123,35 +155,54 @@
             </div>
             <div class="signup-content">
 
-{{--                <input name="nationality" placeholder="الجنسية"/>--}}
-                <select name="nationality" id="nationality">
-                    <option value="null" hidden>الجنسية</option>
-                    @foreach(\App\Models\Country::all() as $item)
-                        <option value="{{$item->title}}">{{$item->title}}</option>
-                    @endforeach
-                </select>
-                <select name="country_id" id="country">
-                    <option value="null" hidden>دولة الإقامه</option>
-                    @foreach(\App\Models\Country::all() as $item)
-                        <option value="{{$item->id}}">{{$item->title}}</option>
-                    @endforeach
-                </select>
-                <select name="aria_id" id="area">
-                    <option value="" hidden>المنطقه</option>
-                    {{--                    @foreach(\App\Models\Aria::all() as $Aria)--}}
-                    {{--                        <option value="{{$Aria->id}}">{{$Aria->title}}</option>--}}
-                    {{--                    @endforeach--}}
-                </select>
+                {{--                <input name="nationality" placeholder="الجنسية"/>--}}
 
-                <select name="city_id">
-                    <option value="" hidden>المدينه</option>
-                    {{--                    @foreach(\App\Models\City::all() as $City)--}}
-                    {{--                        <option value="{{$City->id}}">{{$City->title}}</option>--}}
-                    {{--                    @endforeach--}}
-                </select>
 
-                <input name="height" id="height" placeholder="الطول"/>
-                <input name="width" id="width" placeholder="الوزن"/>
+                <div>
+                    <h2 style="color: #631E73;">الجنسية</h2>
+                    <select name="nationality" class="col-lg-12" id="nationality">
+                        <option value="null" hidden>الجنسية</option>
+                        @foreach(\App\Models\Country::all() as $item)
+                            <option value="{{$item->title}}">{{$item->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <h2 style="color: #631E73;">دولة الإقامه</h2>
+                    <select name="country_id" class="col-lg-12" id="country">
+                        <option value="null" hidden>دولة الإقامه</option>
+                        @foreach(\App\Models\Country::all() as $item)
+                            <option value="{{$item->id}}">{{$item->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <h2 style="color: #631E73;">المنطقه</h2>
+                    <select name="aria_id" class="col-lg-12" id="area">
+                        <option value="" hidden>المنطقه</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h2 style="color: #631E73;">المدينه</h2>
+                    <select name="city_id" class="col-lg-12">
+                        <option value="" hidden>المدينه</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h2 style="color: #631E73;">الطول</h2>
+                    <input name="height" id="height" class="col-lg-12" placeholder="الطول"/>
+                </div>
+
+                <div>
+                    <h2 style="color: #631E73;">الوزن</h2>
+                    <input name="width" id="width" class="col-lg-12" placeholder="الوزن"/>
+                </div>
+
+
             </div>
             <div class="signup-navigate">
                 <a onclick="hideAlert('signup-3'), showAlert('signup-2')" class="signup-back-button">السابق</a>

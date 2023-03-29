@@ -69,7 +69,6 @@
                                                style="right: 50px">{{ $key+1 }}</a>
                                         </td>
 
-
                                         <td>
                                             <a class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{$data->fromUser->email}}</a>
                                         </td>
