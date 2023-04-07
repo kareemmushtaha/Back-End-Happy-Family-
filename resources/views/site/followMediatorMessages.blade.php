@@ -1,7 +1,6 @@
 @extends('SitePartials.main')
 @section('content')
 
-
     <form id="answer" class="hidden">
         <div class="dark-background" style="background-color: #1a215a7f;">
             <div class="popup-container">
@@ -108,7 +107,8 @@
                             </h2>
 
                             <button class="btn_send" onclick="send_question(this)" data-question_id="{{$question->id}}"
-                                    data-url="{{ route('mediator.chat.send_question_chat',$user_follow_mediator) }}"> أرسل
+                                    data-url="{{ route('mediator.chat.send_question_chat',$user_follow_mediator) }}">
+                                أرسل
                             </button>
                         </div>
                     @endforeach
@@ -322,11 +322,15 @@
                             console.log(value)
 
                             const fixed_text_question = "عذرا هذا السؤال قيد التدقيق";
+                            const reject_question = "تم رفض السؤال من قبل الإدارة";
 
                             if (value.question.status == 0) {
                                 question = '<p>' + fixed_text_question + '</p>';
-                            } else {
+
+                            } else if(value.question.status == 1){
                                 question = '<p>' + value.question.question_title + '</p>';
+                            }else if(value.question.status == 2) {
+                                question = '<p>' + reject_question + '</p>';
                             }
 
                             if (user_id !== value.received_id) {
@@ -445,6 +449,8 @@
                         document.getElementById('answerSelect').classList.add('hidden');
                         document.getElementById(`answer_conversation${response.conversation_id}{{$user_follow_mediator}}`).innerHTML = fixed_text;
                         sendNotification(response.msg);
+                        document.getElementById('answer').classList.add('hidden');
+
                     } else {
                         sendNotification(response.msg);
                     }
@@ -482,6 +488,7 @@
                         $("#chats").last().append(message);
                         scroll_to_question(random_string);
                         sendNotification(response.msg);
+                        document.getElementById('question').classList.add('hidden');
                     } else {
                         sendNotification(response.msg);
                     }
@@ -572,6 +579,5 @@
         }
 
     </script>
-
 
 @endsection

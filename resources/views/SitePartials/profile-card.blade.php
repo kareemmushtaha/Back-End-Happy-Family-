@@ -1,10 +1,8 @@
 <div class="profile-top">
     <div>
         <div class="img-border">
-            <a href="">
-
+            <a href="{{route('my_profile')}}">
                 <img id="icon" src="{{asset( auth()->user()->photo)}} " alt=""/>
-
             </a>
         </div>
         <div>

@@ -145,14 +145,10 @@ class UrwayViewPersonalInformationController extends Controller
                 'hashToken' => Str::random(100), // awaiting accept by user
             ]);
 
-
             Mail::to($user->email)->send(new RequestToViewPersonalInformationNotification(auth()->user(), $viewPersonalInformation->hashToken));
-
             toastr()->success(trans('global.add_request_view_personal_information_successfully_has_been_pending_accept'), ['timeOut' => 20000, 'closeButton' => true]);
             return redirect()->back();
         }
-
-
     }
 
     public function accept($hashToken)
@@ -163,7 +159,7 @@ class UrwayViewPersonalInformationController extends Controller
                 'status' => 0,
                 'hashToken' => null,
             ]);
-            //send email to sender accepted accepted payment
+            //send email to sender accepted  payment
             $sender = $viewPersonalInformation->fromUser;
             $receiver = $viewPersonalInformation->toUser;
             Notification::send($sender, new AcceptRequestViewPersonaInformationNotification($receiver));

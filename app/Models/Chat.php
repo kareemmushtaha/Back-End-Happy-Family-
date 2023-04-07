@@ -48,7 +48,7 @@ class Chat extends Model
     public function getLastMessageAttribute(): string
     {
 
-        $count_message_un_answer = $this->conversation()->where('received_id', "!=", auth()->user()->id)->whereNull('answer_chat_id')->count();
+        $count_message_un_answer = $this->conversation()->where('received_id', "=", auth()->user()->id)->whereNull('answer_chat_id')->count();
         if ($count_message_un_answer > 0 ) {
             return trans('global.the_number_of_unanswered_questions') . $count_message_un_answer;
         } else {

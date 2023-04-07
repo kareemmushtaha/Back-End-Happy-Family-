@@ -228,7 +228,7 @@ return [
 
     'success_stories' => [
         'title' => 'قصص النجاح',
-        'title_singular' => 'قصة جاح',
+        'title_singular' => 'قصة نجاح',
         'fields' => [
             'id' => 'الرقم',
             'name' => 'الاسم',

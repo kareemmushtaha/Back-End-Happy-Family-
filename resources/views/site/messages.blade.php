@@ -320,14 +320,17 @@
 
                     appendOtherUserCard(response.other_user),
                         $.each(response.messages, function (key, value) {
-                            console.log(value)
 
                             const fixed_text_question = "عذرا هذا السؤال قيد التدقيق";
+                            const reject_question = "تم رفض السؤال من قبل الإدارة";
 
                             if (value.question.status == 0) {
                                 question = '<p>' + fixed_text_question + '</p>';
-                            } else {
+
+                            } else if(value.question.status == 1){
                                 question = '<p>' + value.question.question_title + '</p>';
+                            }else if(value.question.status == 2) {
+                                question = '<p>' + reject_question + '</p>';
                             }
 
                             if (user_id !== value.received_id) {
@@ -338,8 +341,9 @@
 
                             const no_answer = "لم يتم الإجابة بعد";
                             const no_accept_answer = "هذه الاجابة قيد التدقيق من قبل الإدارة";
-                            if (value.answer) {
 
+
+                            if (value.answer) {
                                 if (value.answer.status == 1) {
                                     answer = `<p id="${answer_id}">  ${value.answer.answer_title}  </p>`;
                                 } else {
@@ -444,6 +448,8 @@
                         document.getElementById('answerSelect').classList.add('hidden');
                         document.getElementById(`answer_conversation${response.conversation_id}{{auth()->user()->id}}`).innerHTML = fixed_text;
                         sendNotification(response.msg);
+                        document.getElementById('answer').classList.add('hidden');
+
                     } else {
                         sendNotification(response.msg);
                     }
@@ -481,6 +487,7 @@
                         $("#chats").last().append(message);
                         scroll_to_question(random_string);
                         sendNotification(response.msg);
+                        document.getElementById('question').classList.add('hidden');
                     } else {
                         sendNotification(response.msg);
                     }
@@ -536,7 +543,7 @@
 
                         message = ` <div class="text-send  question_id${random_string}">` +
                             `<div>` +
-                            `<h2> ${response.question_title} </h2>` +
+                            `<h2> ${response.question_title}  </h2>` +
                             `</div> <div>` +
                             `<h2>  لم يتم الرد </h2>` +
                             `</div>` +

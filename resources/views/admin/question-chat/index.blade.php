@@ -108,21 +108,16 @@
         <!--begin::Body-->
     </div>
     <!--end::Tables Widget 13-->
-
 @endsection
-
-
 
 @section('script')
 
     <script>
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
 
         $(document).on('click', '#btn_save_user', function (e) {
             $('#btn_save_user').html('{{trans('global.save')}} <i class="fa fa-spinner fa-spin"></i>');
