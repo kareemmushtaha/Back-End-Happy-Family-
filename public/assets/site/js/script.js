@@ -37,6 +37,7 @@ function mobileProfile() {
 function mobileChats() {
     const element = document.querySelector('.messages-chats-area');
     element.classList.toggle("active-mobile-menu");
+    $('#users-links-chat').addClass("active-mobile-menu");
 };
 
 function notification(clicked) {

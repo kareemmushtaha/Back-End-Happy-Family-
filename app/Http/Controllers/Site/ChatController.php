@@ -19,10 +19,8 @@ class ChatController extends Controller
 
     public function index()
     {
-
         $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
         $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
-
         return view('site.messages', $data);
     }
 
@@ -34,7 +32,6 @@ class ChatController extends Controller
             $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
             return view('site.messages', $data);
         }
-
         $auth = auth()->user()->id;
         if ($user_id != $auth) {
             $checkChat = Chat::where(function ($query) use ($auth, $user_id) {
@@ -44,14 +41,18 @@ class ChatController extends Controller
             })->first();
 
             if (!$checkChat) {
-                Chat::create([
+                $chat = Chat::create([
                     'sender_id' => $auth,
                     'received_id' => $user_id,
                 ]);
+                $chat_Id = $chat->id;
+            } else {
+                $chat_Id = $checkChat->id;
             }
         }
         $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat()->get();
         $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat()->get();
+        $data['chatId'] = $chat_Id;
 
         return view('site.messages', $data);
     }
@@ -70,6 +71,7 @@ class ChatController extends Controller
 
     public function getMessagesChatMessage($chat_id = 0)
     {
+
         $user_id = auth()->user()->id;
         $messages = Chat::with(['conversation'])->orderBy('id', 'asc')
             ->where(function ($query) use ($user_id) {
@@ -194,7 +196,6 @@ class ChatController extends Controller
         $chat = Chat::query()->findOrFail($request->chat_id);
 
 
-
         $conversation = Conversations::query()->where('chat_id', $chat->id)
             ->where('question_chat_id', $request->question_id)->where('received_id', '=', auth()->user()->id)->update([
                 'answer_chat_id' => $new_answer->id,
@@ -254,7 +255,7 @@ class ChatController extends Controller
         }
     }
 
-    public function searchMessages (Request $request)
+    public function searchMessages(Request $request)
     {
         $search = $request->search;
         $messages = Chat::query()->with(['sender', 'receiver', 'conversation'])->where(function ($q) {
@@ -262,10 +263,10 @@ class ChatController extends Controller
                 ->orWhere('received_id', '=', auth()->user()->id);
         })->orderBy('updated_at', 'desc')
             ->when($search, function ($query) use ($search) {
-                $query->whereHas('sender', function ($query_1) use ($search){
+                $query->whereHas('sender', function ($query_1) use ($search) {
                     $query_1->where('first_name', 'like', '%' . $search . '%');
                     $query_1->orWhere('last_name', 'like', '%' . $search . '%');
-                })->orWhereHas('receiver', function ($query_2) use ($search){
+                })->orWhereHas('receiver', function ($query_2) use ($search) {
                     $query_2->where('first_name', 'like', '%' . $search . '%');
                     $query_2->orWhere('last_name', 'like', '%' . $search . '%');
                 });

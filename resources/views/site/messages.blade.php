@@ -64,17 +64,17 @@
 
     <div class="messages-container">
 
-        <div class="messages-chats-area" >
+        <div class="messages-chats-area">
 
-                        <a class="bg-white px-5">
-                            <h1>الدردشات</h1>
-                        </a>
+            <a class="bg-white px-5">
+                <h1>الدردشات</h1>
+            </a>
             <form class="p-2 ">
                 <button type="submit">
                     <img style="width: 25px; height: 25px;" src="{{asset('assets/site/images/search-dark.png')}}"
                          alt=""/>
                 </button>
-                <input name="search" id="search"  placeholder="ابحث هنا"/>
+                <input name="search" id="search" placeholder="ابحث هنا"/>
             </form>
             <div class="messages-chats-area" id="users-links-chat">
 
@@ -137,7 +137,6 @@
                 }
             });
             setUsersLink();
-
 
 
             // setInterval(getMessages, 10000);
@@ -243,7 +242,7 @@
                         var user_link = '';
                         if (value.sender_id === user_id) {
                             user_link =
-                            ' <a href="javascript:void(0)"  class="media border-0 show_messages" data-chat-id="' + value.id + '" >' +
+                                ' <a href="javascript:void(0)"  class="media border-0 show_messages" data-chat-id="' + value.id + '" >' +
                                 ' <div class="media-left pr-1">' +
                                 '<span class="avatar avatar-md avatar-busy">' +
                                 '<img class="media-object rounded-circle" src=" ' + value.receiver.photo + ' " alt="Generic placeholder image">' +
@@ -327,9 +326,9 @@
                             if (value.question.status == 0) {
                                 question = '<p>' + fixed_text_question + '</p>';
 
-                            } else if(value.question.status == 1){
+                            } else if (value.question.status == 1) {
                                 question = '<p>' + value.question.question_title + '</p>';
-                            }else if(value.question.status == 2) {
+                            } else if (value.question.status == 2) {
                                 question = '<p>' + reject_question + '</p>';
                             }
 
@@ -378,6 +377,12 @@
                 });
         }
 
+        @isset($chatId)
+        $(document).ready(function () {
+            chat_id = {{$chatId}}
+            getMessages()
+        });
+        @endisset
 
         $(document).on('click', '.show_messages', function (e) {
             e.preventDefault();
@@ -427,6 +432,7 @@
                 }
             });
         }
+
         function SendCustomAnswer() {
             var question_id = $("#current_question_id").val();
             var chat_id = $("#chat_id").val();
@@ -578,6 +584,5 @@
         }
 
     </script>
-
 
 @endsection
