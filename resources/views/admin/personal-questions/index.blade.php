@@ -140,7 +140,7 @@
                     if (data.status == true) {
                         document.getElementById("formSaveQuestion").reset();
                         setTimeout(function () {
-                            var url = "{{ route('admin.questions-chat.index') }}"; //the url I want to redirect to
+                            var url = "{{ route('admin.personal-questions.index') }}"; //the url I want to redirect to
                             $(location).attr('href', url);
                         }, 0);
                     } else {
