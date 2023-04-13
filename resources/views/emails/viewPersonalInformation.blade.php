@@ -272,6 +272,19 @@
                                                                         </multiline>
                                                                         <br>
                                                                         <br>
+
+                                                                        @if($personToDisplay != null)
+                                                                            <multiline style="display: block;">
+                                                                                يريد كشف بيانات المستخدم التابع لك انت
+                                                                                كوسيط له
+                                                                                <br>
+                                                                                {{$personToDisplay->getFullName()}}
+                                                                                <br>
+                                                                            </multiline>
+                                                                            <br>
+                                                                            <br>
+                                                                        @endif
+
                                                                         <a href="{{route('viewPersonalInformation.accept',$hashToken)}}">لقبول
                                                                             طلب كشف البيانات انقر هنا</a>
                                                                         <br>

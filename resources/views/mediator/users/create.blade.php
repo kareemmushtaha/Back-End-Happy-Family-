@@ -114,41 +114,41 @@
 
                         </div>
 
-                        <div class="row g-9 mb-8">
-                            <div class="col-md-6 fv-row">
-                                <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                        <span class="required">{{ trans('cruds.user.fields.email') }}</span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                           title="Specify a target name for future usage and reference"></i>
-                                    </label>
-                                    <!--end::Label-->
-                                    <input type="email" class="form-control form-control-solid"
-                                           placeholder="{{ trans('cruds.user.fields.email') }}"
-                                           name="email" id="email"/>
-                                    <span class="text-danger errors"
-                                          id="email_error"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 fv-row">
-                                <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                        <span class="required">{{ trans('cruds.user.fields.password') }}</span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                           title="Specify a target name for future usage and reference"></i>
-                                    </label>
-                                    <!--end::Label-->
-                                    <input type="password" class="form-control form-control-solid"
-                                           placeholder="{{ trans('cruds.user.fields.password') }}"
-                                           name="password" id="password"/>
-                                    <span class="text-danger errors"
-                                          id="password_error"> </span>
-                                </div>
-                            </div>
+{{--                        <div class="row g-9 mb-8">--}}
+{{--                            <div class="col-md-6 fv-row">--}}
+{{--                                <div class="d-flex flex-column mb-8 fv-row">--}}
+{{--                                    <!--begin::Label-->--}}
+{{--                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">--}}
+{{--                                        <span class="required">{{ trans('cruds.user.fields.email') }}</span>--}}
+{{--                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
+{{--                                           title="Specify a target name for future usage and reference"></i>--}}
+{{--                                    </label>--}}
+{{--                                    <!--end::Label-->--}}
+{{--                                    <input type="email" class="form-control form-control-solid"--}}
+{{--                                           placeholder="{{ trans('cruds.user.fields.email') }}"--}}
+{{--                                           name="email" id="email"/>--}}
+{{--                                    <span class="text-danger errors"--}}
+{{--                                          id="email_error"> </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6 fv-row">--}}
+{{--                                <div class="d-flex flex-column mb-8 fv-row">--}}
+{{--                                    <!--begin::Label-->--}}
+{{--                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">--}}
+{{--                                        <span class="required">{{ trans('cruds.user.fields.password') }}</span>--}}
+{{--                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
+{{--                                           title="Specify a target name for future usage and reference"></i>--}}
+{{--                                    </label>--}}
+{{--                                    <!--end::Label-->--}}
+{{--                                    <input type="password" class="form-control form-control-solid"--}}
+{{--                                           placeholder="{{ trans('cruds.user.fields.password') }}"--}}
+{{--                                           name="password" id="password"/>--}}
+{{--                                    <span class="text-danger errors"--}}
+{{--                                          id="password_error"> </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                        </div>
+{{--                        </div>--}}
                         <div class="row g-9 mb-8">
                             <div class="col-md-6 fv-row">
                                 <div class="d-flex flex-column mb-8 fv-row">
@@ -193,10 +193,15 @@
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                            title="Specify a target name for future usage and reference"></i>
                                     </label>
-                                    <!--end::Label-->
-                                    <input type="text" class="form-control form-control-solid"
-                                           placeholder="{{ trans('cruds.user.fields.nationality') }}"
-                                           name="nationality" id="nationality"/>
+
+                                    <select class="form-control form-control-solid" name="nationality" id="nationality" required>
+                                        <option value="">{{ trans('cruds.user.fields.nationality') }}</option>
+                                        @isset($countries)
+                                            @foreach($countries as $country)
+                                                <option value="{{$country->title}}">{{$country->title}}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
                                     <span class="text-danger errors"
                                           id="nationality_error"> </span>
                                 </div>
@@ -286,7 +291,7 @@
                                            title="Specify a target name for future usage and reference"></i>
                                     </label>
                                     <!--end::Label-->
-                                    <input type="text" class="form-control form-control-solid"
+                                    <input type="number"  class="form-control form-control-solid"
                                            placeholder="{{ trans('cruds.user.fields.width') }}"
                                            name="width" id="width"/>
                                     <span class="text-danger errors"
@@ -305,8 +310,8 @@
                                     <!--end::Label-->
                                     <select class="form-control form-control-solid" name="show_profile" id="show_profile" required>
                                         <option value="">حدد حالة الظهور</option>
-                                        <option value="0" >إخفاء البروفايل</option>
-                                        <option value="1" >إظهار البروفايل</option>
+                                        <option value="0" >إخفاء الملف الشخصي</option>
+                                        <option value="1" >إظهار الملف الشخصي</option>
                                     </select>
                                     <span class="text-danger errors"
                                           id="show_profile_error"></span>

@@ -269,6 +269,7 @@ return [
 
         'fields' => [
             'id' => 'الرقم',
+            'mediator' => 'الوسيط',
             'id_helper' => ' ',
             'first_name' => 'الاسم الاول',
             'last_name' => 'الاسم العائلة',

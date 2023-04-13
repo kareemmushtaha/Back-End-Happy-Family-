@@ -24,6 +24,16 @@
                                 <div class="table-responsive">
                                     <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                         <tbody>
+                                        @if($user->getType() == "FollowMediator")
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.user.fields.mediator') }}
+                                            </th>
+                                            <td>
+                                                <a href="{{ route('admin.users.show', $user->mediator_id) }}">لعرض بيانات الوسيط أنقر هنا : {{$user->getMainMediator($user->mediator_id)}}</a>
+                                            </td>
+                                        </tr>
+                                        @endif
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.user.fields.id') }}

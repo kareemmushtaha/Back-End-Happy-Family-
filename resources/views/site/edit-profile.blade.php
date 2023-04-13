@@ -11,32 +11,41 @@
                 <img id="profile-img" src="{{$user->photo}}" alt=""/>
             </div>
             <div class="settings-inputs-container">
+                <input hidden value="{{$user->id}}" name="id"/>
                 <input value="{{$user->first_name}}" name="first_name" placeholder="الاسم الاول"/>
                 <input value="{{$user->last_name}}" name="last_name" placeholder="العائله"/>
                 <input value="{{$user->fake_name}}" name="fake_name" placeholder="الاسم الرمزي"/>
                 <input value="{{$user->height}}" name="height" placeholder="الطول"/>
                 <input value="{{$user->width}}" name="width" placeholder="الوزن"/>
                 <input value="{{$user->phone}}" name="phone" placeholder="رقم الجوال"/>
+                <input  value="{{$user->email}}" name="email" placeholder="البريد الإلكتروني"/>
+                <span id="email_error"></span>
             </div>
             <div class="settings-selects-container">
-                <input value="{{$user->nationality}}" name="nationality" placeholder="الجنسية"/>
+                <select name="nationality">
+                    <option disabled value="" >إختر الجنسية</option>
+                @foreach(\App\Models\Country::all() as $country)
+                        <option value="{{$country->title}}"
+                                @if($user->nationality == $country->title) selected @endif>{{$country->title}}</option>
+                    @endforeach
+                </select>
 
                 <select name="country_id" id="country">
-                    <option value="" hidden>دولة الإقامة</option>
+                    <option disabled value="" > إختر دولة الإقامة</option>
                     @foreach(\App\Models\Country::all() as $Country)
                         <option value="{{$Country->id}}"
                                 @if($Country->id == $user->country_id) selected @endif>{{$Country->title}}</option>
                     @endforeach
-
                 </select>
 
                 <select name="aria_id" id="area">
-                    <option value="" hidden>المنطقه</option>
+                    <option value="" disabled>إختر المنطقه</option>
                     @foreach(\App\Models\Aria::where('country_id', $user->country_id)->get() as $Aria)
                         <option value="{{$Aria->id}}"
                                 @if($Aria->id == $user->aria_id) selected @endif>{{$Aria->title}}</option>
                     @endforeach
                 </select>
+
 
                 <select name="city_id">
                     <option value="" hidden>المدينه</option>
@@ -52,7 +61,6 @@
             <button type="button" id="btn_profile_form">حفظ التعديلات</button>
         </div>
     </form>
-
 
 @endsection
 

@@ -136,16 +136,31 @@ class UrwayViewPersonalInformationController extends Controller
                 }
             }
         } else {
-            $user = User::query()->findOrFail($request->userId);
-            $viewPersonalInformation = ViewPersonalInformation::query()->create([
-                'from_user_id' => auth()->user()->id,
-                'to_user_id' => $user->id,
-                'price' => settingContentAr('price_show_user_information'),
-                'status' => -1, // awaiting accept by user
-                'hashToken' => Str::random(100), // awaiting accept by user
-            ]);
+            $personToDisplay = User::query()->findOrFail($request->userId);
 
-            Mail::to($user->email)->send(new RequestToViewPersonalInformationNotification(auth()->user(), $viewPersonalInformation->hashToken));
+            if ($personToDisplay->getType() == "FollowMediator") {
+                $mediator = User::query()->find($personToDisplay->mediator_id);
+
+                $viewPersonalInformation = ViewPersonalInformation::query()->create([
+                    'from_user_id' => auth()->user()->id,
+                    'to_user_id' => $mediator->id,
+                    'price' => settingContentAr('price_show_user_information'),
+                    'status' => -1, // awaiting accept by user
+                    'hashToken' => Str::random(100), // awaiting accept by user
+                ]);
+                Mail::to($mediator->email)->send(new RequestToViewPersonalInformationNotification(auth()->user(), $viewPersonalInformation->hashToken,$personToDisplay));
+
+            }else{
+                $viewPersonalInformation = ViewPersonalInformation::query()->create([
+                    'from_user_id' => auth()->user()->id,
+                    'to_user_id' => $personToDisplay->id,
+                    'price' => settingContentAr('price_show_user_information'),
+                    'status' => -1, // awaiting accept by user
+                    'hashToken' => Str::random(100), // awaiting accept by user
+                ]);
+                Mail::to($personToDisplay->email)->send(new RequestToViewPersonalInformationNotification(auth()->user(), $viewPersonalInformation->hashToken));
+            }
+
             toastr()->success(trans('global.add_request_view_personal_information_successfully_has_been_pending_accept'), ['timeOut' => 20000, 'closeButton' => true]);
             return redirect()->back();
         }

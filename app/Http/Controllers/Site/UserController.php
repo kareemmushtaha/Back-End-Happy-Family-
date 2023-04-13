@@ -88,10 +88,8 @@ class UserController extends Controller
 
     public function edit_profile(Request $request)
     {
-
         $user = auth()->user();
         return view('site.edit-profile', compact('user'));
-
     }
 
     public function update_profile(Request $request): \Illuminate\Http\JsonResponse
@@ -110,6 +108,8 @@ class UserController extends Controller
             'city_id' => 'required|exists:cities,id',
             'height' => 'required|numeric',
             'width' => 'required|numeric',
+            'email' => 'required|email|unique:users,email,'.$request->id,
+
         ]);
 
 
@@ -117,7 +117,6 @@ class UserController extends Controller
             $error = $validator->errors()->first();
             toastr()->error("$error", ['timeOut' => 20000, 'closeButton' => true]);
             return response()->json(['status' => true, 'msg' => trans('global.register')]);
-
         }
 
 
@@ -130,6 +129,7 @@ class UserController extends Controller
         }
 
         $user->first_name = $request->first_name;
+        $user->email = $request->email;
         $user->last_name = $request->last_name;
         $user->fake_name = $request->fake_name;
         $user->birth_date = $request->birth_date;

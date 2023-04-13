@@ -493,6 +493,12 @@
 
         function appendOtherUserCard(response) {
             $("#other_person").html("");
+            if (response.role_id == 4) {
+                userType= "  لديه وسيط نيابة عنه";
+            }else {
+                userType= "";
+            }
+
             url_ = "{{route('personally',':user_id')}}";
             url_ = url_.replace(':user_id', response.id);
             card = ` <div class="user-profile d-flex flex-column align-items-center">` +
@@ -501,6 +507,7 @@
                 `</div>` +
                 `<div>` +
                 `<h1>` + response.fake_name + `</h1>` +
+                `<h2>` + userType + `</h2>` +
                 `</div>` +
                 `</div>` +
 

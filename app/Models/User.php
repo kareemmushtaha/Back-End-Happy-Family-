@@ -46,7 +46,7 @@ class User extends Authenticatable
         'email', 'email_verified_at', 'password', 'verified',
         'verified_at', 'verification_token', 'two_factor', 'two_factor_code',
         'remember_token', 'created_at', 'updated_at', 'deleted_at',
-        'two_factor_expires_at', 'phone','mediator_id','check_active', 'show_profile'
+        'two_factor_expires_at', 'phone', 'mediator_id', 'check_active', 'show_profile'
     ];
 
 
@@ -111,6 +111,8 @@ class User extends Authenticatable
     }
 
 
+
+
     public function getFullName()
     {
         return "$this->first_name  $this->last_name";
@@ -135,6 +137,11 @@ class User extends Authenticatable
     public function getPhoto($val)
     {
         return ($val !== null) ? asset('/' . $val) : "";
+    }
+
+    public function getMainMediator($mediatorId)
+    {
+        return \App\Models\User::query()->find($mediatorId)->email;
     }
 
     public function getIsAdminAttribute()
@@ -216,10 +223,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
+
     public function aria()
     {
         return $this->belongsTo(Aria::class, 'aria_id', 'id');

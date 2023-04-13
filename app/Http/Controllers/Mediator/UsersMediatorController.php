@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Mediator;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AnswerChatRequest;
 use App\Jobs\RegesterEmailJob;
-use App\Models\AnswerChat;
+use Illuminate\Support\Str;
 use App\Models\AnswerQuestion;
 use App\Models\Aria;
 use App\Models\City;
@@ -76,8 +75,8 @@ class UsersMediatorController extends Controller
             'birth_date' => 'required',
             'nationality' => 'required',
             'phone' => 'required|string|max:12',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+//            'password' => ['required', 'string', 'min:8'],
             'country_id' => 'required|exists:countries,id',
             'aria_id' => 'required|exists:arias,id',
             'city_id' => 'required|exists:cities,id',
@@ -92,8 +91,6 @@ class UsersMediatorController extends Controller
         }
 
         DB::beginTransaction();
-
-
         $file = null;
         if ($request->has('photo')) {
             $file = uniqid() . '.' . $request->photo->guessExtension();
@@ -101,13 +98,17 @@ class UsersMediatorController extends Controller
             $request->photo = $file;
         }
 
+        $generate_email= Str::random(5).'-osra-saeeda@gmail.com';
+
         $user = User::create([
             'mediator_id' => auth()->user()->id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'fake_name' => $request->fake_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+//            'email' => $request->email,
+            'email' => $generate_email,
+//            'password' => Hash::make($request->password),
+            'password' => Hash::make($generate_email),
             'role_id' => 4,
             'birth_date' => $request->birth_date,
             'year' => Carbon::parse($request->birth_date)->format('Y'),
@@ -130,7 +131,6 @@ class UsersMediatorController extends Controller
             $answerQuestion = AnswerQuestion::query()->find($answer);
             $check_user_answered_question = UserQuestionAnswer::query()->where('user_id', $user->id)->where('question_id', $answerQuestion['question_id'])->first();
             if (!$check_user_answered_question) {
-
                 UserQuestionAnswer::query()->create([
                     'user_id' => $user->id,
                     'question_id' => $answerQuestion['question_id'],
@@ -167,8 +167,8 @@ class UsersMediatorController extends Controller
             'birth_date' => 'required',
             'nationality' => 'required',
             'phone' => 'required|string|max:12',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
-            'password' => ['nullable', 'string', 'min:8'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
+//            'password' => ['nullable', 'string', 'min:8'],
             'country_id' => 'required|exists:countries,id',
             'aria_id' => 'required|exists:arias,id',
             'city_id' => 'required|exists:cities,id',
@@ -213,7 +213,7 @@ class UsersMediatorController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'fake_name' => $request->fake_name,
-            'email' => $request->email,
+//            'email' => $request->email,
             'role_id' => 4,
             'birth_date' => $request->birth_date,
             'year' => Carbon::parse($request->birth_date)->format('Y'),
@@ -240,7 +240,6 @@ class UsersMediatorController extends Controller
     public function show($userId)
     {
 //        abort_if(Gate::denies('lesson_step_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $user = User::query()->findOrFail($userId);
         return view('mediator.users.show', compact('user'));
     }

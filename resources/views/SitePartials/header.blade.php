@@ -1,5 +1,5 @@
 <div class="header">
-    <a href="">
+    <a href="{{route('home')}}">
         <div class="logo-area">
             <img src="{{asset('assets/site/images/logo.png')}}" alt=""/>
             <div>
@@ -181,22 +181,15 @@
             </div>
         @endif
 
-
-
-
-
-
-
-
-
-
-
-
             @if(auth()->check())
                 @if(auth()->user()->getType()== "mediator")
                     <a href="{{route('mediator.users.index')}}">لوحة تحكم</a>
                 @endif
             @endif
+            @if(!auth()->check())
+                    <a href="{{route('login')}}">تسجيل الدخول</a>
+            @endif
+
             <a href="{{route('home')}}"
                @if(  \Illuminate\Support\Facades\Request::is('home*' ))  @endif> الرئيسية</a>
             <a href="{{route('landing')}}" >عن المنصة</a>
