@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mediator;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\RegesterEmailJob;
+use App\Models\Conversations;
 use Illuminate\Support\Str;
 use App\Models\AnswerQuestion;
 use App\Models\Aria;
@@ -98,7 +99,7 @@ class UsersMediatorController extends Controller
             $request->photo = $file;
         }
 
-        $generate_email= Str::random(5).'-osra-saeeda@gmail.com';
+        $generate_email = Str::random(5) . '-osra-saeeda@gmail.com';
 
         $user = User::create([
             'mediator_id' => auth()->user()->id,
@@ -254,6 +255,13 @@ class UsersMediatorController extends Controller
             $user->delete();
         }
         return response()->json(['status' => true, 'msg' => trans('global.delete_success')]);
+    }
+
+    public function notifications($userId)
+    {
+        $user = User::query()->findOrFail($userId);
+        $questionsNotAnswer = Conversations::query()->where('received_id', $user->id)->whereNull('answer_chat_id')->get();
+        return view('mediator.users.notification',compact('questionsNotAnswer','user'));
     }
 
 

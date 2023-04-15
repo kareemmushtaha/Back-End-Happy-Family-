@@ -100,8 +100,8 @@
             <div class="text-reply">
                 <div class="reply-content">
                     @foreach($questions as $question)
-                        <input type="hidden" name="chat_id" id="chat_id">
-
+{{--                        <input type="hidden" name="chat_id" id="chat_id">--}}
+                        <input type="hidden" name="chat_id" @isset($chatId) value="{{$chatId}}" @endisset id="chat_id">
                         <div>
                             <h2>
                                 {{$question->question_title}}
@@ -373,6 +373,12 @@
                 });
         }
 
+        @isset($chatId)
+        $(document).ready(function () {
+            chat_id = {{$chatId}}
+            getMessages()
+        });
+        @endisset
 
         $(document).on('click', '.show_messages', function (e) {
 

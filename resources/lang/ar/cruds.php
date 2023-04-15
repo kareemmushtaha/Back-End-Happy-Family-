@@ -266,6 +266,7 @@ return [
         'title' => 'المستخدمين',
         'title_singular' => 'المستخدم',
         'admin' => 'مدير',
+        'notification' => 'الإشعارات',
 
         'fields' => [
             'id' => 'الرقم',

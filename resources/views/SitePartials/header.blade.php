@@ -30,7 +30,7 @@
 {{--                <img src="{{asset('assets/site/images/settings.png')}}" alt=""/>--}}
 {{--                <img id="icon" onclick="notification('messages')" src="{{asset('assets/site/images/messages.png')}} "alt=""/>--}}
               <a href="{{route('chat.index')}}">  <img id="icon"  src="{{asset('assets/site/images/messages.png')}} "alt=""/></a>
-{{--                <img id="icon" onclick="notification('alert')" src="{{asset('assets/site/images/bell.png')}} " alt=""/>--}}
+                <img id="icon" onclick="notification('alert')" src="{{asset('assets/site/images/bell.png')}} " alt=""/>
             @endif
         </div>
 
@@ -90,74 +90,30 @@
 
 {{--                </div>--}}
             </div>
-{{--            <div id="alert" class="notification">--}}
-{{--                <div>--}}
-{{--                    <h2>الإشعارات</h2>--}}
+            <div id="alert" class="notification">
+                <div>
+                    <h2>الإشعارات</h2>
 {{--                    <a href="">--}}
 {{--                        <h3>عرض الكل</h3>--}}
 {{--                    </a>--}}
-{{--                </div>--}}
-{{--                <a href="">--}}
-{{--                    <div class="notification-content">--}}
-{{--                        <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>--}}
-{{--                        <div>--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <h2>عنوان الإشعار</h2>--}}
-{{--                                <h4>قبل 5 ثوان</h4>--}}
-{{--                            </div>--}}
-{{--                            <h2>هنا نص نص نص الاشعار...</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <a href="">--}}
-{{--                    <div class="notification-content">--}}
-{{--                        <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>--}}
-{{--                        <div>--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <h2>عنوان الإشعار</h2>--}}
-{{--                                <h4>قبل 5 ثوان</h4>--}}
-{{--                            </div>--}}
-{{--                            <h2>هنا نص نص نص الاشعار...</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <a href="">--}}
-{{--                    <div class="notification-content">--}}
-{{--                        <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>--}}
-{{--                        <div>--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <h2>عنوان الإشعار</h2>--}}
-{{--                                <h4>قبل 5 ثوان</h4>--}}
-{{--                            </div>--}}
-{{--                            <h2>هنا نص نص نص الاشعار...</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <a href="">--}}
-{{--                    <div class="notification-content">--}}
-{{--                        <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>--}}
-{{--                        <div>--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <h2>عنوان الإشعار</h2>--}}
-{{--                                <h4>قبل 5 ثوان</h4>--}}
-{{--                            </div>--}}
-{{--                            <h2>هنا نص نص نص الاشعار...</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <a href="">--}}
-{{--                    <div class="notification-content">--}}
-{{--                        <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>--}}
-{{--                        <div>--}}
-{{--                            <div class="d-flex justify-content-between">--}}
-{{--                                <h2>عنوان الإشعار</h2>--}}
-{{--                                <h4>قبل 5 ثوان</h4>--}}
-{{--                            </div>--}}
-{{--                            <h2>هنا نص نص نص الاشعار...</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--            </div>--}}
+                </div>
+                @isset($questionsChatNotAnswered)
+                    @foreach($questionsChatNotAnswered as $notification)
+                        <a href="{{route('chat.createAndOpenChat',\App\Models\Chat::query()->find($notification['chat_id'])->sender_id == auth()->user()->id ?\App\Models\Chat::query()->find($notification['chat_id'])->received_id : \App\Models\Chat::query()->find($notification['chat_id'])->sender_id)}}">
+                            <div class="notification-content">
+                                <img style="width: 20px; height: 20px;" src="{{asset('assets/site/images/bell.png')}}" alt=""/>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                        <h2> سؤال جديد غير مجاب</h2>
+                                        <h4>{{\Illuminate\Support\Carbon::parse($notification->created_at)->diffForHumans()}}</h4>
+                                    </div>
+                                    <h2>إنتقل للدردشة...</h2>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                @endisset
+            </div>
         @else
             <div>
                 <a class="signup" href="{{route('login')}}">سجل مجانا</a>

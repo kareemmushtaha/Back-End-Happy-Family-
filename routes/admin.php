@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CitiesController;
 use App\Http\Controllers\Admin\QuestionChatController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Mediator\FollowMediatorChatController;
+use App\Http\Controllers\Mediator\UsersMediatorController;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa','CheckAdmin']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -86,6 +87,7 @@ Route::group(['prefix' => 'mediator', 'as' => 'mediator.', 'namespace' => 'Media
 
     Route::group(['middleware' => ['checkMediator']], function () {
         Route::resource('users', 'UsersMediatorController');
+        Route::get('users/notifications/{UserId}', [UsersMediatorController::class, 'notifications'])->name('users.notifications');
         Route::post('filterAreas', [\App\Http\Controllers\Mediator\UsersMediatorController::class, 'filterAreas'])->name('filterAreas');
         Route::post('filterCities', [\App\Http\Controllers\Mediator\UsersMediatorController::class, 'filterCities'])->name('filterCities');
         Route::group(['prefix' => 'follow-mediator-chat', 'as' => 'chat.', 'middleware' => ['auth', '2fa', 'checkActivateAccount']], function () {

@@ -47,15 +47,19 @@ class FollowMediatorChatController extends Controller
             })->first();
 
             if (!$checkChat) {
-                Chat::create([
+                $chat =   Chat::create([
                     'sender_id' => $user_follow_mediator,
                     'received_id' => $user_id,
                 ]);
+                $chat_Id = $chat->id;
+            } else {
+                $chat_Id = $checkChat->id;
             }
         }
         $data['questions'] = QuestionChat::query()->Active()->MyQuestionChat($user_follow_mediator)->get();
         $data['answers'] = AnswerChat::query()->Active()->MyAnswerChat($user_follow_mediator)->get();
         $data['user_follow_mediator'] = $user_follow_mediator;
+        $data['chatId'] = $chat_Id;
 
         return view('site.followMediatorMessages', $data);
     }

@@ -89,6 +89,10 @@
                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-comment-dots"></i>
                                         </a>
+                                        <a href="{{ route('mediator.users.notifications', $user->id) }}"
+                                           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <i class="fa fa-bell">{{ \App\Models\Conversations::query()->where('received_id', $user->id)->whereNull('answer_chat_id')->count() }}  </i>
+                                        </a>
 
                                         <button category_id_attr="{{$user->id}}"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"

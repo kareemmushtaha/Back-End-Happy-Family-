@@ -30,21 +30,18 @@ class PackageController extends Controller
       //  abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $package_status = Package::STATUS;
-
         return view('admin.packages.edit', compact('package', 'package_status'));
     }
 
     public function update(PackageRequest $request, $package_id)
     {
         $package = Package::query()->findOrFail($package_id);
-
         $data = [
             'ar' => [
                 'title' => $request->title,
                 'description' => $request->description,
                 'subscription_features' => $request->subscription_features,
             ],
-
             'price' => $request->price,
             'status' => $request->status,
         ];
@@ -60,7 +57,6 @@ class PackageController extends Controller
     public function show(Package $package)
     {
         //abort_if(Gate::denies('package_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return view('admin.packages.show', compact('package'));
     }
 
