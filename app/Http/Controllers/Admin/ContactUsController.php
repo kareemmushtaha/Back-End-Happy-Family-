@@ -11,6 +11,6 @@ class ContactUsController extends Controller
     public function index ()
     {
         $messages = ContactUs::query()->get();
-        return view('admin.contactUS.index', compact('messages'));
+        return view('admin.contactUs.index', compact('messages'));
     }
 }

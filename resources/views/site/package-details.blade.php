@@ -9,7 +9,7 @@
             <div class="d-flex flex-column gap-4">
                 <h2>مميزات الاشتراك</h2>
                 {!! $package->subscription_features !!}
-                <h2>سعر الإشتراك {{$package->price}} دولار</h2>
+                <h2>سعر الإشتراك {{$package->price}}  ريال سعودي </h2>
             </div>
             <a style="color: white" id="btn_save_subscription" href="{{route('urway.payment.checkout',$package->id)}}">اشترك الان</a>
         </div>

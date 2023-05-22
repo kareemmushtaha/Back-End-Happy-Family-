@@ -10,7 +10,7 @@
         <div class="d-flex flex-column gap-2">
             <h2>مميزات الاشتراك</h2>
             {!! $package->subscription_features !!}
-            <h2>سعر الإشتراك {{$package->price}} دولار</h2>
+            <h2>سعر الإشتراك {{$package->price}}  ريال سعودي</h2>
         </div>
 
         @if(auth()->check())

@@ -336,17 +336,26 @@
                             }
 
                             const no_answer = "لم يتم الإجابة بعد";
-                            const no_accept_answer = "هذه الاجابة قيد التدقيق من قبل الإدارة";
-                            if (value.answer) {
+                            const no_accept_answer = "هذه الإجابة مرفوضه من إدارة المنصة";
+                            const answer_pending_to_accept = "هذه الاجابة قيد التدقيق من قبل الإدارة";
 
+                            if (value.answer) {
                                 if (value.answer.status == 1) {
+                                    //   1  accepted
                                     answer = `<p id="${answer_id}">  ${value.answer.answer_title}  </p>`;
-                                } else {
-                                    answer = `<p id="${answer_id}">  ${no_accept_answer}  </p>`;
+
+                                } else if(value.answer.status == 0) {
+                                    //        0 pending accept
+                                    answer = `<p id="${answer_id}"> ${answer_pending_to_accept}  </p>`;
+
+                                }else if(value.answer.status == 2) {
+                                    //          2 rejected
+                                    answer = `<p id="${answer_id}"> ${no_accept_answer}  </p>`;
                                 }
                             } else {
                                 answer = `<p id="${answer_id}">  ${no_answer}  </p>`;
                             }
+
 
                             if (user_id === value.received_id) {
                                 message = '<div class="text-recieve">' +
