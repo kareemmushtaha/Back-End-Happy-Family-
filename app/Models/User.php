@@ -43,7 +43,7 @@ class User extends Authenticatable
         'fake_name', 'birth_date', 'year', 'gender', 'height',
         'width', 'nationality', 'photo', 'swear_god',
         'code', 'role_id', 'country_id', 'aria_id', 'city_id',
-        'email', 'email_verified_at', 'password', 'verified',
+        'email', 'email_verified_at', 'password', 'verified', 'check_active_mediator',
         'verified_at', 'verification_token', 'two_factor', 'two_factor_code',
         'remember_token', 'created_at', 'updated_at', 'deleted_at',
         'two_factor_expires_at', 'phone', 'mediator_id', 'check_active', 'show_profile'
@@ -109,9 +109,6 @@ class User extends Authenticatable
                 break;
         }
     }
-
-
-
 
     public function getFullName()
     {

@@ -11,10 +11,10 @@
                     class="card-label fw-bold fs-3 mb-1">{{ trans('global.view') }} {{ trans('cruds.user.title') }}</span>
                     </h3>
                     <div class="card-toolbar">
-                            <a href=" " class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
-                               data-bs-target="#kt_modal_new_target">
-                                <span class="svg-icon svg-icon-2 bi-bag-plus"></span>
-                                {{ trans('global.add') }} {{ trans('cruds.user.admin') }}</a>
+                        <a href=" " class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
+                           data-bs-target="#kt_modal_new_target">
+                            <span class="svg-icon svg-icon-2 bi-bag-plus"></span>
+                            {{ trans('global.add') }} {{ trans('cruds.user.admin') }}</a>
 
                         <a href="/register" class="btn btn-sm btn-light-primary" style="margin: 15px"
                            data-bs-target="#kt_modal_new_target">
@@ -80,19 +80,33 @@
 
                                     </td>
                                     <td>
-
-                                        <button id="btn_un_active_{{$user->id}}"
-                                                class="btn btn-success @if($user->check_active == 0) d-none @endif check_active btn-sm"
-                                                data-check_active="{{$user->check_active}}"
-                                                data-user_id="{{$user->id}}">
-                                            {{trans('global.cancel_active')}}
-                                        </button>
-                                        <button id="btn_active_{{$user->id}}"
-                                                class="btn btn-danger @if($user->check_active == 1) d-none @endif check_active btn-sm"
-                                                data-check_active="{{$user->check_active}}"
-                                                data-user_id="{{$user->id}}">
-                                            {{trans('global.make_active')}}
-                                        </button>
+                                        @if($user->getType() !== 'mediator')
+                                            <button id="btn_un_active_{{$user->id}}"
+                                                    class="btn btn-success @if($user->check_active == 0) d-none @endif check_active btn-sm"
+                                                    data-check_active="{{$user->check_active}}"
+                                                    data-user_id="{{$user->id}}">
+                                                {{trans('global.cancel_active')}}
+                                            </button>
+                                            <button id="btn_active_{{$user->id}}"
+                                                    class="btn btn-danger @if($user->check_active == 1) d-none @endif check_active btn-sm"
+                                                    data-check_active="{{$user->check_active}}"
+                                                    data-user_id="{{$user->id}}">
+                                                {{trans('global.make_active')}}
+                                            </button>
+                                        @else
+                                            <button id="btn_un_active_{{$user->id}}"
+                                                    class="btn btn-success @if($user->check_active_mediator  == 0) d-none @endif check_active btn-sm"
+                                                    data-check_active="{{$user->check_active_mediator}}"
+                                                    data-user_id="{{$user->id}}">
+                                                {{trans('global.cancel_active')}} الوسيط
+                                            </button>
+                                            <button id="btn_active_{{$user->id}}"
+                                                    class="btn btn-danger @if( $user->check_active_mediator  == 1 ) d-none @endif check_active btn-sm"
+                                                    data-check_active="{{$user->check_active_mediator}}"
+                                                    data-user_id="{{$user->id}}">
+                                                {{trans('global.make_active')}} الوسيط
+                                            </button>
+                                        @endif
 
 
                                     </td>

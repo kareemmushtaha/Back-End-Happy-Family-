@@ -43,9 +43,9 @@
             </div>
             <div class="time-container">
                 <h2>من</h2>
-                <input type="number" name="from" value="1960"/>
+                <input type="number" name="from" value="18"/>
                 <h2>الى</h2>
-                <input type="number" name="to" value="2023"/>
+                <input type="number" name="to" value="50"/>
             </div>
             <button id="send_data_search" type="submit">بحث</button>
         </div>

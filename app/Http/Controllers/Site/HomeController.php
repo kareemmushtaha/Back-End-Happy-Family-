@@ -59,75 +59,33 @@ class HomeController extends Controller
 
     public function homeSearch(Request $request)
     {
-        $gender = $request->gender;
-        $country = $request->country;
-        $area = $request->area;
-        $city = $request->city;
-        $from = $request->from;
-        $to = $request->to;
-//
-        if ($request->gender) {
-            $gender = $request->gender;
-        } else {
-            $gender = null;
-        }
 
-        if ($request->country) {
-            $country = $request->country;
-        } else {
-            $country = null;
-        }
+        $gender = $request->gender ? $request->gender : null;
+        $country = $request->country ? $request->country : null;
+        $area = $request->area ? $request->area : null;
+        $city = $request->city ? $request->city : null;
+        $from = $request->from ? Carbon::now()->subYear($request->from)->format('Y') : null;
+        $to = $request->to ? Carbon::now()->subYear($request->to)->format('Y') : null;
 
-        if ($request->area) {
-            $area = $request->area;
-        } else {
-            $area = null;
-        }
 
-        if ($request->city) {
-            $city = $request->city;
-        } else {
-            $city = null;
-        }
-
-        if ($request->from) {
-            $from = $request->from;
-        } else {
-            $from = null;
-        }
-
-        if ($request->to) {
-            $to = $request->to;
-        } else {
-            $to = null;
-        }
         $data['get_users'] = User::query()->where('show_profile', 1);
         if (auth()->check()) {
             $data['get_users']->where('id', '!=', auth()->user()->id);
-        }
-        $data['get_users'] = $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
-            $query_1->where('gender', $gender);
-
-        })->when($country != null, function ($query_2) use ($country) {
-            $query_2->where('country_id', $country);
-
-        })->when($area != null, function ($query_3) use ($area) {
-            $query_3->where('aria_id', $area);
-
-        })->when($city != null, function ($query_4) use ($city) {
-            $query_4->where('city_id', $city);
-
-        })->when($from != null && $to != null, function ($query_5) use ($from, $to) {
-
-            $query_5->whereBetween('year', [$from, $to]);
-
-        })->paginate(6);
-
-        $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
-
-        if ($request->ajax()) {
-            return view('site._userCardPaginate', $data);
-
+            $data['get_users'] = $data['get_users']->when($gender != null, function ($query_1) use ($gender) {
+                $query_1->where('gender', $gender);
+            })->when($country != null, function ($query_2) use ($country) {
+                $query_2->where('country_id', $country);
+            })->when($area != null, function ($query_3) use ($area) {
+                $query_3->where('aria_id', $area);
+            })->when($city != null, function ($query_4) use ($city) {
+                $query_4->where('city_id', $city);
+            })->when($from != null && $to != null, function ($query_5) use ($from, $to) {
+                $query_5->whereBetween('year', [$to, $from]);
+            })->paginate(6);
+            $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
+            if ($request->ajax()) {
+                return view('site._userCardPaginate', $data);
+            }
         }
     }
 
@@ -143,51 +101,13 @@ class HomeController extends Controller
 
     public function resultSearchLanding(Request $request)
     {
-        $gender = $request->gender;
-        $country = $request->country;
-        $area = $request->area;
-        $city = $request->city;
-        $year_from = $request->year_from;
-        $year_to = $request->year_to;
+        $gender = $request->gender ? $request->gender : null;
+        $country = $request->country ? $request->country : null;
+        $area = $request->area ? $request->area : null;
+        $city = $request->city ? $request->city : null;
+        $year_from = $request->year_from ? Carbon::now()->subYear($request->year_from)->format('Y') : null;
+        $year_to = $request->year_to ? Carbon::now()->subYear($request->year_to)->format('Y') : null;
 
-//
-
-        if ($request->gender) {
-            $gender = $request->gender;
-        } else {
-            $gender = null;
-        }
-
-        if ($request->country) {
-            $country = $request->country;
-        } else {
-            $country = null;
-        }
-
-        if ($request->area) {
-            $area = $request->area;
-        } else {
-            $area = null;
-        }
-
-
-        if ($request->city) {
-            $city = $request->city;
-        } else {
-            $city = null;
-        }
-
-        if ($request->year_from) {
-            $year_from = $request->year_from;
-        } else {
-            $year_from = null;
-        }
-
-        if ($request->year_to) {
-            $year_to = $request->year_to;
-        } else {
-            $year_to = null;
-        }
 
         $data['gender'] = $request->gender;
         $data['country'] = $request->country;
@@ -198,21 +118,14 @@ class HomeController extends Controller
 
         $data['get_users'] = $this->users_paginate->query()->where('show_profile', 1)->when($gender != null, function ($query_1) use ($gender) {
             $query_1->where('gender', $gender);
-
         })->when($country != null, function ($query_1) use ($country) {
             $query_1->where('country_id', $country);
-
         })->when($area != null, function ($query_2) use ($area) {
-
             $query_2->where('aria_id', $area);
-
         })->when($city != null, function ($query_3) use ($city) {
-
             $query_3->where('city_id', $city);
-
         })->when($year_from != null && $year_to != null, function ($query_6) use ($year_from, $year_to) {
-            $query_6->whereBetween('year', [$year_from, $year_to]);
-
+            $query_6->whereBetween('year', [$year_to, $year_from]);
         })->paginate(6);
 
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);

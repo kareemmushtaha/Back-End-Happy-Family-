@@ -8,6 +8,10 @@
                 <h1>البحث المتقدم</h1>
                 <div class="advanced-selects-container">
 
+                    <div class="advanced-range-area">
+                        <h2 style="width: 100%">ابحث عن</h2>
+                        <input type="text" name="search" placeholder="ابحث عن ..." />
+                    </div>
                     <div>
                         <img src="{{asset('assets/site/images/location.png')}}" alt=""/>
                         <select name="country" id="country">
@@ -15,7 +19,6 @@
                             @isset($countries)
                                 @foreach($countries as $country)
                                     <option value="{{$country->id}}">{{$country->title}}</option>
-
                                 @endforeach
                             @endisset
                         </select>

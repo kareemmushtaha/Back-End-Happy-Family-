@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('nationality')->nullable();
             $table->string('photo')->nullable();
             $table->string('phone')->nullable();
+            $table->integer('check_active_mediator')->default(0);
             $table->integer('check_active')->default(0);
             $table->integer('show_profile')->default(1);
             $table->bigInteger('role_id')->unsigned();

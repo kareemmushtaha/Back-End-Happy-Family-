@@ -11,11 +11,11 @@ use App\Models\Package;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserPackage;
-use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use function PHPUnit\Framework\lessThanOrEqual;
 
 class UsersController extends Controller
 {
@@ -27,7 +27,6 @@ class UsersController extends Controller
 
         return view('admin.users.index', compact('users', 'roles'));
     }
-
 
     public function store(StoreUserRequest $request)
     {
@@ -74,7 +73,6 @@ class UsersController extends Controller
         return response()->json(['status' => true, 'msg' => trans('global.update_success')]);
     }
 
-
     public function massDestroy(MassDestroyUserRequest $request)
     {
         User::whereIn('id', request('ids'))->delete();
@@ -117,23 +115,32 @@ class UsersController extends Controller
 
     public function changeStatus(Request $request)
     {
-
         if ($request->check_active == 0) {
             $check_active = 1;
         } else {
             $check_active = 0;
         }
 
-        $user = User::query()->findOrFail($request->user_id)->update([
-            'check_active' => $check_active
-        ]);
+        $user = User::query()->findOrFail($request->user_id);
+        if ($user->getType() == "mediator") {
+            $data = [
+                 'check_active_mediator' => $check_active
+            ];
+        } else {
+            $data = [
+                'check_active' => $check_active,
+            ];
+        }
 
+
+        $user->update($data);
         return response()->json([
             'status' => true,
             'check_active' => $check_active,
             'msg' => 'تم تغيير حالة المستخدم بنجاح',
         ]);
     }
+
 
     public function upgradeSubscription(UpgradeSubscriptionRequest $request, $userId)
     {
@@ -154,10 +161,7 @@ class UsersController extends Controller
             return response()->json(['status' => true, 'msg' => trans('global.upgrade_subscription_success')]);
         } else {
             return response()->json(['status' => false, 'msg' => trans('global.sorry_you_have_package_activated')]);
-
         }
-
-
     }
 
 }

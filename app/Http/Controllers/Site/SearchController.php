@@ -54,74 +54,18 @@ class SearchController extends Controller
 
     public function resultAdvancedSearch(Request $request)
     {
-
-        $country = $request->country;
-        $area = $request->area;
-        $city = $request->city;
-        $year_from = $request->year_from;
-        $year_to = $request->year_to;
-        $height_from = $request->height_from;
-        $height_to = $request->height_to;
-        $weight_from = $request->weight_from;
-        $weight_to = $request->weight_to;
+        $search = $request->search ?? '';
         $answers = [];
 
-//
-
-        if ($request->country) {
-            $country = $request->country;
-        } else {
-            $country = null;
-        }
-
-        if ($request->area) {
-            $area = $request->area;
-        } else {
-            $area = null;
-        }
-
-
-        if ($request->city) {
-            $city = $request->city;
-        } else {
-            $city = null;
-        }
-
-        if ($request->year_from) {
-            $year_from = $request->year_from;
-        } else {
-            $year_from = null;
-        }
-
-        if ($request->year_to) {
-            $year_to = $request->year_to;
-        } else {
-            $year_to = null;
-        }
-
-        if ($request->height_from) {
-            $height_from = intval($request->height_from);
-        } else {
-            $height_from = null;
-        }
-
-        if ($request->height_to) {
-            $height_to = intval($request->height_to);
-        } else {
-            $height_to = null;
-        }
-
-        if ($request->weight_from) {
-            $weight_from = intval($request->weight_from);
-        } else {
-            $weight_from = null;
-        }
-
-        if ($request->weight_to) {
-            $weight_to = intval($request->weight_to);
-        } else {
-            $weight_to = null;
-        }
+        $year_from = $request->year_from ? Carbon::now()->subYear($request->year_from)->format('Y') : null;
+        $year_to = $request->year_to ? Carbon::now()->subYear($request->year_to)->format('Y') : null;
+        $country = $request->country ? $request->country : null;
+        $area = $request->area ? $request->area : null;
+        $city = $request->city ? $request->city : null;
+        $height_from = $request->height_from ? intval($request->height_from) : null;
+        $height_to = $request->height_to ? intval($request->height_to) : null;
+        $weight_from = $request->weight_from ? intval($request->weight_from) : null;
+        $weight_to = $request->weight_to ? intval($request->weight_to) : null;
 
         if ($request->answers) {
             if ($this->is_serialized($request->answers) == true) {
@@ -147,6 +91,7 @@ class SearchController extends Controller
         $data['height_from'] = $request->height_from;
         $data['height_to'] = $request->height_to;
         $data['weight_from'] = $request->weight_from;
+        $data['search'] = $request->search;
         $data['weight_to'] = $request->weight_to;
         $data['answers'] = serialize($answers);
         $data['get_users'] = $this->users_paginate->query()
@@ -170,13 +115,14 @@ class SearchController extends Controller
                 $query_5->whereBetween('height', [$height_from, $height_to]);
 
             })->when($year_from != null && $year_to != null, function ($query_6) use ($year_from, $year_to) {
-                $query_6->whereBetween('year', [$year_from, $year_to]);
+                $query_6->whereBetween('year', [$year_to, $year_from]);
 
             })->when(count($answers) > 0, function ($query_7) use ($answers) {
                 $query_7->whereHas('user_question_answers', function ($query_7_1) use ($answers) {
                     $query_7_1->whereIn('answer_question_id', $answers);
                 });
-
+            })->when($search, function ($query_8) use ($search) {
+                $query_8->where('first_name', $search)->orWhere('last_name', $search)->orWhere('fake_name', $search);
             })->paginate(6);
 
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);

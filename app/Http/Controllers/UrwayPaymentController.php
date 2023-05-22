@@ -57,7 +57,7 @@ class UrwayPaymentController extends Controller
                     'user_id' => auth()->user()->id,
                     'price' => $package->price,
                     'start_date' => Carbon::now(),
-                    'end_date' => Carbon::now()->addDays(30),
+                    'end_date' => Carbon::now()->addDays(90),
                     'status' => 0, //subscription is not active
                 ]);
             }

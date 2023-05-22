@@ -18,7 +18,7 @@ class Subscription
                 'user_id' => $user->id,
                 'price' => $package->price,
                 'start_date' => Carbon::now(),
-                'end_date' => Carbon::now()->addDays(30),
+                'end_date' => Carbon::now()->addDays(90),
                 'status' => 1, //subscription is not active
                 'is_free' => 1,
             ]);
