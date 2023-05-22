@@ -51,7 +51,7 @@
                         <h2>نطاق الطول</h2>
                         <div class="advanced-range-area">
                             <h2>من</h2>
-                            <input type="number" name="height_from"  value="100"/>
+                            <input type="number" name="height_from"  value="70"/>
                             <h2>الى</h2>
                             <input type="number" name="height_to" value="200"/>
                         </div>
@@ -60,9 +60,9 @@
                         <h2>نطاق العمر</h2>
                         <div class="advanced-range-area">
                             <h2>من</h2>
-                            <input type="number" name="year_from" value="1960"/>
+                            <input type="number" name="year_from" value="18"/>
                             <h2>الى</h2>
-                            <input type="number" name="year_to" value="2004"/>
+                            <input type="number" name="year_to" value="50"/>
                         </div>
                     </div>
                 </div>

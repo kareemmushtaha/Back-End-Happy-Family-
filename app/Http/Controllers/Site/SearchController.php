@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Package;
 use App\Models\Question;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isJson;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
@@ -122,7 +123,7 @@ class SearchController extends Controller
                     $query_7_1->whereIn('answer_question_id', $answers);
                 });
             })->when($search, function ($query_8) use ($search) {
-                $query_8->where('first_name', $search)->orWhere('last_name', $search)->orWhere('fake_name', $search);
+                $query_8->where('fake_name', 'LIKE', '%' . $search . '%');
             })->paginate(6);
 
         $data['users'] = \App\Http\Resources\ShowUserResource::collection($data['get_users']);
